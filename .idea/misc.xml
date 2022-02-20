@@ -3,9 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/attack.xml" value="0.36" />
+        <entry key="app/src/main/res/drawable/attack_crit.xml" value="0.36" />
+        <entry key="app/src/main/res/drawable/death.xml" value="0.36" />
+        <entry key="app/src/main/res/drawable/evade.xml" value="0.36" />
+        <entry key="app/src/main/res/drawable/hurt.xml" value="0.1755" />
         <entry key="app/src/main/res/layout/activity_compare.xml" value="0.16354166666666667" />
-        <entry key="app/src/main/res/layout/activity_explore.xml" value="0.2552083333333333" />
-        <entry key="app/src/main/res/layout/activity_fight.xml" value="0.2552083333333333" />
+        <entry key="app/src/main/res/layout/activity_explore.xml" value="0.19272727272727272" />
+        <entry key="app/src/main/res/layout/activity_fight.xml" value="0.19272727272727272" />
         <entry key="app/src/main/res/layout/activity_inventory.xml" value="0.184375" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.35885416666666664" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.184375" />

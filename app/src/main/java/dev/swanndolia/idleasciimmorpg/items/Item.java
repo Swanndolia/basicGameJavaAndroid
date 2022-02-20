@@ -4,6 +4,25 @@ import java.io.Serializable;
 
 public class Item implements Serializable {
 
+    public String name;
+    public String desc;
+    public String slot;
+    public Integer dodgeChance;
+    public Integer protection;
+    public Integer weight;
+    public Integer sellValue;
+    public Boolean equipped;
+    public Integer damage;
+    public Integer critChance;
+    public Integer critDamage;
+    public Integer accuracy;
+    public Double critMultiplier;
+
+    public Item() {
+        this.slot = "None";
+        this.equipped = false;
+    }
+
     public String getSlot() {
         return slot;
     }
@@ -92,15 +111,19 @@ public class Item implements Serializable {
         this.equipped = equipped;
     }
 
-    public String name;
-    public String desc;
-    public String slot;
-    public Integer dodgeChance;
-    public Integer protection;
-    public Integer weight;
-    public Integer sellValue;
-    public Boolean equipped;
-    public Integer damage;
-    public Integer critChance;
-    public Integer accuracy;
+    public void setCritMultiplier(Double critMultiplier) {
+        this.critMultiplier = critMultiplier;
+    }
+
+    public Double getCritMultiplier() {
+        return critMultiplier;
+    }
+
+    public void calculateCritDamage() {
+        this.critDamage = (int) (this.damage * this.critMultiplier);
+    }
+
+    public Integer getCritDamage() {
+        return critDamage;
+    }
 }

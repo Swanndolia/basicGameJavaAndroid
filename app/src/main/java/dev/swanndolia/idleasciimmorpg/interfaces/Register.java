@@ -17,18 +17,29 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.Serializable;
-
 import dev.swanndolia.idleasciimmorpg.R;
 import dev.swanndolia.idleasciimmorpg.characters.Player;
+import dev.swanndolia.idleasciimmorpg.tools.music.BackgroundMusicService;
 
 public class Register extends AppCompatActivity {
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(Register.this, "Back Button is being Pressed!", Toast.LENGTH_SHORT).show();
+
+        super.onBackPressed();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent musicService = new Intent(Register.this, BackgroundMusicService.class);
+        startService(musicService);
+
         setContentView(R.layout.activity_register);
 
         final EditText userName = findViewById(R.id.userName);
@@ -67,6 +78,7 @@ public class Register extends AppCompatActivity {
                                 Intent intent = new Intent(Register.this,Menu.class);
                                 intent.putExtra("player", player);
                                 startActivity(intent);
+                                finish();
                             }
                         }
 
@@ -87,4 +99,5 @@ public class Register extends AppCompatActivity {
             }
         });
     }
+
 }

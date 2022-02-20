@@ -1,0 +1,15 @@
+<animation-list android:id="@+id/animation" android:oneshot="false"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/idle1" android:duration="7000" />
+    <item android:drawable="@drawable/idle2" android:duration="400" />
+    <item android:drawable="@drawable/idle3" android:duration="400" />
+    <item android:drawable="@drawable/idle4" android:duration="400" />
+    <item android:drawable="@drawable/idle5" android:duration="400" />
+    <item android:drawable="@drawable/idle6" android:duration="400" />
+    <item android:drawable="@drawable/idle7" android:duration="6000" />
+    <item android:drawable="@drawable/idle8" android:duration="400" />
+    <item android:drawable="@drawable/idle9" android:duration="400" />
+    <item android:drawable="@drawable/idle10" android:duration="400" />
+    <item android:drawable="@drawable/idle11" android:duration="400" />
+    <item android:drawable="@drawable/idle12" android:duration="400" />
+</animation-list>

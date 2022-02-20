@@ -1,0 +1,16 @@
+<animation-list android:id="@+id/animation" android:oneshot="false"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/evade1" android:duration="100" />
+    <item android:drawable="@drawable/evade2" android:duration="100" />
+    <item android:drawable="@drawable/evade3" android:duration="100" />
+    <item android:drawable="@drawable/evade4" android:duration="100" />
+    <item android:drawable="@drawable/evade5" android:duration="100" />
+    <item android:drawable="@drawable/evade6" android:duration="100" />
+    <item android:drawable="@drawable/evade7" android:duration="100" />
+    <item android:drawable="@drawable/evade8" android:duration="100" />
+    <item android:drawable="@drawable/evade9" android:duration="100" />
+    <item android:drawable="@drawable/evade10" android:duration="100" />
+    <item android:drawable="@drawable/evade11" android:duration="100" />
+    <item android:drawable="@drawable/evade12" android:duration="100" />
+    <item android:drawable="@drawable/idle1" android:duration="500" />
+</animation-list>

@@ -168,7 +168,7 @@ public class Inventory extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Inventory.this, CompareAndEquip.class);
                 intent.putExtra("player", player);
-                intent.putExtra("slot", "");
+                intent.putExtra("slot", "None");
                 startActivity(intent);
                 finish();
             }

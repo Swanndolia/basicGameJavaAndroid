@@ -3,6 +3,7 @@
     package="dev.swanndolia.idleasciimmorpg">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,11 +11,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LoginRegisterFirebase">
+        <service
+            android:name=".tools.music.BackgroundMusicService"
+            android:enabled="true"
+            android:exported="true"></service>
+
         <activity
             android:name=".interfaces.Register"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -29,13 +36,13 @@
             android:exported="false" />
         <activity
             android:name=".interfaces.CompareAndEquip"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".interfaces.Explore"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".interfaces.Fight"
-            android:exported="false"/>
+            android:exported="false" />
     </application>
 
 </manifest>
