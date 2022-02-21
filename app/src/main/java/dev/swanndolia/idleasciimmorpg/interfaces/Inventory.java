@@ -11,12 +11,14 @@ import dev.swanndolia.idleasciimmorpg.R;
 import dev.swanndolia.idleasciimmorpg.characters.Player;
 
 public class Inventory extends AppCompatActivity {
+    Player player;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
         Bundle bundle = this.getIntent().getExtras();
-        Player player = (Player) bundle.getSerializable("player");
+        player = (Player) bundle.getSerializable("player");
 
         final Button basicWeaponBtn = findViewById(R.id.basicWeaponBtn);
         final Button specialWeaponBtn = findViewById(R.id.specialWeaponBtn);
@@ -173,5 +175,13 @@ public class Inventory extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Inventory.this, Menu.class);
+        intent.putExtra("player", player);
+        startActivity(intent);
+        finish();
     }
 }

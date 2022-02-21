@@ -1,10 +1,12 @@
 package dev.swanndolia.idleasciimmorpg.items;
 
 import java.io.Serializable;
+import java.security.PublicKey;
 
 public class Item implements Serializable {
 
     public String name;
+    public Integer amount;
     public String desc;
     public String slot;
     public Integer dodgeChance;
@@ -21,6 +23,15 @@ public class Item implements Serializable {
     public Item() {
         this.slot = "None";
         this.equipped = false;
+        this.amount = 1;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
     }
 
     public String getSlot() {

@@ -1,11 +1,9 @@
 package dev.swanndolia.idleasciimmorpg.interfaces;
 
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -27,8 +25,10 @@ import dev.swanndolia.idleasciimmorpg.tools.animations.CustomAnimationDrawableNe
 
 public class Fight extends AppCompatActivity {
 
-    AlertDialog.Builder builder;
+    AlertDialog.Builder builderDeadPlayer;
+    AlertDialog.Builder builderDeadEnemy;
     LinearLayout dropListLayout;
+    LinearLayout deadPlayerLayout;
     LinearLayout parentLayout;
     LinearLayout buttonListLayout;
     ImageView animationView;
@@ -51,11 +51,14 @@ public class Fight extends AppCompatActivity {
 
         setContentView(R.layout.activity_fight);
 
-        builder = new AlertDialog.Builder(this);
+        builderDeadPlayer = new AlertDialog.Builder(this);
+        builderDeadEnemy = new AlertDialog.Builder(this);
         parentLayout = (LinearLayout) findViewById(R.id.parentLayout);
 
         dropListLayout = new LinearLayout(this);
         dropListLayout.setOrientation(LinearLayout.VERTICAL);
+        deadPlayerLayout = new LinearLayout(this);
+        deadPlayerLayout.setOrientation(LinearLayout.VERTICAL);
         buttonListLayout = new LinearLayout(this);
         buttonListLayout.setOrientation(LinearLayout.VERTICAL);
         animationView = new ImageView(this);
@@ -111,18 +114,53 @@ public class Fight extends AppCompatActivity {
 
     private void updatePlayerTextView() {
         playerTextView.setText(player.getName() + " lvl " + player.getLevel() + " HP: " + player.getHp());
+        if (player.getHp() <= 0) {
+            enemyTextView.setText(player.getName() + " has been killed by a " + enemyEncountered.getName() + " lvl " + enemyEncountered.getLevel());
+            playerKilledStep();
+        }
         player.savePlayer();
+    }
+
+    private void playerKilledStep() {
+        Integer lostExp = (int) player.getExp() / 10;
+        Integer lostCryptoCoins = (int) player.getCryptoCoins() / 10;
+        player.setExp(player.getExp() - lostExp);
+        player.setCryptoCoins(player.getCryptoCoins() - lostCryptoCoins);
+
+        parentLayout.removeView(buttonListLayout);
+        TextView deadTitleView = new TextView(this);
+        deadTitleView.setText(player.getName() + " has been killed by a " + enemyEncountered.getName() + " lvl " + enemyEncountered.getLevel());
+        deadTitleView.setTextSize(22);
+        deadTitleView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        deadPlayerLayout.addView(deadTitleView);
+
+        builderDeadPlayer.setView(deadPlayerLayout);
+        AlertDialog deadDialog = builderDeadPlayer.create();
+
+        LinearLayout lostListLayout = new LinearLayout(this);
+        TextView lostCryptoCoinsTextView = new TextView(this);
+        lostCryptoCoinsTextView.setText("You've lost " + lostCryptoCoins + " Crypto-coins");
+        TextView lostExpTextView = new TextView(this);
+        lostExpTextView.setText("You've lost " + lostExp + " exp");
+
+        lostListLayout.setOrientation(LinearLayout.HORIZONTAL);
+        lostListLayout.addView(lostExpTextView);
+        lostListLayout.addView(lostCryptoCoinsTextView);
+        deadPlayerLayout.addView(lostListLayout);
+
+        System.out.println(deadPlayerLayout.getParent());
+        deadDialog.show();
     }
 
     private void updateEnemyTextView() {
         enemyTextView.setText(enemyEncountered.getName() + " lvl " + enemyEncountered.getLevel() + " HP: " + enemyEncountered.getHp());
         if (enemyEncountered.getHp() <= 0) {
             enemyTextView.setText("Good job " + player.getName() + " on killing a " + enemyEncountered.getName() + " lvl " + enemyEncountered.getLevel());
-            generateEnemyKilledResume();
+            enemyKilledStep();
         }
     }
 
-    private void generateEnemyKilledResume() {
+    private void enemyKilledStep() {
         player.setExp(player.getExp() + enemyEncountered.getExpReward());
         player.checkLevelUp();
         parentLayout.removeView(buttonListLayout);
@@ -133,8 +171,8 @@ public class Fight extends AppCompatActivity {
         dropListLayout.addView(dropTitleView);
         Integer totalValue = 0;
 
-        builder.setView(dropListLayout);
-        AlertDialog dialog = builder.create();
+        builderDeadEnemy.setView(dropListLayout);
+        AlertDialog dialog = builderDeadEnemy.create();
 
         for (Item item : enemyEncountered.getInventory()) {
             totalValue += item.getSellValue();
@@ -294,5 +332,13 @@ public class Fight extends AppCompatActivity {
                 enemyAttackStep(playerAttackStep(weapon));
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Fight.this, Menu.class);
+        intent.putExtra("player", player);
+        startActivity(intent);
+        finish();
     }
 }

@@ -17,7 +17,7 @@
             android:exported="true"></service>
 
         <activity
-            android:name=".interfaces.Register"
+            android:name=".interfaces.BootStrap"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,6 +25,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".interfaces.Register"
+            android:exported="false"/>
         <activity
             android:name=".interfaces.Login"
             android:exported="false" />

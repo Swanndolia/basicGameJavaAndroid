@@ -1,5 +1,9 @@
 package dev.swanndolia.idleasciimmorpg.characters;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -122,7 +126,7 @@ public class Player implements Serializable {
         this.exp = exp;
     }
 
-    public void addExp(Integer exp){
+    public void addExp(Integer exp) {
         this.exp = this.exp + exp;
         this.savePlayer();
     }
@@ -137,14 +141,10 @@ public class Player implements Serializable {
 
     public void checkLevelUp() {
         if (this.getExp() >= this.getNextLevelExp()) {
-            this.level =+ 1;
+            this.level += 1;
             this.nextLevelExp = (int) (this.nextLevelExp + this.nextLevelExp * 1.7);
             this.savePlayer();
         }
-    }
-
-    public List<Item> getInventory() {
-        return this.inventory;
     }
 
     public Item getEquippedItem(String slot) {
@@ -173,13 +173,27 @@ public class Player implements Serializable {
         this.savePlayer();
     }
 
+    public List<Item> getInventory() {
+        return this.inventory;
+    }
+
     public void addInventory(List<Item> items) {
-        this.inventory.addAll(items);
+        for (Item item : items){
+            if (this.inventory.contains(item)) {
+                this.inventory.get(inventory.indexOf(item)).setAmount(this.inventory.get(inventory.indexOf(item)).getAmount() + 1);
+            } else {
+                this.inventory.add(item);
+            }
+        }
         this.savePlayer();
     }
 
     public void addInventory(Item item) {
-        this.inventory.add(item);
+        if (this.inventory.contains(item)) {
+            this.inventory.get(inventory.indexOf(item)).setAmount(this.inventory.get(inventory.indexOf(item)).getAmount() + 1);
+        } else {
+            this.inventory.add(item);
+        }
         this.savePlayer();
     }
 
@@ -205,4 +219,5 @@ public class Player implements Serializable {
         this.cryptoCoins += cryptoCoins;
         this.savePlayer();
     }
+
 }

@@ -4,9 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,20 +27,9 @@ public class Register extends AppCompatActivity {
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-
-    @Override
-    public void onBackPressed() {
-        Toast.makeText(Register.this, "Back Button is being Pressed!", Toast.LENGTH_SHORT).show();
-
-        super.onBackPressed();
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Intent musicService = new Intent(Register.this, BackgroundMusicService.class);
-        startService(musicService);
 
         setContentView(R.layout.activity_register);
 
@@ -47,6 +38,7 @@ public class Register extends AppCompatActivity {
         final EditText password = findViewById(R.id.password);
         final EditText conPassword = findViewById(R.id.conPassword);
 
+        final CheckBox stayLoginCheckBox = findViewById(R.id.stayLoginCheckBox);
         final Button registerBtn = findViewById(R.id.registerBtn);
         final TextView loginNowBtn = findViewById(R.id.loginNowBtn);
 
@@ -75,8 +67,15 @@ public class Register extends AppCompatActivity {
 
                                 Toast.makeText(Register.this, "User successfully Register", Toast.LENGTH_SHORT).show();
                                 Player player = new Player().Player(usernameTxt);
-                                Intent intent = new Intent(Register.this,Menu.class);
+                                Intent intent = new Intent(Register.this, Menu.class);
                                 intent.putExtra("player", player);
+                                if (stayLoginCheckBox.isChecked()) {
+                                    SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
+                                    editor.putString("username", usernameTxt);
+                                    editor.putString("password", passwordTxt);
+                                    editor.putBoolean("stayLogin", true);
+                                    editor.apply();
+                                }
                                 startActivity(intent);
                                 finish();
                             }

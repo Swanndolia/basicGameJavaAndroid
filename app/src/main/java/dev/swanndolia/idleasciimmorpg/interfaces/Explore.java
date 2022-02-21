@@ -11,11 +11,12 @@ import dev.swanndolia.idleasciimmorpg.R;
 import dev.swanndolia.idleasciimmorpg.characters.Player;
 
 public class Explore extends AppCompatActivity {
+    Player player;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getIntent().getExtras();
-        Player player = (Player) bundle.getSerializable("player");
+        player = (Player) bundle.getSerializable("player");
 
         setContentView(R.layout.activity_explore);
 
@@ -31,5 +32,12 @@ public class Explore extends AppCompatActivity {
                 finish();
             }
         });
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Explore.this, Menu.class);
+        intent.putExtra("player", player);
+        startActivity(intent);
+        finish();
     }
 }

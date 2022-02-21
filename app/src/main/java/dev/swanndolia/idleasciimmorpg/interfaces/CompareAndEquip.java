@@ -1,11 +1,18 @@
 package dev.swanndolia.idleasciimmorpg.interfaces;
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import dev.swanndolia.idleasciimmorpg.R;
 import dev.swanndolia.idleasciimmorpg.characters.Player;
@@ -16,6 +23,7 @@ public class CompareAndEquip extends AppCompatActivity {
     Button equippedItemBtn;
     LinearLayout parentLayout;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,33 +39,36 @@ public class CompareAndEquip extends AppCompatActivity {
 
         if (player.getEquippedItem(slot) != null) {
             addEventListenerEquippedItem(slot);
-        } else if (!slot.equals("None")) {
+        } else {
             equippedItemBtn.setText("No " + slot + " Equipped");
+        }
+        if (!slot.equals("None")) {
             parentLayout.addView(equippedItemBtn);
         }
         loadInventoryList(slot);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void loadInventoryList(String slot) {
         for (Item item : player.getInventory()) {
-            System.out.println(item.getSlot());
-            System.out.println(player.getEquippedItem(slot) != item);
             if (item.getSlot().equals(slot) && player.getEquippedItem(slot) != item) {
                 Button itemListBtn = new Button(this);
                 itemListBtn.setTextSize(20);
                 itemListBtn.setText(item.getName());
-                itemListBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        // show item full params + ask equip
-                        if (player.getEquippedItem(slot) != null) {
-                            player.getEquippedItem(slot).setEquipped(false);
+                if (!item.getSlot().equals("None")) {
+                    itemListBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            // show item full params + ask equip
+                            if (player.getEquippedItem(slot) != null) {
+                                player.getEquippedItem(slot).setEquipped(false);
+                            }
+                            player.equipItem(item);
+                            addEventListenerEquippedItem(slot);
+                            parentLayout.removeView(itemListBtn);
                         }
-                        player.equipItem(item);
-                        addEventListenerEquippedItem(slot);
-                        parentLayout.removeView(itemListBtn);
-                    }
-                });
+                    });
+                }
                 parentLayout.addView(itemListBtn);
             }
         }
@@ -66,6 +77,7 @@ public class CompareAndEquip extends AppCompatActivity {
     private void addEventListenerEquippedItem(String slot) {
         equippedItemBtn.setText("Equipped: " + player.getEquippedItem(slot).getName());
         equippedItemBtn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
                 equippedItemBtn.setText("No " + slot + " Equipped");
@@ -75,5 +87,13 @@ public class CompareAndEquip extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(CompareAndEquip.this, Menu.class);
+        intent.putExtra("player", player);
+        startActivity(intent);
+        finish();
     }
 }
