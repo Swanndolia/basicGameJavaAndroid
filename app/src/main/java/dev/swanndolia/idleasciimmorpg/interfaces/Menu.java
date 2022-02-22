@@ -147,7 +147,6 @@ public class Menu extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();
-                        finish();
                         System.exit(0);
                     }
                 });

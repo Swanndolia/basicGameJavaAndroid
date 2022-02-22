@@ -9,5 +9,5 @@
     <item android:drawable="@drawable/death7" android:duration="150" />
     <item android:drawable="@drawable/death8" android:duration="150" />
     <item android:drawable="@drawable/death9" android:duration="150" />
-    <item android:drawable="@drawable/death10" android:duration="100000" />
+    <item android:drawable="@drawable/death10" android:duration="10000" />
 </animation-list>

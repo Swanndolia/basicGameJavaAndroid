@@ -12,5 +12,5 @@
     <item android:drawable="@drawable/evade10" android:duration="100" />
     <item android:drawable="@drawable/evade11" android:duration="100" />
     <item android:drawable="@drawable/evade12" android:duration="100" />
-    <item android:drawable="@drawable/idle1" android:duration="500" />
+    <item android:drawable="@drawable/idle1" android:duration="350" />
 </animation-list>

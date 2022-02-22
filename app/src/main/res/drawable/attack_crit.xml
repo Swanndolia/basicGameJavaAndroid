@@ -1,12 +1,12 @@
 <animation-list android:id="@+id/animation" android:oneshot="false"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/attack_crit1" android:duration="150" />
-    <item android:drawable="@drawable/attack_crit2" android:duration="150" />
-    <item android:drawable="@drawable/attack_crit3" android:duration="150" />
-    <item android:drawable="@drawable/attack_crit4" android:duration="150" />
-    <item android:drawable="@drawable/attack_crit5" android:duration="150" />
-    <item android:drawable="@drawable/attack_crit6" android:duration="150" />
-    <item android:drawable="@drawable/attack_crit7" android:duration="150" />
-    <item android:drawable="@drawable/attack_crit8" android:duration="150" />
-    <item android:drawable="@drawable/idle1" android:duration="500" />
+    <item android:drawable="@drawable/attack_crit1" android:duration="100" />
+    <item android:drawable="@drawable/attack_crit2" android:duration="100" />
+    <item android:drawable="@drawable/attack_crit3" android:duration="100" />
+    <item android:drawable="@drawable/attack_crit4" android:duration="100" />
+    <item android:drawable="@drawable/attack_crit5" android:duration="100" />
+    <item android:drawable="@drawable/attack_crit6" android:duration="100" />
+    <item android:drawable="@drawable/attack_crit7" android:duration="100" />
+    <item android:drawable="@drawable/attack_crit8" android:duration="100" />
+    <item android:drawable="@drawable/idle1" android:duration="350" />
 </animation-list>

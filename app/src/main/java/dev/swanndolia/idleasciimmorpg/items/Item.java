@@ -1,19 +1,16 @@
 package dev.swanndolia.idleasciimmorpg.items;
 
 import java.io.Serializable;
-import java.security.PublicKey;
 
 public class Item implements Serializable {
 
     public String name;
-    public Integer amount;
     public String desc;
     public String slot;
     public Integer dodgeChance;
     public Integer protection;
     public Integer weight;
     public Integer sellValue;
-    public Boolean equipped;
     public Integer damage;
     public Integer critChance;
     public Integer critDamage;
@@ -22,16 +19,6 @@ public class Item implements Serializable {
 
     public Item() {
         this.slot = "None";
-        this.equipped = false;
-        this.amount = 1;
-    }
-
-    public Integer getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Integer amount) {
-        this.amount = amount;
     }
 
     public String getSlot() {
@@ -114,14 +101,6 @@ public class Item implements Serializable {
         this.weight = weight;
     }
 
-    public Boolean isEquipped() {
-        return equipped;
-    }
-
-    public void setEquipped(Boolean equipped) {
-        this.equipped = equipped;
-    }
-
     public void setCritMultiplier(Double critMultiplier) {
         this.critMultiplier = critMultiplier;
     }
@@ -136,5 +115,26 @@ public class Item implements Serializable {
 
     public Integer getCritDamage() {
         return critDamage;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                + ((this.name == null) ? 0 : this.name.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this)
+            return true;
+        if (!(obj instanceof Item))
+            return false;
+        Item item = (Item) obj;
+        return item.getName().equals(this.getName())
+                && item.getDesc().equals(this.getDesc())
+                && item.getSellValue() == this.getSellValue();
     }
 }

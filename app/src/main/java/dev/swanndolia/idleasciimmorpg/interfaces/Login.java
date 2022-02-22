@@ -29,19 +29,23 @@ public class Login extends AppCompatActivity {
     CheckBox stayLoginCheckBox;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    Boolean isLogged = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Bundle bundle = this.getIntent().getExtras();
-        if(bundle != null) {
+        if (bundle != null) {
             Boolean autologin = (Boolean) bundle.getSerializable("autologin");
             String usernameFromPref = (String) bundle.getSerializable("username");
             String passwordFromPref = (String) bundle.getSerializable("password");
-            if(autologin){
+            if (autologin) {
                 loginFirebaseAndGetPlayer(usernameFromPref, passwordFromPref);
-                finish();
+                if (isLogged) {
+                    finish();
+                }
+
             }
 
         }
@@ -76,7 +80,7 @@ public class Login extends AppCompatActivity {
         });
     }
 
-    public Player loginFirebaseAndGetPlayer(String passwordTxt, String usernameTxt) {
+    public void loginFirebaseAndGetPlayer(String passwordTxt, String usernameTxt) {
         databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -85,9 +89,9 @@ public class Login extends AppCompatActivity {
                     final String getPassword = snapshot.child(usernameTxt).child("password").getValue(String.class);
                     if (passwordTxt.equals(getPassword)) {
                         Player player = snapshot.child(usernameTxt).child("player").getValue(Player.class);
-                        Intent intent = new Intent(Login.this,Menu.class);
+                        Intent intent = new Intent(Login.this, Menu.class);
                         intent.putExtra("player", player);
-                        if(stayLoginCheckBox.isChecked()){
+                        if (stayLoginCheckBox.isChecked()) {
                             sharedPreferences = getSharedPreferences("AUTO_LOGIN", Context.MODE_PRIVATE);
                             editor = sharedPreferences.edit();
                             editor.putString("username", usernameTxt);
@@ -96,6 +100,7 @@ public class Login extends AppCompatActivity {
                             editor.apply();
                         }
                         startActivity(intent);
+                        isLogged = true;
                         finish();
                     } else {
                         Toast.makeText(Login.this, "Password incorrect", Toast.LENGTH_SHORT).show();
@@ -110,6 +115,5 @@ public class Login extends AppCompatActivity {
                 Toast.makeText(Login.this, "Error with database connexion", Toast.LENGTH_SHORT).show();
             }
         });
-        return null;
     }
 }

@@ -1,10 +1,14 @@
 package dev.swanndolia.idleasciimmorpg.interfaces;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,6 +18,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import java.util.HashMap;
 import java.util.Random;
 
 import dev.swanndolia.idleasciimmorpg.R;
@@ -24,11 +29,7 @@ import dev.swanndolia.idleasciimmorpg.location.fields.GenerateEnemy;
 import dev.swanndolia.idleasciimmorpg.tools.animations.CustomAnimationDrawableNew;
 
 public class Fight extends AppCompatActivity {
-
-    AlertDialog.Builder builderDeadPlayer;
-    AlertDialog.Builder builderDeadEnemy;
-    LinearLayout dropListLayout;
-    LinearLayout deadPlayerLayout;
+    AlertDialog dialog;
     LinearLayout parentLayout;
     LinearLayout buttonListLayout;
     ImageView animationView;
@@ -39,6 +40,7 @@ public class Fight extends AppCompatActivity {
     Button ultimateAttackBtn;
     DefaultCharacter enemyEncountered;
     Player player;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,14 +53,7 @@ public class Fight extends AppCompatActivity {
 
         setContentView(R.layout.activity_fight);
 
-        builderDeadPlayer = new AlertDialog.Builder(this);
-        builderDeadEnemy = new AlertDialog.Builder(this);
         parentLayout = (LinearLayout) findViewById(R.id.parentLayout);
-
-        dropListLayout = new LinearLayout(this);
-        dropListLayout.setOrientation(LinearLayout.VERTICAL);
-        deadPlayerLayout = new LinearLayout(this);
-        deadPlayerLayout.setOrientation(LinearLayout.VERTICAL);
         buttonListLayout = new LinearLayout(this);
         buttonListLayout.setOrientation(LinearLayout.VERTICAL);
         animationView = new ImageView(this);
@@ -122,34 +117,51 @@ public class Fight extends AppCompatActivity {
     }
 
     private void playerKilledStep() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        dialog = builder.create();
+        LinearLayout deadPlayerLayout = new LinearLayout(this);
+        deadPlayerLayout.setOrientation(LinearLayout.VERTICAL);
+
         Integer lostExp = (int) player.getExp() / 10;
-        Integer lostCryptoCoins = (int) player.getCryptoCoins() / 10;
+        Integer lostCryptoCoins = (int) player.getCryptoCoins() / 5;
         player.setExp(player.getExp() - lostExp);
         player.setCryptoCoins(player.getCryptoCoins() - lostCryptoCoins);
 
         parentLayout.removeView(buttonListLayout);
+
         TextView deadTitleView = new TextView(this);
         deadTitleView.setText(player.getName() + " has been killed by a " + enemyEncountered.getName() + " lvl " + enemyEncountered.getLevel());
         deadTitleView.setTextSize(22);
         deadTitleView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        deadTitleView.setTextColor(getColor(R.color.white));
         deadPlayerLayout.addView(deadTitleView);
 
-        builderDeadPlayer.setView(deadPlayerLayout);
-        AlertDialog deadDialog = builderDeadPlayer.create();
-
         LinearLayout lostListLayout = new LinearLayout(this);
+        lostListLayout.setOrientation(LinearLayout.VERTICAL);
         TextView lostCryptoCoinsTextView = new TextView(this);
+        lostCryptoCoinsTextView.setTextColor(getColor(R.color.white));
         lostCryptoCoinsTextView.setText("You've lost " + lostCryptoCoins + " Crypto-coins");
         TextView lostExpTextView = new TextView(this);
+        lostExpTextView.setTextColor(getColor(R.color.white));
         lostExpTextView.setText("You've lost " + lostExp + " exp");
 
         lostListLayout.setOrientation(LinearLayout.HORIZONTAL);
         lostListLayout.addView(lostExpTextView);
         lostListLayout.addView(lostCryptoCoinsTextView);
         deadPlayerLayout.addView(lostListLayout);
+        deadPlayerLayout.setBackgroundColor(getColor(com.google.android.material.R.color.design_default_color_error));
 
-        System.out.println(deadPlayerLayout.getParent());
-        deadDialog.show();
+        builder.setView(deadPlayerLayout);
+        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                player.setHp(player.getMaxHp());
+                dialog.dismiss();
+                onBackPressed();
+            }
+        });
+
+        builder.show();
     }
 
     private void updateEnemyTextView() {
@@ -161,6 +173,11 @@ public class Fight extends AppCompatActivity {
     }
 
     private void enemyKilledStep() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        dialog = builder.create();
+        LinearLayout dropListLayout = new LinearLayout(this);
+        dropListLayout.setOrientation(LinearLayout.VERTICAL);
+
         player.setExp(player.getExp() + enemyEncountered.getExpReward());
         player.checkLevelUp();
         parentLayout.removeView(buttonListLayout);
@@ -169,38 +186,34 @@ public class Fight extends AppCompatActivity {
         dropTitleView.setTextSize(22);
         dropTitleView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         dropListLayout.addView(dropTitleView);
-        Integer totalValue = 0;
-
-        builderDeadEnemy.setView(dropListLayout);
-        AlertDialog dialog = builderDeadEnemy.create();
+        final Integer[] totalValue = {0};
 
         for (Item item : enemyEncountered.getInventory()) {
-            totalValue += item.getSellValue();
+            totalValue[0] += item.getSellValue();
             Button takeOneItem = new Button(this);
             Button sellOneItem = new Button(this);
             LinearLayout actionItemHolderLayout = new LinearLayout(this);
-
-            sellOneItem.setText("Sell for: " + item.getSellValue());
-            sellOneItem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    player.addCryptoCoins(item.getSellValue());
-                    dropListLayout.removeView(actionItemHolderLayout);
-                    if (dropListLayout.getChildCount() == 2) {
-                        dialog.dismiss();
-                    }
-                }
-            });
 
             takeOneItem.setText("Take:" + item.getName());
             takeOneItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    totalValue[0] -= item.getSellValue();
+                    enemyEncountered.removeInventory(item);
                     player.addInventory(item);
                     dropListLayout.removeView(actionItemHolderLayout);
-                    if (dropListLayout.getChildCount() == 2) {
-                        dialog.dismiss();
-                    }
+
+                }
+            });
+
+            sellOneItem.setText("Sell for: " + item.getSellValue());
+            sellOneItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    totalValue[0] -= item.getSellValue();
+                    enemyEncountered.removeInventory(item);
+                    player.addCryptoCoins(item.getSellValue());
+                    dropListLayout.removeView(actionItemHolderLayout);
                 }
             });
 
@@ -217,27 +230,68 @@ public class Fight extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 player.addInventory(enemyEncountered.getInventory());
-                dialog.dismiss();
+                Integer ammountToRemove = enemyEncountered.getInventory().size();
+                enemyEncountered.setInventory(new HashMap<>());
+                dropListLayout.removeViews(0, ammountToRemove + 2);
             }
         });
 
         Button sellAllLoot = new Button(this);
         sellAllLoot.setText("Sell All Loot");
-        Integer finalTotalValue = totalValue;
+        Integer finalTotalValue = totalValue[0];
         sellAllLoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 player.addCryptoCoins(finalTotalValue);
-                dialog.dismiss();
+                Integer ammountToRemove = enemyEncountered.getInventory().size();
+                enemyEncountered.setInventory(new HashMap<>());
+                dropListLayout.removeViews(0, ammountToRemove + 2);
+            }
+        });
+        actionAllItemsLayout.addView(takeAllLoot);
+        actionAllItemsLayout.addView(sellAllLoot);
+        actionAllItemsLayout.setOrientation(LinearLayout.HORIZONTAL);
+        LinearLayout exploreMoreOrBackMenu = new LinearLayout(this);
+        exploreMoreOrBackMenu.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+
+        Button backMenu = new Button(this);
+        backMenu.setText("Back to Menu");
+        backMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
             }
         });
 
-        actionAllItemsLayout.setOrientation(LinearLayout.HORIZONTAL);
-        actionAllItemsLayout.addView(takeAllLoot);
-        actionAllItemsLayout.addView(sellAllLoot);
-        dropListLayout.addView(actionAllItemsLayout);
+        Button exploreMore = new Button(this);
+        exploreMore.setText("Explore Again !");
+        exploreMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Fight.this, Fight.class);
+                intent.putExtra("player", player);
+                startActivity(intent);
+                finish();
+            }
+        });
 
-        dialog.show();
+        exploreMoreOrBackMenu.addView(backMenu);
+        exploreMoreOrBackMenu.addView(exploreMore);
+        exploreMoreOrBackMenu.setOrientation(LinearLayout.HORIZONTAL);
+
+        dropListLayout.addView(actionAllItemsLayout);
+        dropListLayout.addView(exploreMoreOrBackMenu);
+
+
+        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                dialog.dismiss();
+                onBackPressed();
+            }
+        });
+        builder.setView(dropListLayout);
+        builder.show();
     }
 
     public Integer playerAttackStep(Item weapon) {
@@ -336,6 +390,10 @@ public class Fight extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        if(dialog != null){
+            dialog.dismiss();
+            dialog.cancel();
+        }
         Intent intent = new Intent(Fight.this, Menu.class);
         intent.putExtra("player", player);
         startActivity(intent);

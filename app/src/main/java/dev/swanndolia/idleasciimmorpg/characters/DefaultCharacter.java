@@ -123,4 +123,7 @@ public class DefaultCharacter {
         }
         this.inventory = inventory;
     }
+    public void removeInventory(Item item) {
+        this.inventory.remove(item);
+    }
 }
