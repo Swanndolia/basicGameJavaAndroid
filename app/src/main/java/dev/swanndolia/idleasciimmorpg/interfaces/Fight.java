@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,8 @@ import dev.swanndolia.idleasciimmorpg.R;
 import dev.swanndolia.idleasciimmorpg.characters.DefaultCharacter;
 import dev.swanndolia.idleasciimmorpg.characters.Player;
 import dev.swanndolia.idleasciimmorpg.items.Item;
+import dev.swanndolia.idleasciimmorpg.items.weapons.special.SpecialAmmunition;
+import dev.swanndolia.idleasciimmorpg.items.weapons.ultimate.UltimateAmmunition;
 import dev.swanndolia.idleasciimmorpg.location.fields.GenerateEnemy;
 import dev.swanndolia.idleasciimmorpg.tools.animations.CustomAnimationDrawableNew;
 
@@ -89,7 +92,11 @@ public class Fight extends AppCompatActivity {
             specialAttackBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    enemyAttackStep(playerAttackStep(specialWeapon));
+                    if (player.getInventory().contains(new SpecialAmmunition().SpecialAmmunition())) {
+                        enemyAttackStep(playerAttackStep(specialWeapon));
+                    } else {
+                        Toast.makeText(Fight.this, "You don't have any special ammunition", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         }
@@ -98,7 +105,12 @@ public class Fight extends AppCompatActivity {
             ultimateAttackBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    enemyAttackStep(playerAttackStep(ultimateWeapon));
+                    if (player.getInventory().contains(new UltimateAmmunition().UltimateAmmunition())) {
+                        enemyAttackStep(playerAttackStep(ultimateWeapon));
+                    } else {
+                        Toast.makeText(Fight.this, "You don't have any ultimate ammunition", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
             });
         }
@@ -137,12 +149,13 @@ public class Fight extends AppCompatActivity {
         lostListLayout.setOrientation(LinearLayout.VERTICAL);
         TextView lostCryptoCoinsTextView = new TextView(this);
         lostCryptoCoinsTextView.setTextColor(getColor(R.color.white));
+        lostCryptoCoinsTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         lostCryptoCoinsTextView.setText("You've lost " + lostCryptoCoins + " Crypto-coins");
         TextView lostExpTextView = new TextView(this);
         lostExpTextView.setTextColor(getColor(R.color.white));
+        lostExpTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         lostExpTextView.setText("You've lost " + lostExp + " exp");
 
-        lostListLayout.setOrientation(LinearLayout.HORIZONTAL);
         lostListLayout.addView(lostExpTextView);
         lostListLayout.addView(lostCryptoCoinsTextView);
         deadPlayerLayout.addView(lostListLayout);
@@ -381,7 +394,7 @@ public class Fight extends AppCompatActivity {
             Integer losingCryptoCoins = (int) player.getCryptoCoins() / 10;
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             AlertDialog dialog = builder.create();
-            builder.setTitle("Are you sure you want to flee ?\nYou'll lose " + losingCryptoCoins + " Cryptocoins !" );
+            builder.setTitle("Are you sure you want to flee ?\nYou'll lose " + losingCryptoCoins + " Cryptocoins !");
             builder.setPositiveButton(android.R.string.ok,
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {

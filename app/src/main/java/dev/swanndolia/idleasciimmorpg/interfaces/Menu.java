@@ -58,6 +58,14 @@ public class Menu extends AppCompatActivity {
 
         final ImageButton settingsBtn = findViewById(R.id.settingsBtn);
 
+        exploreBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Menu.this, Explore.class);
+                intent.putExtra("player", player);
+                startActivity(intent);
+            }
+        });
         inventoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

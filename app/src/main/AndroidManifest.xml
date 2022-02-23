@@ -27,7 +27,7 @@
         </activity>
         <activity
             android:name=".interfaces.Register"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".interfaces.Login"
             android:exported="false" />
@@ -45,6 +45,36 @@
             android:exported="false" />
         <activity
             android:name=".interfaces.Fight"
+            android:exported="false" />
+        <activity
+            android:name=".interfaces.Craft"
+            android:exported="false" />
+        <activity
+            android:name=".interfaces.Smelt"
+            android:exported="true" />
+        <activity
+            android:name=".interfaces.Tinker"
+            android:exported="false" />
+        <activity
+            android:name=".interfaces.Fuse"
+            android:exported="false" />
+        <activity
+            android:name=".interfaces.Town"
+            android:exported="false" />
+        <activity
+            android:name=".interfaces.Trade"
+            android:exported="false" />
+        <activity
+            android:name=".interfaces.Profile"
+            android:exported="false" />
+        <activity
+            android:name=".interfaces.Guild"
+            android:exported="false" />
+        <activity
+            android:name=".interfaces.Bestiary"
+            android:exported="false" />
+        <activity
+            android:name=".interfaces.Store"
             android:exported="false" />
     </application>
 

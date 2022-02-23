@@ -24,29 +24,28 @@ public class Town extends AppCompatActivity {
 
         setContentView(R.layout.activity_town);
 
-        final Button healerBtn = findViewById(R.id.fieldsBtn);
+        final Button healerBtn = findViewById(R.id.healerBtn);
 
         Integer healCost = player.getMaxHp() * player.getLevel() / 3;
-        String healerSentence = player.getHp() > player.getMaxHp() * 0.75 ? "You sure you need my services ? " : "I see you've been hurt !";
+        String healerSentence = player.getHp() > player.getMaxHp() * 0.75 ? "Sure you need my services ? (" + player.getHp() + "/" + player.getMaxHp() + ")" : "Lemme see ! You're hurt ! (" + player.getHp() + "/" + player.getMaxHp() + ")";
 
         healerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(Town.this);
                 AlertDialog dialog = builder.create();
-                builder.setTitle("Hello " + player.getName() + ",\n" + healerSentence + "\n" + "It will cost you: " + healCost);
+                builder.setTitle(healerSentence + "\n" + "It will cost you: " + healCost);
                 builder.setPositiveButton(android.R.string.ok,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                if(player.getCryptoCoins() >= healCost) {
+                                if (player.getCryptoCoins() >= healCost) {
                                     player.setCryptoCoins((player.getCryptoCoins() - healCost));
                                     dialog.dismiss();
                                     Intent intent = new Intent(Town.this, Menu.class);
                                     intent.putExtra("player", player);
                                     startActivity(intent);
                                     finish();
-                                }
-                                else{
+                                } else {
                                     Toast.makeText(Town.this, "You don't have enough money", Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -57,6 +56,7 @@ public class Town extends AppCompatActivity {
                                 dialog.dismiss();
                             }
                         });
+                builder.show();
             }
         });
     }

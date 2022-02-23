@@ -6,12 +6,12 @@
         <type value="RUNNING_DEVICE_TARGET" />
         <deviceKey>
           <Key>
-            <type value="VIRTUAL_DEVICE_PATH" />
-            <value value="$USER_HOME$/.android/avd/Pixel_XL_API_Tiramisu.avd" />
+            <type value="SERIAL_NUMBER" />
+            <value value="adb-d747208c-Ckwmlw._adb-tls-connect._tcp" />
           </Key>
         </deviceKey>
       </Target>
     </runningDeviceTargetSelectedWithDropDown>
-    <timeTargetWasSelectedWithDropDown value="2022-02-22T19:04:09.021435Z" />
+    <timeTargetWasSelectedWithDropDown value="2022-02-23T01:24:05.685157Z" />
   </component>
 </project>
