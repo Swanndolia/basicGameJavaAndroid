@@ -107,13 +107,13 @@
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/idleBtn"
+            android:id="@+id/townBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
-            android:text="Idle" />
+            android:text="Town" />
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -43,8 +43,19 @@ public class Menu extends AppCompatActivity {
 
         setContentView(R.layout.activity_menu);
 
-        final Button inventoryBtn = findViewById(R.id.inventoryBtn);
         final Button exploreBtn = findViewById(R.id.exploreBtn);
+        final Button craftBtn = findViewById(R.id.craftBtn);
+        final Button smeltBtn = findViewById(R.id.smeltBtn);
+        final Button tinkerBtn = findViewById(R.id.tinkerBtn);
+        final Button fuseBtn = findViewById(R.id.fuseBtn);
+        final Button townBtn = findViewById(R.id.townBtn);
+        final Button tradeBtn = findViewById(R.id.tradeBtn);
+        final Button inventoryBtn = findViewById(R.id.inventoryBtn);
+        final Button profileBtn = findViewById(R.id.profileBtn);
+        final Button guildBtn = findViewById(R.id.guildBtn);
+        final Button bestiaryBtn = findViewById(R.id.bestiaryBtn);
+        final Button storeBtn = findViewById(R.id.storeBtn);
+
         final ImageButton settingsBtn = findViewById(R.id.settingsBtn);
 
         inventoryBtn.setOnClickListener(new View.OnClickListener() {
@@ -55,14 +66,99 @@ public class Menu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        exploreBtn.setOnClickListener(new View.OnClickListener() {
+        craftBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Menu.this, Explore.class);
+                Intent intent = new Intent(Menu.this, Craft.class);
                 intent.putExtra("player", player);
                 startActivity(intent);
             }
         });
+        smeltBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Menu.this, Smelt.class);
+                intent.putExtra("player", player);
+                startActivity(intent);
+            }
+        });
+
+        tinkerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Menu.this, Tinker.class);
+                intent.putExtra("player", player);
+                startActivity(intent);
+            }
+        });
+        fuseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Menu.this, Fuse.class);
+                intent.putExtra("player", player);
+                startActivity(intent);
+            }
+        });
+        townBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Menu.this, Town.class);
+                intent.putExtra("player", player);
+                startActivity(intent);
+            }
+        });
+        tradeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Menu.this, Trade.class);
+                intent.putExtra("player", player);
+                startActivity(intent);
+            }
+        });
+        inventoryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Menu.this, Inventory.class);
+                intent.putExtra("player", player);
+                startActivity(intent);
+            }
+        });
+        profileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Menu.this, Profile.class);
+                intent.putExtra("player", player);
+                startActivity(intent);
+            }
+        });
+        guildBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Menu.this, Guild.class);
+                intent.putExtra("player", player);
+                startActivity(intent);
+            }
+        });
+        bestiaryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Menu.this, Bestiary.class);
+                intent.putExtra("player", player);
+                startActivity(intent);
+            }
+        });
+        storeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Menu.this, Store.class);
+                intent.putExtra("player", player);
+                startActivity(intent);
+            }
+        });
+
+
+
+
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,6 +170,7 @@ public class Menu extends AppCompatActivity {
             }
         });
     }
+
 
     public LinearLayout generateSettingsOverlay(AlertDialog.Builder builder) {
         LinearLayout settingsOverlay = new LinearLayout(this);

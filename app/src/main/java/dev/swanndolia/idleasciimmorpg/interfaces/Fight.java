@@ -48,7 +48,6 @@ public class Fight extends AppCompatActivity {
         Bundle bundle = this.getIntent().getExtras();
         player = (Player) bundle.getSerializable("player");
         String location = (String) bundle.getSerializable("location");
-
         enemyEncountered = new GenerateEnemy().GenerateEnemy(location, player);
         setContentView(R.layout.activity_fight);
 
@@ -62,10 +61,6 @@ public class Fight extends AppCompatActivity {
         specialAttackBtn = (Button) findViewById(R.id.specialWeaponBtn);
         ultimateAttackBtn = (Button) findViewById(R.id.ultimateWeaponBtn);
 
-        Item basicWeapon = player.getEquippedItem("Basic Weapon");
-        Item specialWeapon = player.getEquippedItem("Special Weapon");
-        Item ultimateWeapon = player.getEquippedItem("Ultimate Weapon");
-
         playerHp.setMax(player.getMaxHp());
         playerHp.setProgress(player.getHp());
         updatePlayerInfos();
@@ -76,16 +71,39 @@ public class Fight extends AppCompatActivity {
 
         runAnimation(R.drawable.idle);
 
+        Item basicWeapon = player.getEquippedItem("Basic Weapon");
+        Item specialWeapon = player.getEquippedItem("Special Weapon");
+        Item ultimateWeapon = player.getEquippedItem("Ultimate Weapon");
+
         if (basicWeapon != null) {
-            addClickListenerAttackBtn(basicWeapon, basicAttackBtn);
+            basicAttackBtn.setText(basicWeapon.getName() + " " + basicWeapon.getDamage() + " dmg");
+            basicAttackBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    enemyAttackStep(playerAttackStep(basicWeapon));
+                }
+            });
         }
         if (specialWeapon != null) {
-            addClickListenerAttackBtn(specialWeapon, specialAttackBtn);
+            specialAttackBtn.setText(specialWeapon.getName() + " " + specialWeapon.getDamage() + " dmg");
+            specialAttackBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    enemyAttackStep(playerAttackStep(specialWeapon));
+                }
+            });
         }
         if (ultimateWeapon != null) {
-            addClickListenerAttackBtn(ultimateWeapon, ultimateAttackBtn);
+            ultimateAttackBtn.setText(ultimateWeapon.getName() + " " + ultimateWeapon.getDamage() + " dmg");
+            ultimateAttackBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    enemyAttackStep(playerAttackStep(ultimateWeapon));
+                }
+            });
         }
     }
+
 
     private void updatePlayerInfos() {
         playerHp.setProgress(player.getHp());
@@ -209,9 +227,9 @@ public class Fight extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 player.addInventory(enemyEncountered.getInventory());
-                Integer ammountToRemove = enemyEncountered.getInventory().size();
+                Integer amountToRemove = enemyEncountered.getInventory().size();
                 enemyEncountered.setInventory(new HashMap<>());
-                dropListLayout.removeViews(0, ammountToRemove + 2);
+                dropListLayout.removeViews(0, amountToRemove + 2);
             }
         });
 
@@ -357,25 +375,40 @@ public class Fight extends AppCompatActivity {
         }, waitPlayerAnimEnd);
     }
 
-    private void addClickListenerAttackBtn(Item weapon, Button attackButton) {
-        attackButton.setText(weapon.getName() + " " + weapon.getDamage() + " dmg");
-        attackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                enemyAttackStep(playerAttackStep(weapon));
-            }
-        });
-    }
-
     @Override
     public void onBackPressed() {
-        if (dialog != null) {
-            dialog.dismiss();
-            dialog.cancel();
+        if (enemyEncountered.getHp() > 0 && player.getHp() > 0) {
+            Integer losingCryptoCoins = (int) player.getCryptoCoins() / 10;
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            AlertDialog dialog = builder.create();
+            builder.setTitle("Are you sure you want to flee ?\nYou'll lose " + losingCryptoCoins + " Cryptocoins !" );
+            builder.setPositiveButton(android.R.string.ok,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            player.setCryptoCoins((player.getCryptoCoins() - losingCryptoCoins));
+                            dialog.dismiss();
+                            Intent intent = new Intent(Fight.this, Menu.class);
+                            intent.putExtra("player", player);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+            builder.setNegativeButton(android.R.string.cancel,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+
+            builder.show();
+        } else {
+            if (dialog != null) {
+                dialog.dismiss();
+            }
+            Intent intent = new Intent(Fight.this, Menu.class);
+            intent.putExtra("player", player);
+            startActivity(intent);
+            finish();
         }
-        Intent intent = new Intent(Fight.this, Menu.class);
-        intent.putExtra("player", player);
-        startActivity(intent);
-        finish();
     }
 }
