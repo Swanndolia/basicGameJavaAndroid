@@ -7,14 +7,14 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentTop="true"
+>
 
         <ProgressBar
-            android:id="@+id/progress"
+            android:id="@+id/expProgressBar"
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:indeterminate="false"></ProgressBar>
+            android:layout_height="match_parent"></ProgressBar>
 
         <RelativeLayout
             android:layout_width="match_parent"

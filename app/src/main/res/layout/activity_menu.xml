@@ -8,18 +8,20 @@
     tools:context=".interfaces.Menu">
 
     <ImageButton
+        android:id="@+id/settingsBtn"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentRight="true"
-        android:background="@drawable/settings_icon"
-        android:id="@+id/settingsBtn" />
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/settings_icon" />
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentTop="true">
 
         <ProgressBar
-            android:id="@+id/progress"
+            android:id="@+id/expProgressBar"
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"></ProgressBar>
@@ -40,9 +42,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="20dp"
         android:gravity="center"
-        android:orientation="vertical"
-        android:layout_margin="20dp">
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/exploreBtn"
@@ -125,18 +127,18 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/tradeBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="Trade" />
-
-            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/inventoryBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:text="Inventory" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/profileBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Profile" />
 
         </LinearLayout>
 
@@ -150,29 +152,21 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/profileBtn"
-                android:layout_width="wrap_content"
+                android:id="@+id/bestiaryBtn"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:text="Profile" />
+                android:text="Bestiary" />
+
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/guildBtn"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:text="Guild" />
 
         </LinearLayout>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/bestiaryBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:text="Bestiary" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/storeBtn"

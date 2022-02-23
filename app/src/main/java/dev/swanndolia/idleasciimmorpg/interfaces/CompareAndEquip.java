@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,15 +23,19 @@ public class CompareAndEquip extends AppCompatActivity {
     Button equippedItemBtn;
     LinearLayout parentLayout;
     String slot;
+    ProgressBar expProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_compare);
-
         Bundle bundle = this.getIntent().getExtras();
         player = (Player) bundle.getSerializable("player");
         slot = (String) bundle.getSerializable("slot");
+        setContentView(R.layout.activity_compare);
+
+        expProgressBar = (ProgressBar) findViewById(R.id.expProgressBar);
+        expProgressBar.setProgress(player.getExp());
+        expProgressBar.setMax(player.getNextLevelExp());
 
         parentLayout = (LinearLayout) findViewById(R.id.parentLayout);
         equippedItemBtn = new Button(this);

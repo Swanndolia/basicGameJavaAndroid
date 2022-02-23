@@ -1,11 +1,15 @@
 package dev.swanndolia.idleasciimmorpg.interfaces;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,8 +21,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import org.w3c.dom.Text;
+
 import java.util.HashMap;
 import java.util.Random;
+import java.util.zip.Inflater;
 
 import dev.swanndolia.idleasciimmorpg.R;
 import dev.swanndolia.idleasciimmorpg.characters.DefaultCharacter;
@@ -30,8 +37,6 @@ import dev.swanndolia.idleasciimmorpg.location.fields.GenerateEnemy;
 import dev.swanndolia.idleasciimmorpg.tools.animations.CustomAnimationDrawableNew;
 
 public class Fight extends AppCompatActivity {
-    AlertDialog dialog;
-    LinearLayout parentLayout;
     ImageView playerAnimationView;
     TextView playerTextView;
     TextView enemyTextView;
@@ -42,19 +47,21 @@ public class Fight extends AppCompatActivity {
     Player player;
     ProgressBar playerHp;
     ProgressBar enemyHp;
+    ProgressBar expProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
         Bundle bundle = this.getIntent().getExtras();
-        player = (Player) bundle.getSerializable("player");
         String location = (String) bundle.getSerializable("location");
+        player = (Player) bundle.getSerializable("player");
         enemyEncountered = new GenerateEnemy().GenerateEnemy(location, player);
         setContentView(R.layout.activity_fight);
 
-        parentLayout = (LinearLayout) findViewById(R.id.parentLayout);
+        expProgressBar = (ProgressBar) findViewById(R.id.expProgressBar);
+        expProgressBar.setProgress(player.getExp());
+        expProgressBar.setMax(player.getNextLevelExp());
+
         playerAnimationView = (ImageView) findViewById(R.id.playerAnim);
         playerTextView = (TextView) findViewById(R.id.playerInfo);
         playerHp = (ProgressBar) findViewById(R.id.playerHp);
@@ -116,192 +123,122 @@ public class Fight extends AppCompatActivity {
         }
     }
 
-
     private void updatePlayerInfos() {
         playerHp.setProgress(player.getHp());
         playerTextView.setText(player.getName() + " lvl " + player.getLevel() + " HP: " + player.getHp());
         if (player.getHp() <= 0) {
-            playerTextView.setText(player.getName() + " has been killed by a " + enemyEncountered.getName() + " lvl " + enemyEncountered.getLevel());
-            playerKilledStep();
+            Dialog dialog = new Dialog(this);
+            dialog.setContentView(R.layout.player_dead_layout);
+            Integer lostExp = (int) player.getExp() / 10;
+            Integer lostCryptoCoins = (int) player.getCryptoCoins() / 5;
+            player.setExp(player.getExp() - lostExp);
+            player.setCryptoCoins(player.getCryptoCoins() - lostCryptoCoins);
+            TextView deadPlayerText = (TextView) dialog.findViewById(R.id.deadPlayerText);
+            deadPlayerText.setText(player.getName() + " has been killed by a " + enemyEncountered.getName() + " lvl " + enemyEncountered.getLevel());
+            TextView lostCryptoCoinsText = (TextView) dialog.findViewById(R.id.lostCryptoCoinsText);
+            lostCryptoCoinsText.setText("You've lost " + lostCryptoCoins + " Crypto-coins");
+            TextView lostExpTextView = (TextView) dialog.findViewById(R.id.lostExpText);
+            lostExpTextView.setText("You've lost " + lostExp + " exp");
+            dialog.show();
         }
         player.savePlayer();
-    }
-
-    private void playerKilledStep() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        dialog = builder.create();
-        LinearLayout deadPlayerLayout = new LinearLayout(this);
-        deadPlayerLayout.setOrientation(LinearLayout.VERTICAL);
-
-        Integer lostExp = (int) player.getExp() / 10;
-        Integer lostCryptoCoins = (int) player.getCryptoCoins() / 5;
-        player.setExp(player.getExp() - lostExp);
-        player.setCryptoCoins(player.getCryptoCoins() - lostCryptoCoins);
-
-        TextView deadTitleView = new TextView(this);
-        deadTitleView.setText(player.getName() + " has been killed by a " + enemyEncountered.getName() + " lvl " + enemyEncountered.getLevel());
-        deadTitleView.setTextSize(22);
-        deadTitleView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        deadTitleView.setTextColor(getColor(R.color.white));
-        deadPlayerLayout.addView(deadTitleView);
-
-        LinearLayout lostListLayout = new LinearLayout(this);
-        lostListLayout.setOrientation(LinearLayout.VERTICAL);
-        TextView lostCryptoCoinsTextView = new TextView(this);
-        lostCryptoCoinsTextView.setTextColor(getColor(R.color.white));
-        lostCryptoCoinsTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        lostCryptoCoinsTextView.setText("You've lost " + lostCryptoCoins + " Crypto-coins");
-        TextView lostExpTextView = new TextView(this);
-        lostExpTextView.setTextColor(getColor(R.color.white));
-        lostExpTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        lostExpTextView.setText("You've lost " + lostExp + " exp");
-
-        lostListLayout.addView(lostExpTextView);
-        lostListLayout.addView(lostCryptoCoinsTextView);
-        deadPlayerLayout.addView(lostListLayout);
-        deadPlayerLayout.setBackgroundColor(getColor(com.google.android.material.R.color.design_default_color_error));
-
-        builder.setView(deadPlayerLayout);
-        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialogInterface) {
-                player.setHp(player.getMaxHp());
-                dialog.dismiss();
-                onBackPressed();
-            }
-        });
-
-        builder.show();
     }
 
     private void updateEnemyInfos() {
         enemyHp.setProgress(enemyEncountered.getHp());
         enemyTextView.setText(enemyEncountered.getName() + " lvl " + enemyEncountered.getLevel() + " HP: " + enemyEncountered.getHp());
         if (enemyEncountered.getHp() <= 0) {
-            enemyTextView.setText("Good job " + player.getName() + " on killing a " + enemyEncountered.getName() + " lvl " + enemyEncountered.getLevel());
-            enemyKilledStep();
-        }
-    }
+            Dialog dialog = new Dialog(this);
+            dialog.setContentView(R.layout.enemy_drops_layout);
+            player.setExp(player.getExp() + enemyEncountered.getExpReward());
+            player.checkLevelUp();
+            expProgressBar.setProgress(player.getExp());
+            expProgressBar.setMax(player.getNextLevelExp());
+            final Integer[] totalValue = {0};
 
-    private void enemyKilledStep() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        dialog = builder.create();
-        LinearLayout dropListLayout = new LinearLayout(this);
-        dropListLayout.setOrientation(LinearLayout.VERTICAL);
+            LinearLayout itemListHolder = (LinearLayout) dialog.findViewById(R.id.itemListHolder);
+            TextView enemyKilledTitle = (TextView) dialog.findViewById(R.id.enemyKilledTitle);
+            enemyKilledTitle.setText("Good job " + player.getName() + " on killing a " + enemyEncountered.getName() + " lvl " + enemyEncountered.getLevel());
 
-        player.setExp(player.getExp() + enemyEncountered.getExpReward());
-        player.checkLevelUp();
-        TextView dropTitleView = new TextView(this);
-        dropTitleView.setText("Good job " + player.getName() + " on killing a " + enemyEncountered.getName() + " lvl " + enemyEncountered.getLevel());
-        dropTitleView.setTextSize(22);
-        dropTitleView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        dropListLayout.addView(dropTitleView);
-        final Integer[] totalValue = {0};
-
-        for (Item item : enemyEncountered.getInventory()) {
-            totalValue[0] += item.getSellValue();
-            Button takeOneItem = new Button(this);
-            Button sellOneItem = new Button(this);
-            LinearLayout actionItemHolderLayout = new LinearLayout(this);
-
-            takeOneItem.setText("Take:" + item.getName());
-            takeOneItem.setOnClickListener(new View.OnClickListener() {
+            Button backMenu = (Button) dialog.findViewById(R.id.backToMenuBtn);
+            backMenu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    totalValue[0] -= item.getSellValue();
-                    enemyEncountered.removeInventory(item);
-                    player.addInventory(item);
-                    dropListLayout.removeView(actionItemHolderLayout);
-
+                    onBackPressed();
                 }
             });
 
-            sellOneItem.setText("Sell for: " + item.getSellValue());
-            sellOneItem.setOnClickListener(new View.OnClickListener() {
+            Button exploreMore = (Button) dialog.findViewById(R.id.exploreAgainBtn);
+            exploreMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    totalValue[0] -= item.getSellValue();
-                    enemyEncountered.removeInventory(item);
-                    player.addCryptoCoins(item.getSellValue());
-                    dropListLayout.removeView(actionItemHolderLayout);
+                    Intent intent = new Intent(Fight.this, Fight.class);
+                    intent.putExtra("player", player);
+                    startActivity(intent);
+                    finish();
                 }
             });
 
-            actionItemHolderLayout.addView(takeOneItem);
-            actionItemHolderLayout.addView(sellOneItem);
-            actionItemHolderLayout.setOrientation(LinearLayout.HORIZONTAL);
-            dropListLayout.addView(actionItemHolderLayout);
+            Button sellAllLoot = (Button) dialog.findViewById(R.id.sellAllLootBtn);
+            Button takeAllLoot = (Button) dialog.findViewById(R.id.takeAllLootBtn);
+            takeAllLoot.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    player.addInventory(enemyEncountered.getInventory());
+                    Integer amountToRemove = enemyEncountered.getInventory().size();
+                    enemyEncountered.setInventory(new HashMap<>());
+                    itemListHolder.removeViews(0, amountToRemove);
+                    takeAllLoot.setVisibility(View.GONE);
+                    sellAllLoot.setVisibility(View.GONE);
+                }
+            });
+
+            Integer finalTotalValue = totalValue[0];
+            sellAllLoot.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    player.addCryptoCoins(finalTotalValue);
+                    Integer amountToRemove = enemyEncountered.getInventory().size();
+                    enemyEncountered.setInventory(new HashMap<>());
+                    itemListHolder.removeViews(0, amountToRemove);
+                    sellAllLoot.setVisibility(View.GONE);
+                    takeAllLoot.setVisibility(View.GONE);
+                }
+            });
+
+            for (Item item : enemyEncountered.getInventory()) {
+                totalValue[0] += item.getSellValue();
+                // used to setup double buttons don't touch this fucking shit stay in loop to avoid already have parent
+                LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                LinearLayout doubleButton = (LinearLayout) layoutInflater.inflate(R.layout.take_or_sell_buttons, null);
+
+                Button takeOneItem = doubleButton.findViewById(R.id.buttonLeft);
+                Button sellOneItem = doubleButton.findViewById(R.id.buttonRight);
+                takeOneItem.setText("Take:" + item.getName());
+                takeOneItem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        totalValue[0] -= item.getSellValue();
+                        enemyEncountered.removeInventory(item);
+                        player.addInventory(item);
+                        itemListHolder.removeView(doubleButton);
+                    }
+                });
+                sellOneItem.setText("Sell for: " + item.getSellValue());
+                sellOneItem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        totalValue[0] -= item.getSellValue();
+                        enemyEncountered.removeInventory(item);
+                        player.addCryptoCoins(item.getSellValue());
+                        itemListHolder.removeView(doubleButton);
+                    }
+                });
+                itemListHolder.addView(doubleButton);
+            }
+            dialog.setCancelable(false);
+            dialog.show();
         }
-
-        LinearLayout actionAllItemsLayout = new LinearLayout(this);
-        Button takeAllLoot = new Button(this);
-        takeAllLoot.setText("Take All Loot");
-        takeAllLoot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                player.addInventory(enemyEncountered.getInventory());
-                Integer amountToRemove = enemyEncountered.getInventory().size();
-                enemyEncountered.setInventory(new HashMap<>());
-                dropListLayout.removeViews(0, amountToRemove + 2);
-            }
-        });
-
-        Button sellAllLoot = new Button(this);
-        sellAllLoot.setText("Sell All Loot");
-        Integer finalTotalValue = totalValue[0];
-        sellAllLoot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                player.addCryptoCoins(finalTotalValue);
-                Integer ammountToRemove = enemyEncountered.getInventory().size();
-                enemyEncountered.setInventory(new HashMap<>());
-                dropListLayout.removeViews(0, ammountToRemove + 2);
-            }
-        });
-        actionAllItemsLayout.addView(takeAllLoot);
-        actionAllItemsLayout.addView(sellAllLoot);
-        actionAllItemsLayout.setOrientation(LinearLayout.HORIZONTAL);
-        LinearLayout exploreMoreOrBackMenu = new LinearLayout(this);
-        exploreMoreOrBackMenu.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-
-        Button backMenu = new Button(this);
-        backMenu.setText("Back to Menu");
-        backMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
-
-        Button exploreMore = new Button(this);
-        exploreMore.setText("Explore Again !");
-        exploreMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Fight.this, Fight.class);
-                intent.putExtra("player", player);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        exploreMoreOrBackMenu.addView(backMenu);
-        exploreMoreOrBackMenu.addView(exploreMore);
-        exploreMoreOrBackMenu.setOrientation(LinearLayout.HORIZONTAL);
-
-        dropListLayout.addView(actionAllItemsLayout);
-        dropListLayout.addView(exploreMoreOrBackMenu);
-
-
-        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialogInterface) {
-                dialog.dismiss();
-                onBackPressed();
-            }
-        });
-        builder.setView(dropListLayout);
-        builder.show();
     }
 
     public Integer playerAttackStep(Item weapon) {
@@ -415,8 +352,8 @@ public class Fight extends AppCompatActivity {
 
             builder.show();
         } else {
-            if (dialog != null) {
-                dialog.dismiss();
+            if (player.getHp() <= 0) {
+                player.setHp(player.getMaxHp());
             }
             Intent intent = new Intent(Fight.this, Menu.class);
             intent.putExtra("player", player);

@@ -76,6 +76,9 @@
         <activity
             android:name=".interfaces.Store"
             android:exported="false" />
+        <activity
+            android:name=".interfaces.MarketPlace"
+            android:exported="false" />
     </application>
 
 </manifest>

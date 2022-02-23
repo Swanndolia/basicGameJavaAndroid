@@ -32,7 +32,7 @@ public class Login extends AppCompatActivity {
     Boolean isLogged = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Bundle bundle = this.getIntent().getExtras();
@@ -52,17 +52,17 @@ public class Login extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
 
-        final EditText username = findViewById(R.id.username);
-        final EditText password = findViewById(R.id.password);
-        final Button loginBtn = findViewById(R.id.loginBtn);
-        final TextView registerNowBtn = findViewById(R.id.registerNowBtn);
+        EditText username = findViewById(R.id.username);
+        EditText password = findViewById(R.id.password);
+        Button loginBtn = findViewById(R.id.loginBtn);
+        TextView registerNowBtn = findViewById(R.id.registerNowBtn);
         stayLoginCheckBox = findViewById(R.id.stayLoginCheckBox);
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String passwordTxt = password.getText().toString();
-                final String usernameTxt = username.getText().toString();
+                String passwordTxt = password.getText().toString();
+                String usernameTxt = username.getText().toString();
 
                 if (usernameTxt.isEmpty() || passwordTxt.isEmpty()) {
                     Toast.makeText(Login.this, "Please enter a valid email and password", Toast.LENGTH_SHORT).show();
@@ -86,7 +86,7 @@ public class Login extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Toast.makeText(Login.this, usernameTxt, Toast.LENGTH_SHORT).show();
                 if (snapshot.hasChild(usernameTxt)) {
-                    final String getPassword = snapshot.child(usernameTxt).child("password").getValue(String.class);
+                    String getPassword = snapshot.child(usernameTxt).child("password").getValue(String.class);
                     if (passwordTxt.equals(getPassword)) {
                         Player player = snapshot.child(usernameTxt).child("player").getValue(Player.class);
                         Intent intent = new Intent(Login.this, Menu.class);

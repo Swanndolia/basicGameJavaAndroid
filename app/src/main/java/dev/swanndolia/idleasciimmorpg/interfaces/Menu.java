@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -31,17 +32,20 @@ import dev.swanndolia.idleasciimmorpg.characters.Player;
 import dev.swanndolia.idleasciimmorpg.tools.music.BackgroundMusicService;
 
 public class Menu extends AppCompatActivity {
-
     AlertDialog dialog;
     Player player;
+    ProgressBar expProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getIntent().getExtras();
         player = (Player) bundle.getSerializable("player");
-
         setContentView(R.layout.activity_menu);
+
+        expProgressBar = (ProgressBar) findViewById(R.id.expProgressBar);
+        expProgressBar.setMax(player.getNextLevelExp());
+        expProgressBar.setProgress(player.getExp());
 
         final Button exploreBtn = findViewById(R.id.exploreBtn);
         final Button craftBtn = findViewById(R.id.craftBtn);
@@ -49,13 +53,11 @@ public class Menu extends AppCompatActivity {
         final Button tinkerBtn = findViewById(R.id.tinkerBtn);
         final Button fuseBtn = findViewById(R.id.fuseBtn);
         final Button townBtn = findViewById(R.id.townBtn);
-        final Button tradeBtn = findViewById(R.id.tradeBtn);
         final Button inventoryBtn = findViewById(R.id.inventoryBtn);
         final Button profileBtn = findViewById(R.id.profileBtn);
         final Button guildBtn = findViewById(R.id.guildBtn);
         final Button bestiaryBtn = findViewById(R.id.bestiaryBtn);
         final Button storeBtn = findViewById(R.id.storeBtn);
-
         final ImageButton settingsBtn = findViewById(R.id.settingsBtn);
 
         exploreBtn.setOnClickListener(new View.OnClickListener() {
@@ -115,14 +117,6 @@ public class Menu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        tradeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Menu.this, Trade.class);
-                intent.putExtra("player", player);
-                startActivity(intent);
-            }
-        });
         inventoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,18 +133,18 @@ public class Menu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        guildBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Menu.this, Guild.class);
-                intent.putExtra("player", player);
-                startActivity(intent);
-            }
-        });
         bestiaryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Menu.this, Bestiary.class);
+                intent.putExtra("player", player);
+                startActivity(intent);
+            }
+        });
+        guildBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Menu.this, Guild.class);
                 intent.putExtra("player", player);
                 startActivity(intent);
             }
@@ -163,8 +157,6 @@ public class Menu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
 
 
         settingsBtn.setOnClickListener(new View.OnClickListener() {

@@ -24,13 +24,11 @@ import dev.swanndolia.idleasciimmorpg.characters.Player;
 import dev.swanndolia.idleasciimmorpg.tools.music.BackgroundMusicService;
 
 public class Register extends AppCompatActivity {
-
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_register);
 
         final EditText userName = findViewById(R.id.userName);
