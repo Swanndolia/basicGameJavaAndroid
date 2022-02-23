@@ -133,6 +133,9 @@ public class Item implements Serializable {
         if (!(obj instanceof Item))
             return false;
         Item item = (Item) obj;
+        System.out.println("name " + item.getName().equals(this.getName()) );
+        System.out.println(item.getSellValue() == this.getSellValue() );
+        System.out.println("desc " + item.getDesc().equals(this.getDesc()) );
         return item.getName().equals(this.getName())
                 && item.getDesc().equals(this.getDesc())
                 && item.getSellValue() == this.getSellValue();

@@ -1,17 +1,15 @@
 package dev.swanndolia.idleasciimmorpg.interfaces;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -31,8 +29,7 @@ import dev.swanndolia.idleasciimmorpg.tools.animations.CustomAnimationDrawableNe
 public class Fight extends AppCompatActivity {
     AlertDialog dialog;
     LinearLayout parentLayout;
-    LinearLayout buttonListLayout;
-    ImageView animationView;
+    ImageView playerAnimationView;
     TextView playerTextView;
     TextView enemyTextView;
     Button basicAttackBtn;
@@ -40,7 +37,8 @@ public class Fight extends AppCompatActivity {
     Button ultimateAttackBtn;
     DefaultCharacter enemyEncountered;
     Player player;
-
+    ProgressBar playerHp;
+    ProgressBar enemyHp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,50 +49,32 @@ public class Fight extends AppCompatActivity {
         player = (Player) bundle.getSerializable("player");
         String location = (String) bundle.getSerializable("location");
 
+        enemyEncountered = new GenerateEnemy().GenerateEnemy(location, player);
         setContentView(R.layout.activity_fight);
 
         parentLayout = (LinearLayout) findViewById(R.id.parentLayout);
-        buttonListLayout = new LinearLayout(this);
-        buttonListLayout.setOrientation(LinearLayout.VERTICAL);
-        animationView = new ImageView(this);
-        playerTextView = new TextView(this);
-        enemyTextView = new TextView(this);
-        basicAttackBtn = new Button(this);
-        specialAttackBtn = new Button(this);
-        ultimateAttackBtn = new Button(this);
-        enemyEncountered = new GenerateEnemy().GenerateEnemy(location, player);
-
-        basicAttackBtn.setTextSize(20);
-        basicAttackBtn.setText("No Basic Weapon ");
-        buttonListLayout.addView(basicAttackBtn);
-        specialAttackBtn.setTextSize(20);
-        specialAttackBtn.setText("No Special Weapon ");
-        buttonListLayout.addView(specialAttackBtn);
-        ultimateAttackBtn.setTextSize(20);
-        ultimateAttackBtn.setText("No Ultimate Weapon ");
-        buttonListLayout.addView(ultimateAttackBtn);
+        playerAnimationView = (ImageView) findViewById(R.id.playerAnim);
+        playerTextView = (TextView) findViewById(R.id.playerInfo);
+        playerHp = (ProgressBar) findViewById(R.id.playerHp);
+        enemyTextView = (TextView) findViewById(R.id.enemyInfo);
+        enemyHp = (ProgressBar) findViewById(R.id.enemyHp);
+        basicAttackBtn = (Button) findViewById(R.id.basicWeaponBtn);
+        specialAttackBtn = (Button) findViewById(R.id.specialWeaponBtn);
+        ultimateAttackBtn = (Button) findViewById(R.id.ultimateWeaponBtn);
 
         Item basicWeapon = player.getEquippedItem("Basic Weapon");
         Item specialWeapon = player.getEquippedItem("Special Weapon");
         Item ultimateWeapon = player.getEquippedItem("Ultimate Weapon");
 
-        enemyTextView.setTextSize(20);
-        enemyTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        enemyTextView.setLines(1);
-        parentLayout.addView(enemyTextView);
-        updateEnemyTextView();
-        playerTextView.setTextSize(20);
-        playerTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        playerTextView.setLines(1);
-        parentLayout.addView(playerTextView);
-        updatePlayerTextView();
+        playerHp.setMax(player.getMaxHp());
+        playerHp.setProgress(player.getHp());
+        updatePlayerInfos();
 
+        enemyHp.setMax(enemyEncountered.getHp());
+        enemyHp.setProgress(enemyEncountered.getHp());
+        updateEnemyInfos();
 
-        animationView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        parentLayout.addView(animationView);
         runAnimation(R.drawable.idle);
-
-        parentLayout.addView(buttonListLayout);
 
         if (basicWeapon != null) {
             addClickListenerAttackBtn(basicWeapon, basicAttackBtn);
@@ -107,10 +87,11 @@ public class Fight extends AppCompatActivity {
         }
     }
 
-    private void updatePlayerTextView() {
+    private void updatePlayerInfos() {
+        playerHp.setProgress(player.getHp());
         playerTextView.setText(player.getName() + " lvl " + player.getLevel() + " HP: " + player.getHp());
         if (player.getHp() <= 0) {
-            enemyTextView.setText(player.getName() + " has been killed by a " + enemyEncountered.getName() + " lvl " + enemyEncountered.getLevel());
+            playerTextView.setText(player.getName() + " has been killed by a " + enemyEncountered.getName() + " lvl " + enemyEncountered.getLevel());
             playerKilledStep();
         }
         player.savePlayer();
@@ -126,8 +107,6 @@ public class Fight extends AppCompatActivity {
         Integer lostCryptoCoins = (int) player.getCryptoCoins() / 5;
         player.setExp(player.getExp() - lostExp);
         player.setCryptoCoins(player.getCryptoCoins() - lostCryptoCoins);
-
-        parentLayout.removeView(buttonListLayout);
 
         TextView deadTitleView = new TextView(this);
         deadTitleView.setText(player.getName() + " has been killed by a " + enemyEncountered.getName() + " lvl " + enemyEncountered.getLevel());
@@ -164,7 +143,8 @@ public class Fight extends AppCompatActivity {
         builder.show();
     }
 
-    private void updateEnemyTextView() {
+    private void updateEnemyInfos() {
+        enemyHp.setProgress(enemyEncountered.getHp());
         enemyTextView.setText(enemyEncountered.getName() + " lvl " + enemyEncountered.getLevel() + " HP: " + enemyEncountered.getHp());
         if (enemyEncountered.getHp() <= 0) {
             enemyTextView.setText("Good job " + player.getName() + " on killing a " + enemyEncountered.getName() + " lvl " + enemyEncountered.getLevel());
@@ -180,7 +160,6 @@ public class Fight extends AppCompatActivity {
 
         player.setExp(player.getExp() + enemyEncountered.getExpReward());
         player.checkLevelUp();
-        parentLayout.removeView(buttonListLayout);
         TextView dropTitleView = new TextView(this);
         dropTitleView.setText("Good job " + player.getName() + " on killing a " + enemyEncountered.getName() + " lvl " + enemyEncountered.getLevel());
         dropTitleView.setTextSize(22);
@@ -338,12 +317,12 @@ public class Fight extends AppCompatActivity {
                     basicAttackBtn.setEnabled(true);
                     specialAttackBtn.setEnabled(true);
                     ultimateAttackBtn.setEnabled(true);
-                    updatePlayerTextView();
+                    updatePlayerInfos();
                 } else {
                     basicAttackBtn.setEnabled(false);
                     specialAttackBtn.setEnabled(false);
                     ultimateAttackBtn.setEnabled(false);
-                    updateEnemyTextView();
+                    updateEnemyInfos();
                 }
             }
 
@@ -355,7 +334,7 @@ public class Fight extends AppCompatActivity {
                         if (player.getHp() > 0) {
                             runAnimation(R.drawable.idle);
                         } else {
-                            updatePlayerTextView();
+                            updatePlayerInfos();
                             runAnimation(R.drawable.death);
                         }
                     }
@@ -363,7 +342,7 @@ public class Fight extends AppCompatActivity {
             }
         };
         cad.stop();
-        animationView.setImageDrawable(cad);
+        playerAnimationView.setImageDrawable(cad);
         cad.start();
         return cad.getTotalDuration();
     }
@@ -390,7 +369,7 @@ public class Fight extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(dialog != null){
+        if (dialog != null) {
             dialog.dismiss();
             dialog.cancel();
         }
