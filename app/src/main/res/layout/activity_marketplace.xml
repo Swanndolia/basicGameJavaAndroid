@@ -47,17 +47,6 @@
             android:layout_margin="20dp"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Filters here"></TextView>
-
-            <LinearLayout
-                android:id="@+id/marketItemListHolder"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical" />
-
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/sellItemOnMarket"
                 android:layout_width="match_parent"
@@ -71,8 +60,20 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentBottom="true"
                 android:text="Buy items from the marketplace"
-                android:visibility="gone"
-                />
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Filters here"></TextView>
+
+            <LinearLayout
+                android:id="@+id/marketItemListHolder"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" />
+
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

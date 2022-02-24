@@ -2,6 +2,7 @@ package dev.swanndolia.idleasciimmorpg.interfaces;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,14 +10,18 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import java.util.Map;
+
 import dev.swanndolia.idleasciimmorpg.R;
 import dev.swanndolia.idleasciimmorpg.characters.Player;
 import dev.swanndolia.idleasciimmorpg.items.Item;
@@ -29,6 +34,7 @@ public class MarketPlace extends AppCompatActivity {
     ProgressBar expProgressBar;
     LinearLayout marketItemListHolder;
     DatabaseReference databaseReference;
+    Button sellOnMarket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +44,7 @@ public class MarketPlace extends AppCompatActivity {
         makePlayerAlwaysUpdated();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         setContentView(R.layout.activity_marketplace);
-        Button sellOnMarket = (Button) findViewById(R.id.sellItemOnMarket);
+        sellOnMarket = (Button) findViewById(R.id.sellItemOnMarket);
         Button buyOnMarket = (Button) findViewById(R.id.buyItemOnMarket);
 
         marketItemListHolder = (LinearLayout) findViewById(R.id.marketItemListHolder);
@@ -67,12 +73,17 @@ public class MarketPlace extends AppCompatActivity {
         databaseReference.child("market").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                marketItemListHolder.removeAllViews();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    ItemHolder itemHolder = dataSnapshot.getValue(ItemHolder.class);
-                    Item item = itemHolder.getItem();
-                    if (!itemHolder.getOwnerName().equals(player.getName())) {
+                //dumbass check to update market list view only if player is checking market and not inventory
+                if (sellOnMarket.getVisibility() == View.VISIBLE) {
+                    marketItemListHolder.removeAllViews();
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        ItemHolder itemHolder = dataSnapshot.getValue(ItemHolder.class);
+                        Item item = itemHolder.getItem();
+
                         Button marketItemListBtn = new Button(MarketPlace.this);
+                        if (itemHolder.getOwnerName().equals(player.getName())) {
+                            marketItemListBtn.setTextColor(getColor(R.color.purple_500));
+                        }
                         marketItemListBtn.setTextSize(20);
                         marketItemListBtn.setText(item.getName() + " x " + itemHolder.getAmount() + "  Buy for: " + itemHolder.getAmount() * itemHolder.getPrice());
                         marketItemListBtn.setOnClickListener(view -> {
@@ -130,6 +141,7 @@ public class MarketPlace extends AppCompatActivity {
                         if (!priceString.equals("")) {
                             Integer sellPrice = Integer.parseInt(priceString);
                             sendItemToMarketPlace(entry.getKey(), sellPrice, amountToSell[0]);
+                            marketItemListHolder.removeView(inventoryItemListBtn);
                             dialog.dismiss();
                         } else {
                             Toast.makeText(MarketPlace.this, "Please set a valid price", Toast.LENGTH_SHORT).show();
@@ -181,6 +193,7 @@ public class MarketPlace extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
     private void makePlayerAlwaysUpdated() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("users").addValueEventListener(new ValueEventListener() {
@@ -188,6 +201,7 @@ public class MarketPlace extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 player = snapshot.child(player.getName()).child("player").getValue(Player.class);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }

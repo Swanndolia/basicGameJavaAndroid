@@ -126,6 +126,7 @@ public class Fight extends AppCompatActivity {
             lostCryptoCoinsText.setText("You've lost " + lostCryptoCoins + " Crypto-coins");
             TextView lostExpTextView = (TextView) dialog.findViewById(R.id.lostExpText);
             lostExpTextView.setText("You've lost " + lostExp + " exp");
+            player.setHp(player.getMaxHp());
             dialog.show();
             dialog.setOnCancelListener(
                     dialogInterface -> onBackPressed()
@@ -321,9 +322,6 @@ public class Fight extends AppCompatActivity {
             stopFlee.setOnClickListener(view -> dialog.dismiss());
             dialog.show();
         } else {
-            if (player.getHp() <= 0) {
-                player.setHp(player.getMaxHp());
-            }
             Intent intent = new Intent(Fight.this, Menu.class);
             intent.putExtra("player", player);
             startActivity(intent);
