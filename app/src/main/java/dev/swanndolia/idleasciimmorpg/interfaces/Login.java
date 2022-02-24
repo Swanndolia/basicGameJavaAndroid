@@ -84,7 +84,6 @@ public class Login extends AppCompatActivity {
         databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Toast.makeText(Login.this, usernameTxt, Toast.LENGTH_SHORT).show();
                 if (snapshot.hasChild(usernameTxt)) {
                     String getPassword = snapshot.child(usernameTxt).child("password").getValue(String.class);
                     if (passwordTxt.equals(getPassword)) {

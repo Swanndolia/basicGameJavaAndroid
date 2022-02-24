@@ -1,18 +1,18 @@
 package dev.swanndolia.idleasciimmorpg.interfaces;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-
-import androidx.annotation.RequiresApi;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import java.util.Map;
-
 import dev.swanndolia.idleasciimmorpg.R;
 import dev.swanndolia.idleasciimmorpg.characters.Player;
 import dev.swanndolia.idleasciimmorpg.items.Item;
@@ -30,6 +30,7 @@ public class CompareAndEquip extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getIntent().getExtras();
         player = (Player) bundle.getSerializable("player");
+        makePlayerAlwaysUpdated();
         slot = (String) bundle.getSerializable("slot");
         setContentView(R.layout.activity_compare);
 
@@ -46,7 +47,7 @@ public class CompareAndEquip extends AppCompatActivity {
 
         equippedItemBtn.setText("No " + slot + " Equipped");
         if(player.getEquippedItem(slot) != null){
-            generateEquippeItemButton(null);
+            generateEquippItemButton(null);
         }
 
         loadInventoryMapped(null);
@@ -63,27 +64,24 @@ public class CompareAndEquip extends AppCompatActivity {
                 itemListBtn.setText(entry.getKey().getName() + " x " + entry.getValue());
 
                 if (player.getEquippedItem(slot) != null && player.getEquippedItem(slot).equals(entry.getKey())) {
-                    generateEquippeItemButton(itemListBtn);
+                    generateEquippItemButton(itemListBtn);
                 }
 
                 if (!entry.getKey().getSlot().equals("None")) {
-                    itemListBtn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            if (player.getEquippedItem(slot) == null || !player.getEquippedItem(slot).equals(entry.getKey())) {
-                                if (player.getEquippedItem(slot) != null) {
-                                    player.unequippItem(player.getEquippedItem(slot));
-                                }
-                                player.equipItem(entry.getKey());
-                                entry.setValue(entry.getValue() - 1);
-                                if (entry.getValue() == 0) {
-                                    parentLayout.removeView(itemListBtn);
-                                }
-
-                                itemListBtn.setText(entry.getKey().getName() + " x " + entry.getValue());
-
-                                generateEquippeItemButton(itemListBtn);
+                    itemListBtn.setOnClickListener(view -> {
+                        if (player.getEquippedItem(slot) == null || !player.getEquippedItem(slot).equals(entry.getKey())) {
+                            if (player.getEquippedItem(slot) != null) {
+                                player.unequippItem(player.getEquippedItem(slot));
                             }
+                            player.equipItem(entry.getKey());
+                            entry.setValue(entry.getValue() - 1);
+                            if (entry.getValue() == 0) {
+                                parentLayout.removeView(itemListBtn);
+                            }
+
+                            itemListBtn.setText(entry.getKey().getName() + " x " + entry.getValue());
+
+                            generateEquippItemButton(itemListBtn);
                         }
                     });
                 }
@@ -94,26 +92,35 @@ public class CompareAndEquip extends AppCompatActivity {
         }
     }
 
-    private void generateEquippeItemButton(Button button) {
+    private void generateEquippItemButton(Button button) {
         equippedItemBtn.setText("Equipped: " + player.getEquippedItem(slot).getName());
-        equippedItemBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (player.getEquippedItem(slot) != null) {
-                    equippedItemBtn.setText("No " + slot + " Equipped");
-                    player.unequippItem(player.getEquippedItem(slot));
-                    parentLayout.removeView(button);
-                    loadInventoryMapped(player.getEquippedItem(slot));
-                }
+        equippedItemBtn.setOnClickListener(view -> {
+            if (player.getEquippedItem(slot) != null) {
+                equippedItemBtn.setText("No " + slot + " Equipped");
+                player.unequippItem(player.getEquippedItem(slot));
+                parentLayout.removeView(button);
+                loadInventoryMapped(player.getEquippedItem(slot));
             }
         });
     }
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(CompareAndEquip.this, Menu.class);
+        Intent intent = new Intent(CompareAndEquip.this, Inventory.class);
         intent.putExtra("player", player);
         startActivity(intent);
         finish();
+    }
+    private void makePlayerAlwaysUpdated() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                player = snapshot.child(player.getName()).child("player").getValue(Player.class);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
     }
 }

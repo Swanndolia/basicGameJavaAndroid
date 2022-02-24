@@ -1,35 +1,26 @@
 package dev.swanndolia.idleasciimmorpg.interfaces;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
-import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.MutableContextWrapper;
 import android.content.SharedPreferences;
-import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.transition.Explode;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
-import com.google.android.material.slider.Slider;
-
-import org.w3c.dom.Text;
-
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import dev.swanndolia.idleasciimmorpg.R;
 import dev.swanndolia.idleasciimmorpg.characters.Player;
-import dev.swanndolia.idleasciimmorpg.tools.music.BackgroundMusicService;
 
 public class Menu extends AppCompatActivity {
     AlertDialog dialog;
@@ -41,6 +32,9 @@ public class Menu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getIntent().getExtras();
         player = (Player) bundle.getSerializable("player");
+        makePlayerAlwaysUpdated();
+
+        setContentView(R.layout.activity_menu);
         setContentView(R.layout.activity_menu);
 
         expProgressBar = (ProgressBar) findViewById(R.id.expProgressBar);
@@ -60,119 +54,95 @@ public class Menu extends AppCompatActivity {
         final Button storeBtn = findViewById(R.id.storeBtn);
         final ImageButton settingsBtn = findViewById(R.id.settingsBtn);
 
-        exploreBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Menu.this, Explore.class);
-                intent.putExtra("player", player);
-                startActivity(intent);
-            }
+
+
+        exploreBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(Menu.this, Explore.class);
+            intent.putExtra("player", player);
+            startActivity(intent);
         });
-        inventoryBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Menu.this, Inventory.class);
-                intent.putExtra("player", player);
-                startActivity(intent);
-            }
+        inventoryBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(Menu.this, Inventory.class);
+            intent.putExtra("player", player);
+            startActivity(intent);
         });
-        craftBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Menu.this, Craft.class);
-                intent.putExtra("player", player);
-                startActivity(intent);
-            }
+        craftBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(Menu.this, Craft.class);
+            intent.putExtra("player", player);
+            startActivity(intent);
         });
-        smeltBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Menu.this, Smelt.class);
-                intent.putExtra("player", player);
-                startActivity(intent);
-            }
+        smeltBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(Menu.this, Smelt.class);
+            intent.putExtra("player", player);
+            startActivity(intent);
         });
 
-        tinkerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Menu.this, Tinker.class);
-                intent.putExtra("player", player);
-                startActivity(intent);
-            }
+        tinkerBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(Menu.this, Tinker.class);
+            intent.putExtra("player", player);
+            startActivity(intent);
         });
-        fuseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Menu.this, Fuse.class);
-                intent.putExtra("player", player);
-                startActivity(intent);
-            }
+        fuseBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(Menu.this, Fuse.class);
+            intent.putExtra("player", player);
+            startActivity(intent);
         });
-        townBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Menu.this, Town.class);
-                intent.putExtra("player", player);
-                startActivity(intent);
-            }
+        townBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(Menu.this, Town.class);
+            intent.putExtra("player", player);
+            startActivity(intent);
         });
-        inventoryBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Menu.this, Inventory.class);
-                intent.putExtra("player", player);
-                startActivity(intent);
-            }
+        inventoryBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(Menu.this, Inventory.class);
+            intent.putExtra("player", player);
+            startActivity(intent);
         });
-        profileBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Menu.this, Profile.class);
-                intent.putExtra("player", player);
-                startActivity(intent);
-            }
+        profileBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(Menu.this, Profile.class);
+            intent.putExtra("player", player);
+            startActivity(intent);
         });
-        bestiaryBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Menu.this, Bestiary.class);
-                intent.putExtra("player", player);
-                startActivity(intent);
-            }
+        bestiaryBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(Menu.this, Bestiary.class);
+            intent.putExtra("player", player);
+            startActivity(intent);
         });
-        guildBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Menu.this, Guild.class);
-                intent.putExtra("player", player);
-                startActivity(intent);
-            }
+        guildBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(Menu.this, Guild.class);
+            intent.putExtra("player", player);
+            startActivity(intent);
         });
-        storeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Menu.this, Store.class);
-                intent.putExtra("player", player);
-                startActivity(intent);
-            }
+        storeBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(Menu.this, Store.class);
+            intent.putExtra("player", player);
+            startActivity(intent);
         });
 
 
-        settingsBtn.setOnClickListener(new View.OnClickListener() {
+        settingsBtn.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(Menu.this);
+            builder.setTitle("Customize your settings here !");
+            builder.setView(generateSettingsOverlay());
+            dialog = builder.create();
+            dialog.show();
+        });
+    }
+
+    private void makePlayerAlwaysUpdated() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("users").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(Menu.this);
-                builder.setTitle("Customize your settings here !");
-                builder.setView(generateSettingsOverlay(builder));
-                dialog = builder.create();
-                dialog.show();
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                player = snapshot.child(player.getName()).child("player").getValue(Player.class);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
             }
         });
     }
 
 
-    public LinearLayout generateSettingsOverlay(AlertDialog.Builder builder) {
+    public LinearLayout generateSettingsOverlay() {
         LinearLayout settingsOverlay = new LinearLayout(this);
         settingsOverlay.setOrientation(LinearLayout.VERTICAL);
         LinearLayout soundSettingsLayout = new LinearLayout(this);
@@ -201,18 +171,15 @@ public class Menu extends AppCompatActivity {
         Button disconnectBtn = new Button(this);
         disconnectBtn.setText("DISCONNECT");
         disconnectBtn.setBackgroundColor(ContextCompat.getColor(this, com.google.android.material.R.color.design_default_color_error));
-        disconnectBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SharedPreferences sharedPreferences = getSharedPreferences("AUTO_LOGIN", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean("stayLogin", false);
-                editor.apply();
-                dialog.dismiss();
-                Intent intent = new Intent(Menu.this, Login.class);
-                startActivity(intent);
-                finish();
-            }
+        disconnectBtn.setOnClickListener(view -> {
+            SharedPreferences sharedPreferences = getSharedPreferences("AUTO_LOGIN", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("stayLogin", false);
+            editor.apply();
+            dialog.dismiss();
+            Intent intent = new Intent(Menu.this, Login.class);
+            startActivity(intent);
+            finish();
         });
         TextView discordTextView = new TextView(this);
         discordTextView.setText("discord ic");
@@ -241,18 +208,12 @@ public class Menu extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Are you sure you want to close the game ?");
         builder.setPositiveButton(android.R.string.ok,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                        System.exit(0);
-                    }
+                (dialog, id) -> {
+                    dialog.dismiss();
+                    System.exit(0);
                 });
         builder.setNegativeButton(android.R.string.cancel,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
+                (dialog, id) -> dialog.dismiss());
         AlertDialog dialog = builder.create();
         dialog.show();
     }

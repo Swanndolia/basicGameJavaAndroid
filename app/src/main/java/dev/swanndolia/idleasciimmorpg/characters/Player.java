@@ -2,7 +2,6 @@ package dev.swanndolia.idleasciimmorpg.characters;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -174,6 +173,12 @@ public class Player implements Serializable {
         this.savePlayer();
     }
 
+    public void addInventory(Item item, Integer integer) {
+        for (int i = 0; i < integer; i++) {
+            this.addInventory(item);
+        }
+    }
+
     public void addInventory(Item item) {
         this.inventory.add(item);
         this.savePlayer();
@@ -187,6 +192,13 @@ public class Player implements Serializable {
     public void removeInventory(Item item) {
         this.inventory.remove(item);
         this.savePlayer();
+    }
+
+    public void removeInventory(Item item, Integer integer) {
+
+        for (int i = 0; i < integer; i++) {
+            this.removeInventory(item);
+        }
     }
 
     public void removeEquippedInventory(Item item) {

@@ -1,30 +1,26 @@
 package dev.swanndolia.idleasciimmorpg.interfaces;
 
-import android.content.DialogInterface;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-
+import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-
 import dev.swanndolia.idleasciimmorpg.R;
 import dev.swanndolia.idleasciimmorpg.characters.Player;
 import dev.swanndolia.idleasciimmorpg.items.Item;
+import dev.swanndolia.idleasciimmorpg.tools.market.ItemHolder;
 import dev.swanndolia.idleasciimmorpg.tools.player.ForceSaveInventoryList;
 import dev.swanndolia.idleasciimmorpg.tools.player.ListToMapInventory;
 
@@ -39,11 +35,12 @@ public class MarketPlace extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getIntent().getExtras();
         player = (Player) bundle.getSerializable("player");
-        setContentView(R.layout.activity_marketplace);
+        makePlayerAlwaysUpdated();
         databaseReference = FirebaseDatabase.getInstance().getReference();
-
+        setContentView(R.layout.activity_marketplace);
         Button sellOnMarket = (Button) findViewById(R.id.sellItemOnMarket);
         Button buyOnMarket = (Button) findViewById(R.id.buyItemOnMarket);
+
         marketItemListHolder = (LinearLayout) findViewById(R.id.marketItemListHolder);
         expProgressBar = (ProgressBar) findViewById(R.id.expProgressBar);
         expProgressBar.setProgress(player.getExp());
@@ -51,38 +48,59 @@ public class MarketPlace extends AppCompatActivity {
 
         fetchItemOnMarket();
 
-        sellOnMarket.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                marketItemListHolder.removeAllViews();
-                sellOnMarket.setVisibility(View.GONE);
-                buyOnMarket.setVisibility(View.VISIBLE);
-                displayInventoryForSale(new ListToMapInventory().ListToMapInventory(player.getInventory()));
-            }
+        sellOnMarket.setOnClickListener(view -> {
+            marketItemListHolder.removeAllViews();
+            sellOnMarket.setVisibility(View.GONE);
+            buyOnMarket.setVisibility(View.VISIBLE);
+            displayInventoryForSale(new ListToMapInventory().ListToMapInventory(player.getInventory()));
         });
-        buyOnMarket.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                marketItemListHolder.removeAllViews();
-                buyOnMarket.setVisibility(View.GONE);
-                sellOnMarket.setVisibility(View.VISIBLE);
-                fetchItemOnMarket();
-            }
+        buyOnMarket.setOnClickListener(view -> {
+            marketItemListHolder.removeAllViews();
+            buyOnMarket.setVisibility(View.GONE);
+            sellOnMarket.setVisibility(View.VISIBLE);
+            fetchItemOnMarket();
         });
     }
 
     public void fetchItemOnMarket() {
+
         databaseReference.child("market").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<Item> itemList = new ArrayList<Item>();
-
+                marketItemListHolder.removeAllViews();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Item item = dataSnapshot.getValue(Item.class);
-                    itemList.add(item);
+                    ItemHolder itemHolder = dataSnapshot.getValue(ItemHolder.class);
+                    Item item = itemHolder.getItem();
+                    if (!itemHolder.getOwnerName().equals(player.getName())) {
+                        Button marketItemListBtn = new Button(MarketPlace.this);
+                        marketItemListBtn.setTextSize(20);
+                        marketItemListBtn.setText(item.getName() + " x " + itemHolder.getAmount() + "  Buy for: " + itemHolder.getAmount() * itemHolder.getPrice());
+                        marketItemListBtn.setOnClickListener(view -> {
+                            if (player.getCryptoCoins() >= itemHolder.getPrice() * itemHolder.getAmount()) {
+                                player.setCryptoCoins(player.getCryptoCoins() - itemHolder.getPrice() * itemHolder.getAmount());
+                                player.addInventory(item, itemHolder.getAmount());
+                                dataSnapshot.getRef().removeValue();
+                                databaseReference.child("users").child(itemHolder.getOwnerName()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot1) {
+                                        Player owner = snapshot1.child("player").getValue(Player.class);
+                                        owner.addCryptoCoins(itemHolder.getPrice() * itemHolder.getAmount());
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                            } else {
+                                Toast.makeText(MarketPlace.this, "You don't have enough money", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        marketItemListHolder.addView(marketItemListBtn);
+                    }
                 }
-                displayInventoryForSale(new ListToMapInventory().ListToMapInventory(itemList));
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -90,23 +108,89 @@ public class MarketPlace extends AppCompatActivity {
         });
     }
 
-    private void displayMarketToBuy(Map<Item, Integer> listToMapInventory) {
-    }
-
     public void displayInventoryForSale(Map<Item, Integer> listToMapInventory) {
         for (Map.Entry<Item, Integer> entry : listToMapInventory.entrySet()) {
             if (!entry.getKey().equals(new ForceSaveInventoryList().ForceSaveInventoryList())) {
-                Button itemListBtn = new Button(this);
-                itemListBtn.setTextSize(20);
-                itemListBtn.setText(entry.getKey().getName() + " x " + entry.getValue());
-                itemListBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        
-                    }
+                Button inventoryItemListBtn = new Button(this);
+                inventoryItemListBtn.setTextSize(20);
+                inventoryItemListBtn.setText(entry.getKey().getName() + " x " + entry.getValue());
+                inventoryItemListBtn.setOnClickListener(view -> {
+                    final Integer[] amountToSell = {entry.getValue()};
+                    Dialog dialog = new Dialog(MarketPlace.this);
+                    dialog.setContentView(R.layout.add_item_marketplace);
+                    Button confirmBtn = (Button) dialog.findViewById(R.id.confirmBtn);
+                    Button plusBtn = (Button) dialog.findViewById(R.id.plusBtn);
+                    Button minusBtn = (Button) dialog.findViewById(R.id.minusBtn);
+                    Button itemSelectBtn = (Button) dialog.findViewById(R.id.itemSelectBtn);
+                    EditText sellPriceField = (EditText) dialog.findViewById(R.id.sellPriceField);
+                    itemSelectBtn.setText(entry.getKey().getName() + " x " + amountToSell[0]);
+
+                    confirmBtn.setOnClickListener(view1 -> {
+                        String priceString = sellPriceField.getText().toString();
+                        if (!priceString.equals("")) {
+                            Integer sellPrice = Integer.parseInt(priceString);
+                            sendItemToMarketPlace(entry.getKey(), sellPrice, amountToSell[0]);
+                            dialog.dismiss();
+                        } else {
+                            Toast.makeText(MarketPlace.this, "Please set a valid price", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    plusBtn.setOnClickListener(view12 -> {
+                        if (amountToSell[0] < entry.getValue()) {
+                            amountToSell[0] += 1;
+                            itemSelectBtn.setText(entry.getKey().getName() + " x " + amountToSell[0]);
+                        }
+                    });
+                    minusBtn.setOnClickListener(view13 -> {
+                        if (amountToSell[0] > 1) {
+                            amountToSell[0] -= 1;
+                            itemSelectBtn.setText(entry.getKey().getName() + " x " + amountToSell[0]);
+                        }
+                    });
+                    itemSelectBtn.setOnClickListener(view14 -> dialog.dismiss());
+
+                    dialog.show();
                 });
-                marketItemListHolder.addView(itemListBtn);
+                marketItemListHolder.addView(inventoryItemListBtn);
             }
         }
+    }
+
+    private void sendItemToMarketPlace(Item item, Integer sellPrice, Integer amountToSell) {
+        databaseReference.child("market").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                DatabaseReference ref = databaseReference.child("market").push();
+                ItemHolder itemHolder = new ItemHolder().ItemHolder(item, amountToSell, sellPrice, player.getName());
+                ref.setValue(itemHolder);
+                player.removeInventory(item, amountToSell);
+                displayInventoryForSale(new ListToMapInventory().ListToMapInventory(player.getInventory()));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(MarketPlace.this, Town.class);
+        intent.putExtra("player", player);
+        startActivity(intent);
+        finish();
+    }
+    private void makePlayerAlwaysUpdated() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                player = snapshot.child(player.getName()).child("player").getValue(Player.class);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
     }
 }

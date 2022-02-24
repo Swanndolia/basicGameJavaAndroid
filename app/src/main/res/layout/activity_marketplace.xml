@@ -52,7 +52,6 @@
                 android:layout_height="wrap_content"
                 android:text="Filters here"></TextView>
 
-
             <LinearLayout
                 android:id="@+id/marketItemListHolder"
                 android:layout_width="match_parent"

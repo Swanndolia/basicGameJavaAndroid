@@ -2,31 +2,28 @@ package dev.swanndolia.idleasciimmorpg.interfaces;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AlertDialog;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
-import org.w3c.dom.Text;
-
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Random;
-import java.util.zip.Inflater;
-
 import dev.swanndolia.idleasciimmorpg.R;
 import dev.swanndolia.idleasciimmorpg.characters.DefaultCharacter;
 import dev.swanndolia.idleasciimmorpg.characters.Player;
@@ -55,6 +52,7 @@ public class Fight extends AppCompatActivity {
         Bundle bundle = this.getIntent().getExtras();
         String location = (String) bundle.getSerializable("location");
         player = (Player) bundle.getSerializable("player");
+        makePlayerAlwaysUpdated();
         enemyEncountered = new GenerateEnemy().GenerateEnemy(location, player);
         setContentView(R.layout.activity_fight);
 
@@ -73,11 +71,11 @@ public class Fight extends AppCompatActivity {
 
         playerHp.setMax(player.getMaxHp());
         playerHp.setProgress(player.getHp());
-        updatePlayerInfos();
+        updatePlayerInfo();
 
         enemyHp.setMax(enemyEncountered.getHp());
         enemyHp.setProgress(enemyEncountered.getHp());
-        updateEnemyInfos();
+        updateEnemyInfo();
 
         runAnimation(R.drawable.idle);
 
@@ -87,43 +85,32 @@ public class Fight extends AppCompatActivity {
 
         if (basicWeapon != null) {
             basicAttackBtn.setText(basicWeapon.getName() + " " + basicWeapon.getDamage() + " dmg");
-            basicAttackBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    enemyAttackStep(playerAttackStep(basicWeapon));
-                }
-            });
+            basicAttackBtn.setOnClickListener(v -> enemyAttackStep(playerAttackStep(basicWeapon)));
         }
         if (specialWeapon != null) {
             specialAttackBtn.setText(specialWeapon.getName() + " " + specialWeapon.getDamage() + " dmg");
-            specialAttackBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (player.getInventory().contains(new SpecialAmmunition().SpecialAmmunition())) {
-                        enemyAttackStep(playerAttackStep(specialWeapon));
-                    } else {
-                        Toast.makeText(Fight.this, "You don't have any special ammunition", Toast.LENGTH_SHORT).show();
-                    }
+            specialAttackBtn.setOnClickListener(v -> {
+                if (player.getInventory().contains(new SpecialAmmunition().SpecialAmmunition())) {
+                    enemyAttackStep(playerAttackStep(specialWeapon));
+                } else {
+                    Toast.makeText(Fight.this, "You don't have any special ammunition", Toast.LENGTH_SHORT).show();
                 }
             });
         }
         if (ultimateWeapon != null) {
             ultimateAttackBtn.setText(ultimateWeapon.getName() + " " + ultimateWeapon.getDamage() + " dmg");
-            ultimateAttackBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (player.getInventory().contains(new UltimateAmmunition().UltimateAmmunition())) {
-                        enemyAttackStep(playerAttackStep(ultimateWeapon));
-                    } else {
-                        Toast.makeText(Fight.this, "You don't have any ultimate ammunition", Toast.LENGTH_SHORT).show();
-                    }
-
+            ultimateAttackBtn.setOnClickListener(v -> {
+                if (player.getInventory().contains(new UltimateAmmunition().UltimateAmmunition())) {
+                    enemyAttackStep(playerAttackStep(ultimateWeapon));
+                } else {
+                    Toast.makeText(Fight.this, "You don't have any ultimate ammunition", Toast.LENGTH_SHORT).show();
                 }
+
             });
         }
     }
 
-    private void updatePlayerInfos() {
+    private void updatePlayerInfo() {
         playerHp.setProgress(player.getHp());
         playerTextView.setText(player.getName() + " lvl " + player.getLevel() + " HP: " + player.getHp());
         if (player.getHp() <= 0) {
@@ -140,11 +127,14 @@ public class Fight extends AppCompatActivity {
             TextView lostExpTextView = (TextView) dialog.findViewById(R.id.lostExpText);
             lostExpTextView.setText("You've lost " + lostExp + " exp");
             dialog.show();
+            dialog.setOnCancelListener(
+                    dialogInterface -> onBackPressed()
+            );
         }
         player.savePlayer();
     }
 
-    private void updateEnemyInfos() {
+    private void updateEnemyInfo() {
         enemyHp.setProgress(enemyEncountered.getHp());
         enemyTextView.setText(enemyEncountered.getName() + " lvl " + enemyEncountered.getLevel() + " HP: " + enemyEncountered.getHp());
         if (enemyEncountered.getHp() <= 0) {
@@ -161,49 +151,39 @@ public class Fight extends AppCompatActivity {
             enemyKilledTitle.setText("Good job " + player.getName() + " on killing a " + enemyEncountered.getName() + " lvl " + enemyEncountered.getLevel());
 
             Button backMenu = (Button) dialog.findViewById(R.id.backToMenuBtn);
-            backMenu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onBackPressed();
-                }
+            backMenu.setOnClickListener(view -> {
+                player.addInventory(enemyEncountered.getInventory());
+                onBackPressed();
             });
 
             Button exploreMore = (Button) dialog.findViewById(R.id.exploreAgainBtn);
-            exploreMore.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(Fight.this, Fight.class);
-                    intent.putExtra("player", player);
-                    startActivity(intent);
-                    finish();
-                }
+            exploreMore.setOnClickListener(view -> {
+                player.addInventory(enemyEncountered.getInventory());
+                Intent intent = new Intent(Fight.this, Fight.class);
+                intent.putExtra("player", player);
+                startActivity(intent);
+                finish();
             });
 
             Button sellAllLoot = (Button) dialog.findViewById(R.id.sellAllLootBtn);
             Button takeAllLoot = (Button) dialog.findViewById(R.id.takeAllLootBtn);
-            takeAllLoot.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    player.addInventory(enemyEncountered.getInventory());
-                    Integer amountToRemove = enemyEncountered.getInventory().size();
-                    enemyEncountered.setInventory(new HashMap<>());
-                    itemListHolder.removeViews(0, amountToRemove);
-                    takeAllLoot.setVisibility(View.GONE);
-                    sellAllLoot.setVisibility(View.GONE);
-                }
+            takeAllLoot.setOnClickListener(view -> {
+                player.addInventory(enemyEncountered.getInventory());
+                int amountToRemove = enemyEncountered.getInventory().size();
+                enemyEncountered.setInventory(new HashMap<>());
+                itemListHolder.removeViews(0, amountToRemove);
+                takeAllLoot.setVisibility(View.GONE);
+                sellAllLoot.setVisibility(View.GONE);
             });
 
             Integer finalTotalValue = totalValue[0];
-            sellAllLoot.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    player.addCryptoCoins(finalTotalValue);
-                    Integer amountToRemove = enemyEncountered.getInventory().size();
-                    enemyEncountered.setInventory(new HashMap<>());
-                    itemListHolder.removeViews(0, amountToRemove);
-                    sellAllLoot.setVisibility(View.GONE);
-                    takeAllLoot.setVisibility(View.GONE);
-                }
+            sellAllLoot.setOnClickListener(view -> {
+                player.addCryptoCoins(finalTotalValue);
+                int amountToRemove = enemyEncountered.getInventory().size();
+                enemyEncountered.setInventory(new HashMap<>());
+                itemListHolder.removeViews(0, amountToRemove);
+                sellAllLoot.setVisibility(View.GONE);
+                takeAllLoot.setVisibility(View.GONE);
             });
 
             for (Item item : enemyEncountered.getInventory()) {
@@ -215,23 +195,25 @@ public class Fight extends AppCompatActivity {
                 Button takeOneItem = doubleButton.findViewById(R.id.buttonLeft);
                 Button sellOneItem = doubleButton.findViewById(R.id.buttonRight);
                 takeOneItem.setText("Take:" + item.getName());
-                takeOneItem.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        totalValue[0] -= item.getSellValue();
-                        enemyEncountered.removeInventory(item);
-                        player.addInventory(item);
-                        itemListHolder.removeView(doubleButton);
+                takeOneItem.setOnClickListener(view -> {
+                    totalValue[0] -= item.getSellValue();
+                    enemyEncountered.removeInventory(item);
+                    player.addInventory(item);
+                    itemListHolder.removeView(doubleButton);
+                    if(itemListHolder.getChildCount() == 0){
+                        sellAllLoot.setVisibility(View.GONE);
+                        takeAllLoot.setVisibility(View.GONE);
                     }
                 });
                 sellOneItem.setText("Sell for: " + item.getSellValue());
-                sellOneItem.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        totalValue[0] -= item.getSellValue();
-                        enemyEncountered.removeInventory(item);
-                        player.addCryptoCoins(item.getSellValue());
-                        itemListHolder.removeView(doubleButton);
+                sellOneItem.setOnClickListener(view -> {
+                    totalValue[0] -= item.getSellValue();
+                    enemyEncountered.removeInventory(item);
+                    player.addCryptoCoins(item.getSellValue());
+                    itemListHolder.removeView(doubleButton);
+                    if(itemListHolder.getChildCount() == 0){
+                        sellAllLoot.setVisibility(View.GONE);
+                        takeAllLoot.setVisibility(View.GONE);
                     }
                 });
                 itemListHolder.addView(doubleButton);
@@ -285,12 +267,12 @@ public class Fight extends AppCompatActivity {
                     basicAttackBtn.setEnabled(true);
                     specialAttackBtn.setEnabled(true);
                     ultimateAttackBtn.setEnabled(true);
-                    updatePlayerInfos();
+                    updatePlayerInfo();
                 } else {
                     basicAttackBtn.setEnabled(false);
                     specialAttackBtn.setEnabled(false);
                     ultimateAttackBtn.setEnabled(false);
-                    updateEnemyInfos();
+                    updateEnemyInfo();
                 }
             }
 
@@ -302,7 +284,7 @@ public class Fight extends AppCompatActivity {
                         if (player.getHp() > 0) {
                             runAnimation(R.drawable.idle);
                         } else {
-                            updatePlayerInfos();
+                            updatePlayerInfo();
                             runAnimation(R.drawable.death);
                         }
                     }
@@ -317,40 +299,27 @@ public class Fight extends AppCompatActivity {
 
     private void scheduleAnim(Integer waitPlayerAnimEnd, Integer animationId) {
         Handler animHandler = new Handler();
-        animHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                runAnimation(animationId);
-            }
-        }, waitPlayerAnimEnd);
+        animHandler.postDelayed(() -> runAnimation(animationId), waitPlayerAnimEnd);
     }
 
     @Override
     public void onBackPressed() {
         if (enemyEncountered.getHp() > 0 && player.getHp() > 0) {
             Integer losingCryptoCoins = (int) player.getCryptoCoins() / 10;
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            AlertDialog dialog = builder.create();
-            builder.setTitle("Are you sure you want to flee ?\nYou'll lose " + losingCryptoCoins + " Cryptocoins !");
-            builder.setPositiveButton(android.R.string.ok,
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            player.setCryptoCoins((player.getCryptoCoins() - losingCryptoCoins));
-                            dialog.dismiss();
-                            Intent intent = new Intent(Fight.this, Menu.class);
-                            intent.putExtra("player", player);
-                            startActivity(intent);
-                            finish();
-                        }
-                    });
-            builder.setNegativeButton(android.R.string.cancel,
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.dismiss();
-                        }
-                    });
-
-            builder.show();
+            Dialog dialog = new Dialog(this);
+            dialog.setContentView(R.layout.flee_confirm_layout);
+            Button confirmFlee = dialog.findViewById(R.id.confirmFlee);
+            confirmFlee.setOnClickListener(view -> {
+                player.setCryptoCoins(player.getCryptoCoins() - losingCryptoCoins);
+                dialog.dismiss();
+                Intent intent = new Intent(Fight.this, Menu.class);
+                intent.putExtra("player", player);
+                startActivity(intent);
+                finish();
+            });
+            Button stopFlee = dialog.findViewById(R.id.stopFlee);
+            stopFlee.setOnClickListener(view -> dialog.dismiss());
+            dialog.show();
         } else {
             if (player.getHp() <= 0) {
                 player.setHp(player.getMaxHp());
@@ -361,4 +330,18 @@ public class Fight extends AppCompatActivity {
             finish();
         }
     }
+    private void makePlayerAlwaysUpdated() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                player = snapshot.child(player.getName()).child("player").getValue(Player.class);
+                updatePlayerInfo();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
 }
+
