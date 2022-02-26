@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import dev.swanndolia.idleasciimmorpg.interfaces.Inventory;
 import dev.swanndolia.idleasciimmorpg.items.Item;
 
 public class ListToMapInventory {

@@ -2,7 +2,9 @@ package dev.swanndolia.idleasciimmorpg.items.weapons.normal;
 
 import java.io.Serializable;
 
-public class BrokenSword extends NormalWeapon implements Serializable {
+import dev.swanndolia.idleasciimmorpg.items.rarity.Broken;
+
+public class BrokenSword extends NormalWeapon implements Serializable, Broken {
     public BrokenSword BrokenSword() {
         this.setName("Broken Sword");
         this.setDesc("A very rustic Sword");
@@ -12,6 +14,8 @@ public class BrokenSword extends NormalWeapon implements Serializable {
         this.setSellValue(5);
         this.setCritMultiplier(2.0);
         this.calculateCritDamage();
+        this.Broken(this);
         return this;
+
     }
 }

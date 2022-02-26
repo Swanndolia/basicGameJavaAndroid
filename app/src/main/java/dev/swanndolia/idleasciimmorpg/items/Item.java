@@ -7,15 +7,33 @@ public class Item implements Serializable {
     public String name;
     public String desc;
     public String slot;
-    public Integer dodgeChance;
-    public Integer protection;
-    public Integer weight;
-    public Integer sellValue;
-    public Integer damage;
-    public Integer critChance;
-    public Integer critDamage;
-    public Integer accuracy;
+    public int dodgeChance;
+    public int protection;
+    public int weight;
+    public int sellValue;
+    public int damage;
+    public int critChance;
+    public int critDamage;
+    public int accuracy;
     public Double critMultiplier;
+    public int color;
+    public String rarity;
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
+    }
+
+    public String getRarity() {
+        return rarity;
+    }
+
+    public void setRarity(String rarity) {
+        this.rarity = rarity;
+    }
 
     public Item() {
         this.slot = "None";
@@ -29,27 +47,27 @@ public class Item implements Serializable {
         this.slot = slot;
     }
 
-    public Integer getDamage() {
+    public int getDamage() {
         return damage;
     }
 
-    public void setDamage(Integer damage) {
+    public void setDamage(int damage) {
         this.damage = damage;
     }
 
-    public Integer getCritChance() {
+    public int getCritChance() {
         return critChance;
     }
 
-    public void setCritChance(Integer critChance) {
+    public void setCritChance(int critChance) {
         this.critChance = critChance;
     }
 
-    public Integer getAccuracy() {
+    public int getAccuracy() {
         return accuracy;
     }
 
-    public void setAccuracy(Integer accuracy) {
+    public void setAccuracy(int accuracy) {
         this.accuracy = accuracy;
     }
 
@@ -69,35 +87,35 @@ public class Item implements Serializable {
         this.desc = desc;
     }
 
-    public Integer getSellValue() {
+    public int getSellValue() {
         return sellValue;
     }
 
-    public void setSellValue(Integer sellValue) {
+    public void setSellValue(int sellValue) {
         this.sellValue = sellValue;
     }
 
-    public Integer getDodgeChance() {
+    public int getDodgeChance() {
         return dodgeChance;
     }
 
-    public void setDodgeChance(Integer dodgeChance) {
+    public void setDodgeChance(int dodgeChance) {
         this.dodgeChance = dodgeChance;
     }
 
-    public Integer getProtection() {
+    public int getProtection() {
         return protection;
     }
 
-    public void setProtection(Integer protection) {
+    public void setProtection(int protection) {
         this.protection = protection;
     }
 
-    public Integer getWeight() {
+    public int getWeight() {
         return weight;
     }
 
-    public void setWeight(Integer weight) {
+    public void setWeight(int weight) {
         this.weight = weight;
     }
 
@@ -135,6 +153,6 @@ public class Item implements Serializable {
         Item item = (Item) obj;
         return item.getName().equals(this.getName())
                 && item.getDesc().equals(this.getDesc())
-                && item.getSellValue().equals(this.getSellValue());
+                && item.getSellValue() == this.getSellValue();
     }
 }

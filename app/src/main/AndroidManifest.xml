@@ -17,7 +17,7 @@
             android:exported="true"></service>
 
         <activity
-            android:name=".interfaces.BootStrap"
+            android:name=".tools.activity.BootStrap"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,58 +26,58 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".interfaces.Register"
+            android:name=".userinterface.Register"
             android:exported="false" />
         <activity
-            android:name=".interfaces.Login"
+            android:name=".userinterface.Login"
             android:exported="false" />
         <activity
-            android:name=".interfaces.Menu"
+            android:name=".userinterface.Menu"
             android:exported="true" />
         <activity
-            android:name=".interfaces.Inventory"
+            android:name=".userinterface.Inventory"
             android:exported="false" />
         <activity
-            android:name=".interfaces.CompareAndEquip"
+            android:name=".userinterface.CompareAndEquip"
             android:exported="false" />
         <activity
-            android:name=".interfaces.Explore"
+            android:name=".userinterface.Explore"
             android:exported="false" />
         <activity
-            android:name=".interfaces.Fight"
+            android:name=".userinterface.Fight"
             android:exported="false" />
         <activity
-            android:name=".interfaces.Craft"
+            android:name=".userinterface.Craft"
             android:exported="false" />
         <activity
-            android:name=".interfaces.Smelt"
+            android:name=".userinterface.Smelt"
             android:exported="true" />
         <activity
-            android:name=".interfaces.Tinker"
+            android:name=".userinterface.Tinker"
             android:exported="false" />
         <activity
-            android:name=".interfaces.Fuse"
+            android:name=".userinterface.Fuse"
             android:exported="false" />
         <activity
-            android:name=".interfaces.Town"
+            android:name=".userinterface.Town"
             android:exported="false" />
         <activity
-            android:name=".interfaces.Trade"
+            android:name=".userinterface.Trade"
             android:exported="false" />
         <activity
-            android:name=".interfaces.Profile"
+            android:name=".userinterface.Profile"
             android:exported="false" />
         <activity
-            android:name=".interfaces.Guild"
+            android:name=".userinterface.Guild"
             android:exported="false" />
         <activity
-            android:name=".interfaces.Bestiary"
+            android:name=".userinterface.Bestiary"
             android:exported="false" />
         <activity
-            android:name=".interfaces.Store"
+            android:name=".userinterface.Store"
             android:exported="false" />
         <activity
-            android:name=".interfaces.MarketPlace"
+            android:name=".userinterface.MarketPlace"
             android:exported="false" />
     </application>
 

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".interfaces.Register"
+    tools:context=".userinterface.Register"
     android:layout_margin="40dp">
 
     <TextView
