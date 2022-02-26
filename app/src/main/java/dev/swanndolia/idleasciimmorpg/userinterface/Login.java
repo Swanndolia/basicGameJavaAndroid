@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -58,26 +57,18 @@ public class Login extends AppCompatActivity {
         TextView registerNowBtn = findViewById(R.id.registerNowBtn);
         stayLoginCheckBox = findViewById(R.id.stayLoginCheckBox);
 
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String passwordTxt = password.getText().toString();
-                String usernameTxt = username.getText().toString();
+        loginBtn.setOnClickListener(v -> {
+            String passwordTxt = password.getText().toString();
+            String usernameTxt = username.getText().toString();
 
-                if (usernameTxt.isEmpty() || passwordTxt.isEmpty()) {
-                    Toast.makeText(Login.this, "Please enter a valid email and password", Toast.LENGTH_SHORT).show();
-                } else {
-                    loginFirebaseAndGetPlayer(passwordTxt, usernameTxt);
-                }
+            if (usernameTxt.isEmpty() || passwordTxt.isEmpty()) {
+                Toast.makeText(Login.this, "Please enter a valid email and password", Toast.LENGTH_SHORT).show();
+            } else {
+                loginFirebaseAndGetPlayer(passwordTxt, usernameTxt);
             }
         });
 
-        registerNowBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Login.this, Register.class));
-            }
-        });
+        registerNowBtn.setOnClickListener(v -> startActivity(new Intent(Login.this, Register.class)));
     }
 
     public void loginFirebaseAndGetPlayer(String passwordTxt, String usernameTxt) {

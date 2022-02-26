@@ -48,48 +48,20 @@ public class Inventory extends AppCompatActivity {
         final Button torsoBtn = findViewById(R.id.torsoBtn);
         final Button miscBtn = findViewById(R.id.miscBtn);
 
-        basicWeaponBtn.setOnClickListener(v -> {
-            new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Basic Weapon");
-        });
-        specialWeaponBtn.setOnClickListener(v -> {
-            new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Special Weapon");
-        });
-        ultimateWeaponBtn.setOnClickListener(v -> {
-            new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Ultimate Weapon");
-        });
-        armsBtn.setOnClickListener(v -> {
-            new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Arms");
-        });
-        bootsBtn.setOnClickListener(v -> {
-            new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Boots");
-        });
-        capeBtn.setOnClickListener(v -> {
-            new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Cape");
-        });
-        glovesBtn.setOnClickListener(v -> {
-            new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Gloves");
-        });
-        helmetBtn.setOnClickListener(v -> {
-            new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Helmet");
-        });
-        legsBtn.setOnClickListener(v -> {
-            new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Legs");
-        });
-        lRingBtn.setOnClickListener(v -> {
-            new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Ring");
-        });
-        rRingBtn.setOnClickListener(v -> {
-            new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Ring");
-        });
-        neckBtn.setOnClickListener(v -> {
-            new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Neck");
-        });
-        torsoBtn.setOnClickListener(v -> {
-            new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Torso");
-        });
-        miscBtn.setOnClickListener(v -> {
-            new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "None");
-        });
+        basicWeaponBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Basic Weapon"));
+        specialWeaponBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Special Weapon"));
+        ultimateWeaponBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Ultimate Weapon"));
+        armsBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Arms"));
+        bootsBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Boots"));
+        capeBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Cape"));
+        glovesBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Gloves"));
+        helmetBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Helmet"));
+        legsBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Legs"));
+        lRingBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Ring"));
+        rRingBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Ring"));
+        neckBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Neck"));
+        torsoBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Torso"));
+        miscBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "None"));
     }
 
     @Override

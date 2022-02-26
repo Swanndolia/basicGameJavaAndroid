@@ -17,7 +17,6 @@ public class ItemHolder implements Serializable {
         this.amount = amountToSell;
         this.ownerName = ownerName;
         return this;
-
     }
 
     public Item getItem() {

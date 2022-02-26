@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.MessageFormat;
 import java.util.Random;
 import dev.swanndolia.idleasciimmorpg.R;
 import dev.swanndolia.idleasciimmorpg.characters.DefaultCharacter;
@@ -84,11 +85,11 @@ public class Fight extends AppCompatActivity {
         Item ultimateWeapon = player.getEquippedItem("Ultimate Weapon");
 
         if (basicWeapon != null) {
-            basicAttackBtn.setText(basicWeapon.getName() + " " + basicWeapon.getDamage() + " dmg");
+            basicAttackBtn.setText(MessageFormat.format("{0} {1} dmg", basicWeapon.getName(), basicWeapon.getDamage()));
             basicAttackBtn.setOnClickListener(v -> enemyAttackStep(playerAttackStep(basicWeapon)));
         }
         if (specialWeapon != null) {
-            specialAttackBtn.setText(specialWeapon.getName() + " " + specialWeapon.getDamage() + " dmg");
+            specialAttackBtn.setText(MessageFormat.format("{0} {1} dmg", specialWeapon.getName(), specialWeapon.getDamage()));
             specialAttackBtn.setOnClickListener(v -> {
                 if (player.getInventory().contains(new SpecialAmmunition().SpecialAmmunition())) {
                     enemyAttackStep(playerAttackStep(specialWeapon));
@@ -98,7 +99,7 @@ public class Fight extends AppCompatActivity {
             });
         }
         if (ultimateWeapon != null) {
-            ultimateAttackBtn.setText(ultimateWeapon.getName() + " " + ultimateWeapon.getDamage() + " dmg");
+            ultimateAttackBtn.setText(MessageFormat.format("{0} {1} dmg", ultimateWeapon.getName(), ultimateWeapon.getDamage()));
             ultimateAttackBtn.setOnClickListener(v -> {
                 if (player.getInventory().contains(new UltimateAmmunition().UltimateAmmunition())) {
                     enemyAttackStep(playerAttackStep(ultimateWeapon));
@@ -112,7 +113,7 @@ public class Fight extends AppCompatActivity {
 
     private void updatePlayerInfo() {
         playerHp.setProgress(player.getHp());
-        playerTextView.setText(player.getName() + " lvl " + player.getLevel() + " HP: " + player.getHp());
+        playerTextView.setText(MessageFormat.format("{0} lvl {1} HP: {2}", player.getName(), player.getLevel(), player.getHp()));
         if (player.getHp() <= 0) {
             Dialog dialog = new Dialog(this);
             dialog.setContentView(R.layout.player_dead_layout);
@@ -121,11 +122,11 @@ public class Fight extends AppCompatActivity {
             player.setExp(player.getExp() - lostExp);
             player.setCryptoCoins(player.getCryptoCoins() - lostCryptoCoins);
             TextView deadPlayerText = (TextView) dialog.findViewById(R.id.deadPlayerText);
-            deadPlayerText.setText(player.getName() + " has been killed by a " + enemyEncountered.getName() + " lvl " + enemyEncountered.getLevel());
+            deadPlayerText.setText(MessageFormat.format("{0} has been killed by a {1} lvl {2}", player.getName(), enemyEncountered.getName(), enemyEncountered.getLevel()));
             TextView lostCryptoCoinsText = (TextView) dialog.findViewById(R.id.lostCryptoCoinsText);
-            lostCryptoCoinsText.setText("You've lost " + lostCryptoCoins + " Crypto-coins");
+            lostCryptoCoinsText.setText(MessageFormat.format("You''ve lost {0} Crypto-coins", lostCryptoCoins));
             TextView lostExpTextView = (TextView) dialog.findViewById(R.id.lostExpText);
-            lostExpTextView.setText("You've lost " + lostExp + " exp");
+            lostExpTextView.setText(MessageFormat.format("You''ve lost {0} exp", lostExp));
             player.setHp(player.getMaxHp());
             dialog.show();
             dialog.setOnCancelListener(
@@ -137,7 +138,7 @@ public class Fight extends AppCompatActivity {
 
     private void updateEnemyInfo() {
         enemyHp.setProgress(enemyEncountered.getHp());
-        enemyTextView.setText(enemyEncountered.getName() + " lvl " + enemyEncountered.getLevel() + " HP: " + enemyEncountered.getHp());
+        enemyTextView.setText(MessageFormat.format("{0} lvl {1} HP: {2}", enemyEncountered.getName(), enemyEncountered.getLevel(), enemyEncountered.getHp()));
         if (enemyEncountered.getHp() <= 0) {
             new EnemyKilledOverlay().EnemyKilledOverlay(Fight.this, player, enemyEncountered);
         }

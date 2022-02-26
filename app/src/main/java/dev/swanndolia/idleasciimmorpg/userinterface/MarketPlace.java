@@ -19,11 +19,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.MessageFormat;
 import java.util.Map;
 
 import dev.swanndolia.idleasciimmorpg.R;
 import dev.swanndolia.idleasciimmorpg.characters.Player;
 import dev.swanndolia.idleasciimmorpg.items.Item;
+import dev.swanndolia.idleasciimmorpg.tools.firebase.GetRgbFromRarity;
 import dev.swanndolia.idleasciimmorpg.tools.market.ItemHolder;
 import dev.swanndolia.idleasciimmorpg.tools.player.ForceSaveInventoryList;
 import dev.swanndolia.idleasciimmorpg.tools.player.ListToMapInventory;
@@ -80,11 +82,9 @@ public class MarketPlace extends AppCompatActivity {
                         Item item = itemHolder.getItem();
 
                         Button marketItemListBtn = new Button(MarketPlace.this);
-                        if (itemHolder.getOwnerName().equals(player.getName())) {
-                            marketItemListBtn.setTextColor(getColor(R.color.purple_500));
-                        }
                         marketItemListBtn.setTextSize(20);
-                        marketItemListBtn.setText(item.getName() + " x " + itemHolder.getAmount() + "  Buy for: " + itemHolder.getAmount() * itemHolder.getPrice());
+                        marketItemListBtn.setTextColor(new GetRgbFromRarity().GetRgbFromRarity(item.getRarity()));
+                        marketItemListBtn.setText(MessageFormat.format("{0} x {1}  Buy for: {2}", item.getName(), itemHolder.getAmount(), itemHolder.getAmount() * itemHolder.getPrice()));
                         marketItemListBtn.setOnClickListener(view -> {
                             if (player.getCryptoCoins() >= itemHolder.getPrice() * itemHolder.getAmount()) {
                                 player.setCryptoCoins(player.getCryptoCoins() - itemHolder.getPrice() * itemHolder.getAmount());
@@ -123,7 +123,8 @@ public class MarketPlace extends AppCompatActivity {
             if (!entry.getKey().equals(new ForceSaveInventoryList().ForceSaveInventoryList())) {
                 Button inventoryItemListBtn = new Button(this);
                 inventoryItemListBtn.setTextSize(20);
-                inventoryItemListBtn.setText(entry.getKey().getName() + " x " + entry.getValue());
+                inventoryItemListBtn.setTextColor(new GetRgbFromRarity().GetRgbFromRarity(entry.getKey().getRarity()));
+                inventoryItemListBtn.setText(MessageFormat.format("{0} x {1}", entry.getKey().getName(), entry.getValue()));
                 inventoryItemListBtn.setOnClickListener(view -> {
                     final Integer[] amountToSell = {entry.getValue()};
                     Dialog dialog = new Dialog(MarketPlace.this);
@@ -133,7 +134,7 @@ public class MarketPlace extends AppCompatActivity {
                     Button minusBtn = (Button) dialog.findViewById(R.id.minusBtn);
                     Button itemSelectBtn = (Button) dialog.findViewById(R.id.itemSelectBtn);
                     EditText sellPriceField = (EditText) dialog.findViewById(R.id.sellPriceField);
-                    itemSelectBtn.setText(entry.getKey().getName() + " x " + amountToSell[0]);
+                    itemSelectBtn.setText(MessageFormat.format("{0} x {1}", entry.getKey().getName(), amountToSell[0]));
 
                     confirmBtn.setOnClickListener(view1 -> {
                         String priceString = sellPriceField.getText().toString();
@@ -149,13 +150,13 @@ public class MarketPlace extends AppCompatActivity {
                     plusBtn.setOnClickListener(view12 -> {
                         if (amountToSell[0] < entry.getValue()) {
                             amountToSell[0] += 1;
-                            itemSelectBtn.setText(entry.getKey().getName() + " x " + amountToSell[0]);
+                            itemSelectBtn.setText(MessageFormat.format("{0} x {1}", entry.getKey().getName(), amountToSell[0]));
                         }
                     });
                     minusBtn.setOnClickListener(view13 -> {
                         if (amountToSell[0] > 1) {
                             amountToSell[0] -= 1;
-                            itemSelectBtn.setText(entry.getKey().getName() + " x " + amountToSell[0]);
+                            itemSelectBtn.setText(MessageFormat.format("{0} x {1}", entry.getKey().getName(), amountToSell[0]));
                         }
                     });
                     itemSelectBtn.setOnClickListener(view14 -> dialog.dismiss());

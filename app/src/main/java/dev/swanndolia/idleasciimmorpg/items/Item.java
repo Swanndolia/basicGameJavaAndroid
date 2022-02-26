@@ -1,6 +1,11 @@
 package dev.swanndolia.idleasciimmorpg.items;
 
+
+import android.graphics.Color;
+
 import java.io.Serializable;
+
+import dev.swanndolia.idleasciimmorpg.items.rarity.Broken;
 
 public class Item implements Serializable {
 
@@ -16,16 +21,7 @@ public class Item implements Serializable {
     public int critDamage;
     public int accuracy;
     public Double critMultiplier;
-    public int color;
     public String rarity;
-
-    public int getColor() {
-        return color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
-    }
 
     public String getRarity() {
         return rarity;

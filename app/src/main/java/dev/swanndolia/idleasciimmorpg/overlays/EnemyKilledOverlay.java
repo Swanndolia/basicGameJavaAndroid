@@ -27,26 +27,26 @@ public class EnemyKilledOverlay {
 
         final Integer[] totalValue = {0};
 
-        LinearLayout itemListHolder = (LinearLayout) dialog.findViewById(R.id.itemListHolder);
-        TextView enemyKilledTitle = (TextView) dialog.findViewById(R.id.enemyKilledTitle);
+        LinearLayout itemListHolder = dialog.findViewById(R.id.itemListHolder);
+        TextView enemyKilledTitle = dialog.findViewById(R.id.enemyKilledTitle);
         enemyKilledTitle.setText("Good job " + player.getName() + " on killing a " + enemyEncountered.getName() + " lvl " + enemyEncountered.getLevel());
-        TextView rewardsList = (TextView) dialog.findViewById(R.id.rewardsList);
+        TextView rewardsList = dialog.findViewById(R.id.rewardsList);
         rewardsList.setText("You've won " + enemyEncountered.getExpReward() + " experience");
 
-        Button backMenu = (Button) dialog.findViewById(R.id.backToMenuBtn);
+        Button backMenu = dialog.findViewById(R.id.backToMenuBtn);
         backMenu.setOnClickListener(view -> {
             player.addInventory(enemyEncountered.getInventory());
             new ActivityLauncher().ActivityLauncher(context, Menu.class, player);
         });
 
-        Button exploreMore = (Button) dialog.findViewById(R.id.exploreAgainBtn);
+        Button exploreMore = dialog.findViewById(R.id.exploreAgainBtn);
         exploreMore.setOnClickListener(view -> {
             player.addInventory(enemyEncountered.getInventory());
             new ActivityLauncher().ActivityLauncher(context, Fight.class, player);
         });
 
-        Button sellAllLoot = (Button) dialog.findViewById(R.id.sellAllLootBtn);
-        Button takeAllLoot = (Button) dialog.findViewById(R.id.takeAllLootBtn);
+        Button sellAllLoot = dialog.findViewById(R.id.sellAllLootBtn);
+        Button takeAllLoot = dialog.findViewById(R.id.takeAllLootBtn);
         takeAllLoot.setOnClickListener(view -> {
             player.addInventory(enemyEncountered.getInventory());
             int amountToRemove = enemyEncountered.getInventory().size();

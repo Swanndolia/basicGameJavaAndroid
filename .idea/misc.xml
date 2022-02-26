@@ -29,10 +29,12 @@
         <entry key="app/src/main/res/layout/activity_town.xml" value="0.184375" />
         <entry key="app/src/main/res/layout/activity_trade.xml" value="0.18958333333333333" />
         <entry key="app/src/main/res/layout/add_item_marketplace.xml" value="0.18958333333333333" />
+        <entry key="app/src/main/res/layout/chat_overlay.xml" value="0.2" />
         <entry key="app/src/main/res/layout/enemy_drops_layout.xml" value="0.18958333333333333" />
         <entry key="app/src/main/res/layout/enemy_killed_dialog.xml" value="0.18958333333333333" />
         <entry key="app/src/main/res/layout/flee_confirm_layout.xml" value="0.18958333333333333" />
         <entry key="app/src/main/res/layout/player_dead_layout.xml" value="0.18958333333333333" />
+        <entry key="app/src/main/res/layout/settings_overlay.xml" value="0.184375" />
         <entry key="app/src/main/res/layout/take_or_sell_buttons.xml" value="0.18958333333333333" />
       </map>
     </option>
