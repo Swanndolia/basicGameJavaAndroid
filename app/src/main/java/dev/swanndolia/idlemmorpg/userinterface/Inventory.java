@@ -1,0 +1,85 @@
+package dev.swanndolia.idlemmorpg.userinterface;
+
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.ProgressBar;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import dev.swanndolia.idlemmorpg.R;
+import dev.swanndolia.idlemmorpg.characters.Player;
+import dev.swanndolia.idlemmorpg.tools.activity.ActivityLauncher;
+
+public class Inventory extends AppCompatActivity {
+    Player player;
+    ProgressBar expProgressBar;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = this.getIntent().getExtras();
+        player = (Player) bundle.getSerializable("player");
+        makePlayerAlwaysUpdated();
+        setContentView(R.layout.activity_inventory);
+
+        expProgressBar = (ProgressBar) findViewById(R.id.expProgressBar);
+        expProgressBar.setProgress(player.getExp());
+        expProgressBar.setMax(player.getNextLevelExp());
+
+        final Button basicWeaponBtn = findViewById(R.id.basicWeaponBtn);
+        final Button specialWeaponBtn = findViewById(R.id.specialWeaponBtn);
+        final Button ultimateWeaponBtn = findViewById(R.id.ultimateWeaponBtn);
+        final Button armsBtn = findViewById(R.id.armsBtn);
+        final Button capeBtn = findViewById(R.id.capeBtn);
+        final Button bootsBtn = findViewById(R.id.bootsBtn);
+        final Button glovesBtn = findViewById(R.id.glovesBtn);
+        final Button helmetBtn = findViewById(R.id.helmetBtn);
+        final Button legsBtn = findViewById(R.id.legsBtn);
+        final Button lRingBtn = findViewById(R.id.lRingBtn);
+        final Button rRingBtn = findViewById(R.id.rRingBtn);
+        final Button neckBtn = findViewById(R.id.neckBtn);
+        final Button torsoBtn = findViewById(R.id.torsoBtn);
+        final Button miscBtn = findViewById(R.id.miscBtn);
+
+        basicWeaponBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Basic Weapon"));
+        specialWeaponBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Special Weapon"));
+        ultimateWeaponBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Ultimate Weapon"));
+        armsBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Arms"));
+        bootsBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Boots"));
+        capeBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Cape"));
+        glovesBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Gloves"));
+        helmetBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Helmet"));
+        legsBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Legs"));
+        lRingBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Ring"));
+        rRingBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Ring"));
+        neckBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Neck"));
+        torsoBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "Torso"));
+        miscBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, CompareAndEquip.class, player, "None"));
+    }
+
+    @Override
+    public void onBackPressed() {
+        new ActivityLauncher().ActivityLauncher(this, Menu.class, player);
+    }
+
+    private void makePlayerAlwaysUpdated() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("users").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                player = snapshot.child(player.getName()).child("player").getValue(Player.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
+}

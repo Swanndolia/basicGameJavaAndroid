@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="dev.swanndolia.idleasciimmorpg">
+    package="dev.swanndolia.idlemmorpg">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -12,12 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LoginRegisterFirebase">
         <service
-            android:name=".tools.music.BackgroundMusicService"
+            android:name="dev.swanndolia.idlemmorpg.tools.music.BackgroundMusicService"
             android:enabled="true"
             android:exported="true"></service>
 
         <activity
-            android:name=".tools.activity.BootStrap"
+            android:name="dev.swanndolia.idlemmorpg.tools.activity.BootStrap"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,58 +26,58 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".userinterface.Register"
+            android:name="dev.swanndolia.idlemmorpg.userinterface.Register"
             android:exported="false" />
         <activity
-            android:name=".userinterface.Login"
+            android:name="dev.swanndolia.idlemmorpg.userinterface.Login"
             android:exported="false" />
         <activity
-            android:name=".userinterface.Menu"
+            android:name="dev.swanndolia.idlemmorpg.userinterface.Menu"
             android:exported="true" />
         <activity
-            android:name=".userinterface.Inventory"
+            android:name="dev.swanndolia.idlemmorpg.userinterface.Inventory"
             android:exported="false" />
         <activity
-            android:name=".userinterface.CompareAndEquip"
+            android:name="dev.swanndolia.idlemmorpg.userinterface.CompareAndEquip"
             android:exported="false" />
         <activity
-            android:name=".userinterface.Explore"
+            android:name="dev.swanndolia.idlemmorpg.userinterface.Explore"
             android:exported="false" />
         <activity
-            android:name=".userinterface.Fight"
+            android:name="dev.swanndolia.idlemmorpg.userinterface.Fight"
             android:exported="false" />
         <activity
-            android:name=".userinterface.Craft"
+            android:name="dev.swanndolia.idlemmorpg.userinterface.Craft"
             android:exported="false" />
         <activity
-            android:name=".userinterface.Smelt"
+            android:name="dev.swanndolia.idlemmorpg.userinterface.Smelt"
             android:exported="true" />
         <activity
-            android:name=".userinterface.Tinker"
+            android:name="dev.swanndolia.idlemmorpg.userinterface.Tinker"
             android:exported="false" />
         <activity
-            android:name=".userinterface.Fuse"
+            android:name="dev.swanndolia.idlemmorpg.userinterface.Fuse"
             android:exported="false" />
         <activity
-            android:name=".userinterface.Town"
+            android:name="dev.swanndolia.idlemmorpg.userinterface.Town"
             android:exported="false" />
         <activity
-            android:name=".userinterface.Trade"
+            android:name="dev.swanndolia.idlemmorpg.userinterface.Trade"
             android:exported="false" />
         <activity
-            android:name=".userinterface.Profile"
+            android:name="dev.swanndolia.idlemmorpg.userinterface.Profile"
             android:exported="false" />
         <activity
-            android:name=".userinterface.Guild"
+            android:name="dev.swanndolia.idlemmorpg.userinterface.Guild"
             android:exported="false" />
         <activity
-            android:name=".userinterface.Bestiary"
+            android:name="dev.swanndolia.idlemmorpg.userinterface.Bestiary"
             android:exported="false" />
         <activity
-            android:name=".userinterface.Store"
+            android:name="dev.swanndolia.idlemmorpg.userinterface.Store"
             android:exported="false" />
         <activity
-            android:name=".userinterface.MarketPlace"
+            android:name="dev.swanndolia.idlemmorpg.userinterface.MarketPlace"
             android:exported="false" />
     </application>
 

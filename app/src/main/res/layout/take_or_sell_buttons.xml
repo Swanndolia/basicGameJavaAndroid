@@ -3,12 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
-
+<ImageView
+    android:id="@+id/iconItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="0.3"></ImageView>
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonLeft"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5">
+        android:layout_weight="0.2">
 
     </androidx.appcompat.widget.AppCompatButton>
 
@@ -16,7 +20,7 @@
         android:id="@+id/buttonRight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5">
+        android:layout_weight="0.2">
 
     </androidx.appcompat.widget.AppCompatButton>
 </LinearLayout>
