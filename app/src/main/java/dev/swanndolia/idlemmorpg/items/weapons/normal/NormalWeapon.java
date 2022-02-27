@@ -8,6 +8,6 @@ import dev.swanndolia.idlemmorpg.items.weapons.Weapon;
 public class NormalWeapon extends Weapon implements Serializable {
     public NormalWeapon() {
         this.setSlot("Basic Weapon");
-        this.setIcon(R.drawable.sword);
+        this.setIcon(R.drawable.icon_basic_weapon);
     }
 }

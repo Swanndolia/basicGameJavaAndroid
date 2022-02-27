@@ -26,58 +26,58 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="dev.swanndolia.idlemmorpg.userinterface.Register"
+            android:name="dev.swanndolia.idlemmorpg.ui.main.Register"
             android:exported="false" />
         <activity
-            android:name="dev.swanndolia.idlemmorpg.userinterface.Login"
+            android:name="dev.swanndolia.idlemmorpg.ui.main.Login"
             android:exported="false" />
         <activity
-            android:name="dev.swanndolia.idlemmorpg.userinterface.Menu"
+            android:name="dev.swanndolia.idlemmorpg.ui.main.Menu"
             android:exported="true" />
         <activity
-            android:name="dev.swanndolia.idlemmorpg.userinterface.Inventory"
+            android:name="dev.swanndolia.idlemmorpg.ui.main.Inventory"
             android:exported="false" />
         <activity
-            android:name="dev.swanndolia.idlemmorpg.userinterface.CompareAndEquip"
+            android:name="dev.swanndolia.idlemmorpg.ui.main.CompareAndEquip"
             android:exported="false" />
         <activity
-            android:name="dev.swanndolia.idlemmorpg.userinterface.Explore"
+            android:name="dev.swanndolia.idlemmorpg.ui.main.Explore"
             android:exported="false" />
         <activity
-            android:name="dev.swanndolia.idlemmorpg.userinterface.Fight"
+            android:name="dev.swanndolia.idlemmorpg.ui.main.Fight"
             android:exported="false" />
         <activity
-            android:name="dev.swanndolia.idlemmorpg.userinterface.Craft"
+            android:name="dev.swanndolia.idlemmorpg.ui.main.Craft"
             android:exported="false" />
         <activity
-            android:name="dev.swanndolia.idlemmorpg.userinterface.Smelt"
+            android:name="dev.swanndolia.idlemmorpg.ui.main.Smelt"
             android:exported="true" />
         <activity
-            android:name="dev.swanndolia.idlemmorpg.userinterface.Tinker"
+            android:name="dev.swanndolia.idlemmorpg.ui.main.Tinker"
             android:exported="false" />
         <activity
-            android:name="dev.swanndolia.idlemmorpg.userinterface.Fuse"
+            android:name="dev.swanndolia.idlemmorpg.ui.main.Fuse"
             android:exported="false" />
         <activity
-            android:name="dev.swanndolia.idlemmorpg.userinterface.Town"
+            android:name="dev.swanndolia.idlemmorpg.ui.main.Town"
             android:exported="false" />
         <activity
-            android:name="dev.swanndolia.idlemmorpg.userinterface.Trade"
+            android:name="dev.swanndolia.idlemmorpg.ui.main.Trade"
             android:exported="false" />
         <activity
-            android:name="dev.swanndolia.idlemmorpg.userinterface.Profile"
+            android:name="dev.swanndolia.idlemmorpg.ui.main.Profile"
             android:exported="false" />
         <activity
-            android:name="dev.swanndolia.idlemmorpg.userinterface.Guild"
+            android:name="dev.swanndolia.idlemmorpg.ui.main.Guild"
             android:exported="false" />
         <activity
-            android:name="dev.swanndolia.idlemmorpg.userinterface.Bestiary"
+            android:name="dev.swanndolia.idlemmorpg.ui.main.Bestiary"
             android:exported="false" />
         <activity
-            android:name="dev.swanndolia.idlemmorpg.userinterface.Store"
+            android:name="dev.swanndolia.idlemmorpg.ui.main.Store"
             android:exported="false" />
         <activity
-            android:name="dev.swanndolia.idlemmorpg.userinterface.MarketPlace"
+            android:name="dev.swanndolia.idlemmorpg.ui.main.MarketPlace"
             android:exported="false" />
     </application>
 

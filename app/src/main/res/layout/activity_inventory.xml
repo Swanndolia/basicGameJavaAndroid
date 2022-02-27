@@ -5,7 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".userinterface.Inventory">
+    tools:context=".ui.main.Inventory">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background"></ImageView>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -39,121 +45,178 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/helmetBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="40dp"
                 android:layout_marginEnd="20dp"
-                android:text="Helmet" />
+                android:drawableLeft="@drawable/icon_helmet"
+                android:text="Helmet"
+                android:textColor="@color/cardview_dark_background"
+                app:strokeColor="@color/cardview_dark_background"
+                app:strokeWidth="2dp" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/neckBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:text="Neck" />
+                android:drawableLeft="@drawable/icon_neck"
+                android:text="Neck"
+                android:textColor="@color/cardview_dark_background"
+                app:strokeColor="@color/cardview_dark_background"
+                app:strokeWidth="2dp" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/torsoBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:text="Torso" />
-
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/armsBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:text="Arms" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/lRingBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:text="Left Ring" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/rRingBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:text="Right Ring" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/glovesBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:text="Gloves" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/legsBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:text="Legs" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/bootsBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:text="Boots" />
-
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/capeBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:text="Cape" />
+                android:drawableLeft="@drawable/icon_cape"
+                android:text="Cape"
+                android:textColor="@color/cardview_dark_background"
+                app:strokeColor="@color/cardview_dark_background"
+                app:strokeWidth="2dp" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/ultimateWeaponBtn"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/torsoBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:text="Ultimate Weapon" />
+                android:drawableLeft="@drawable/icon_torso"
+                android:text="Torso"
+                android:textColor="@color/cardview_dark_background"
+                app:strokeColor="@color/cardview_dark_background"
+                app:strokeWidth="2dp" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/specialWeaponBtn"
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/armsBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:text="Special Weapon" />
+                android:drawableLeft="@drawable/icon_torso"
+                android:text="Arms"
+                android:textColor="@color/cardview_dark_background"
+                app:strokeColor="@color/cardview_dark_background"
+                app:strokeWidth="2dp" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/lRingBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:drawableLeft="@drawable/icon_ring"
+                android:text="Left Ring"
+                android:textColor="@color/cardview_dark_background"
+                app:strokeColor="@color/cardview_dark_background"
+                app:strokeWidth="2dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/rRingBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:drawableLeft="@drawable/icon_ring"
+                android:text="Right Ring"
+                android:textColor="@color/cardview_dark_background"
+                app:strokeColor="@color/cardview_dark_background"
+                app:strokeWidth="2dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/glovesBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:drawableLeft="@drawable/icon_ring"
+                android:text="Gloves"
+                android:textColor="@color/cardview_dark_background"
+                app:strokeColor="@color/cardview_dark_background"
+                app:strokeWidth="2dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/legsBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:drawableLeft="@drawable/icon_boots"
+                android:text="Legs"
+                android:textColor="@color/cardview_dark_background"
+                app:strokeColor="@color/cardview_dark_background"
+                app:strokeWidth="2dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bootsBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:drawableLeft="@drawable/icon_boots"
+                android:text="Boots"
+                android:textColor="@color/cardview_dark_background"
+                app:strokeColor="@color/cardview_dark_background"
+                app:strokeWidth="2dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/rangedWeaponBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:drawableLeft="@drawable/icon_ranged_weapon"
+                android:text="Ranged Weapon"
+                android:textColor="@color/cardview_dark_background"
+                app:strokeColor="@color/cardview_dark_background"
+                app:strokeWidth="2dp" />
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/basicWeaponBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:text="Basic Weapon" />
+                android:drawableLeft="@drawable/icon_basic_weapon"
+                android:text="Basic Weapon"
+                android:textColor="@color/cardview_dark_background"
+                app:strokeColor="@color/cardview_dark_background"
+                app:strokeWidth="2dp" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/miscBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:text="Drops and Misc" />
+                android:drawableLeft="@drawable/icon_inventory"
+                android:text="Drops and Misc"
+                android:textColor="@color/cardview_dark_background"
+                app:strokeColor="@color/cardview_dark_background"
+                app:strokeWidth="2dp" />
         </LinearLayout>
     </ScrollView>
 

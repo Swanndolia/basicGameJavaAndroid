@@ -2,18 +2,24 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".userinterface.Menu">
+    tools:context=".ui.main.Menu">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background"></ImageView>
 
     <ImageButton
         android:id="@+id/chatBtn"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/chat_icon"
-        android:layout_margin="10dp" />
+        android:layout_margin="10dp"
+        android:background="@drawable/icon_chat" />
 
     <ImageButton
         android:id="@+id/settingsBtn"
@@ -21,8 +27,8 @@
         android:layout_height="40dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/settings_icon"
-        android:layout_margin="10dp" />
+        android:layout_margin="10dp"
+        android:background="@drawable/icon_settings" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -55,14 +61,18 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/exploreBtn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="110dp"
             android:layout_marginEnd="20dp"
-            android:text="Explore" />
+            android:text="Explore"
+            android:textColor="@color/cardview_dark_background"
+            app:strokeColor="@color/cardview_dark_background"
+            app:strokeWidth="4dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -74,19 +84,29 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/craftBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:layout_weight="0.5"
-                android:text="Craft" />
+                android:text="Craft"
+                android:textColor="@color/cardview_dark_background"
+                app:strokeColor="@color/cardview_dark_background"
+                app:strokeWidth="2dp" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/smeltBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:layout_weight="0.5"
-                android:text="Smelt" />
+                android:text="Smelt"
+                android:textColor="@color/cardview_dark_background"
+                app:strokeColor="@color/cardview_dark_background"
+                app:strokeWidth="2dp" />
 
 
         </LinearLayout>
@@ -96,35 +116,50 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:textColor="@color/white">
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/tinkerBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:layout_weight="0.5"
-                android:text="Tinker" />
+                android:text="Tinker"
+                android:textColor="@color/cardview_dark_background"
+                app:strokeColor="@color/cardview_dark_background"
+                app:strokeWidth="2dp" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/fuseBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:layout_weight="0.5"
-                android:text="Fuse" />
+                android:text="Fuse"
+                android:textColor="@color/cardview_dark_background"
+                app:strokeColor="@color/cardview_dark_background"
+                app:strokeWidth="2dp" />
 
         </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/townBtn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
-            android:text="Town" />
+            android:text="Town"
+            android:textColor="@color/cardview_dark_background"
+            app:strokeColor="@color/cardview_dark_background"
+            app:strokeWidth="4dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -135,19 +170,29 @@
             android:layout_marginEnd="20dp"
             android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/inventoryBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:layout_weight="0.5"
-                android:text="Inventory" />
+                android:text="Inventory"
+                android:textColor="@color/cardview_dark_background"
+                app:strokeColor="@color/cardview_dark_background"
+                app:strokeWidth="2dp" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/profileBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:layout_weight="0.5"
-                android:text="Profile" />
+                android:text="Profile"
+                android:textColor="@color/cardview_dark_background"
+                app:strokeColor="@color/cardview_dark_background"
+                app:strokeWidth="2dp" />
 
         </LinearLayout>
 
@@ -156,34 +201,47 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="0dp"
             android:layout_marginEnd="20dp"
             android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/bestiaryBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:layout_weight="0.5"
-                android:text="Bestiary" />
+                android:text="Bestiary"
+                android:textColor="@color/cardview_dark_background"
+                app:strokeColor="@color/cardview_dark_background"
+                app:strokeWidth="2dp" />
 
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/guildBtn"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:layout_weight="0.5"
-                android:text="Guild" />
+                android:text="Guild"
+                android:textColor="@color/cardview_dark_background"
+                app:strokeColor="@color/cardview_dark_background"
+                app:strokeWidth="2dp" />
 
         </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/storeBtn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
-            android:text="Store" />
+            android:text="Store"
+            android:textColor="@color/cardview_dark_background"
+            app:strokeColor="@color/cardview_dark_background"
+            app:strokeWidth="4dp" />
     </LinearLayout>
 </RelativeLayout>

@@ -16,6 +16,6 @@ public class BrokenBow extends RangedWeapon implements Serializable, Broken {
         this.setCritMultiplier(3.0);
         this.calculateCritDamage();
         this.Broken(this);
-        this.setIcon(R.drawable.bow);
+        this.setIcon(R.drawable.icon_ranged_weapon);
     }
 }

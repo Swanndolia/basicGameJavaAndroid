@@ -12,8 +12,9 @@ import dev.swanndolia.idlemmorpg.items.armor.torso.BasicTunic;
 import dev.swanndolia.idlemmorpg.items.weapons.normal.BrokenSword;
 import dev.swanndolia.idlemmorpg.items.weapons.ranged.BrokenBow;
 import dev.swanndolia.idlemmorpg.tools.player.ForceSaveInventoryList;
+import dev.swanndolia.idlemmorpg.tools.player.PlayerStats;
 
-public class Player implements Serializable {
+public class Player extends PlayerStats implements Serializable {
 
     String name;
     Integer hp;
@@ -21,7 +22,7 @@ public class Player implements Serializable {
     Integer maxMp;
     Integer level;
     Integer arrow;
-    Integer cryptoCoins;
+    Integer coins;
     Integer luck;
     Integer maxHp;
     Integer evade;
@@ -43,7 +44,7 @@ public class Player implements Serializable {
         this.exp = 0;
         this.nextLevelExp = 8;
         this.arrow = 0;
-        this.cryptoCoins = 0;
+        this.coins = 0;
         this.luck = 0;
         this.evade = 0;
         this.inventory = new ArrayList<Item>();
@@ -130,26 +131,26 @@ public class Player implements Serializable {
     }
 
     public void addCryptoCoins(Integer cryptoCoins) {
-        this.cryptoCoins += cryptoCoins;
+        this.coins += cryptoCoins;
         this.savePlayer();
     }
 
 
-    public Integer getSpecialAmmo() {
+    public Integer getArrow() {
         return arrow;
     }
 
-    public void setSpecialAmmo(Integer specialAmmo) {
-        this.arrow = specialAmmo;
+    public void setArrow(Integer arrow) {
+        this.arrow = arrow;
 
     }
 
-    public Integer getCryptoCoins() {
-        return cryptoCoins;
+    public Integer getCoins() {
+        return coins;
     }
 
-    public void setCryptoCoins(Integer cryptoCoins) {
-        this.cryptoCoins = cryptoCoins;
+    public void setCoins(Integer coins) {
+        this.coins = coins;
 
     }
 
