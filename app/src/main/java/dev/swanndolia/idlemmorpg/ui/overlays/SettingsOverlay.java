@@ -2,28 +2,27 @@ package dev.swanndolia.idlemmorpg.ui.overlays;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
-import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
-
+import dev.swanndolia.idlemmorpg.R;
+import dev.swanndolia.idlemmorpg.tools.music.BackgroundMusicService;
 import dev.swanndolia.idlemmorpg.ui.main.Login;
 import dev.swanndolia.idlemmorpg.tools.activity.ActivityLauncher;
+import dev.swanndolia.idlemmorpg.ui.main.Menu;
 
 public class SettingsOverlay {
-    public void SettingsOverlay(Context context, SharedPreferences sharedPreferences) {
+
+    public SettingsOverlay(Context context, SharedPreferences sharedPreferences) {
         Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.overlay_settings);
         dialog.setTitle("Customize your settings here !");
-        LinearLayout settingsOverlay = new LinearLayout(context);
-        settingsOverlay.setOrientation(LinearLayout.VERTICAL);
-        LinearLayout soundSettingsLayout = new LinearLayout(context);
-        TextView soundTextView = new TextView(context);
-        soundTextView.setText("Volume: ");
-        SeekBar soundSeekBar = new SeekBar(context);
+
+        SeekBar soundSeekBar = dialog.findViewById(R.id.volumeMusicBar);
         soundSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onStopTrackingTouch(SeekBar arg0) {
@@ -37,43 +36,23 @@ public class SettingsOverlay {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
                 //send command to music service somehow
+                Intent musicService = new Intent(context, BackgroundMusicService.class);
+                if (progress == 0) {
+                    context.stopService(musicService);
+                } else if (progress == 100) {
+                    context.startService(musicService);
+                }
             }
         });
-        soundSettingsLayout.addView(soundTextView);
-        soundSettingsLayout.addView(soundSeekBar);
-        settingsOverlay.addView(soundSettingsLayout);
 
-        Button disconnectBtn = new Button(context);
-        disconnectBtn.setText("DISCONNECT");
-        disconnectBtn.setBackgroundColor(ContextCompat.getColor(context, com.google.android.material.R.color.design_default_color_error));
-        Dialog finalDialog = dialog;
+        Button disconnectBtn = dialog.findViewById(R.id.disconnectBtn);
         disconnectBtn.setOnClickListener(view -> {
-
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean("stayLogin", false);
+            editor.clear();
             editor.apply();
-            finalDialog.dismiss();
-            new ActivityLauncher().ActivityLauncher(context, Login.class);
-
+            dialog.dismiss();
+            new ActivityLauncher(context, Login.class);
         });
-        TextView discordTextView = new TextView(context);
-        discordTextView.setText("discord ic");
-        TextView githubTextView = new TextView(context);
-        githubTextView.setText("github là");
-        TextView settings1TextView = new TextView(context);
-        settings1TextView.setText("jsp encore ic");
-        TextView settings2TextView = new TextView(context);
-        settings2TextView.setText("jsp la nn plus");
-        TextView settings3TextView = new TextView(context);
-        settings3TextView.setText("et la nn plus");
-
-        settingsOverlay.addView(discordTextView);
-        settingsOverlay.addView(githubTextView);
-        settingsOverlay.addView(settings1TextView);
-        settingsOverlay.addView(settings2TextView);
-        settingsOverlay.addView(settings3TextView);
-        settingsOverlay.addView(disconnectBtn);
-        dialog.setContentView(settingsOverlay);
 
         Window window = dialog.getWindow();
         window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);

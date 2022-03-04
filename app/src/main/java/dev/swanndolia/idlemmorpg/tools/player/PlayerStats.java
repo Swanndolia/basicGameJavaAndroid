@@ -3,12 +3,12 @@ package dev.swanndolia.idlemmorpg.tools.player;
 import java.io.Serializable;
 
 public class PlayerStats implements Serializable {
-    public Integer getRareEnemyKilled() {
-        return rareEnemyKilled;
+    public Integer getEnemyKilled() {
+        return enemyKilled;
     }
 
-    public void setRareEnemyKilled(int rareEnemyKilled) {
-        this.rareEnemyKilled = rareEnemyKilled;
+    public void setEnemyKilled(int rareEnemyKilled) {
+        this.enemyKilled = enemyKilled;
     }
 
     public Integer getLegendaryEnemyKilled() {
@@ -75,7 +75,7 @@ public class PlayerStats implements Serializable {
         this.itemSoldMarket = itemSoldMarket;
     }
 
-    Integer rareEnemyKilled;
+    Integer enemyKilled;
     Integer legendaryEnemyKilled;
     Integer deaths;
     Integer uniqueItemFound;
@@ -86,7 +86,7 @@ public class PlayerStats implements Serializable {
     Integer itemSoldMarket;
 
     public PlayerStats() {
-        this.rareEnemyKilled = 0;
+        this.enemyKilled = 0;
         this.legendaryEnemyKilled = 0;
         this.deaths = 0;
         this.uniqueItemFound = 0;

@@ -30,9 +30,9 @@ import dev.swanndolia.idlemmorpg.tools.chat.MessageHolder;
 public class ChatOverlay {
     LinearLayout messagesHolder;
 
-    public void ChatOverlay(Context context, Player player) {
+    public ChatOverlay(Context context, Player player) {
         Dialog dialog = new Dialog(context);
-        dialog.setContentView(R.layout.chat_overlay);
+        dialog.setContentView(R.layout.overlay_chat);
         messagesHolder = dialog.findViewById(R.id.messagesHolder);
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         EditText messageBox = dialog.findViewById(R.id.messageBox);

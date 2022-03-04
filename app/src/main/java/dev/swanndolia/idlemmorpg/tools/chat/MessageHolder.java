@@ -5,13 +5,16 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import java.io.Serializable;
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
 
-public class MessageHolder {
+public class MessageHolder implements Serializable {
     String sender;
     String message;
     String date;
+
+    public MessageHolder() {}
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public MessageHolder(String messageToSend, String sender) {

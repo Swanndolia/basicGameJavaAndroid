@@ -112,7 +112,7 @@ public class CompareAndEquip extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        new ActivityLauncher().ActivityLauncher(this, Inventory.class, player);
+        new ActivityLauncher(this, Inventory.class, player);
     }
     private void makePlayerAlwaysUpdated() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();

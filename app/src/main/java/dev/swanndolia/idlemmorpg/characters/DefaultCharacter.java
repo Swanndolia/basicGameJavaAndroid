@@ -1,12 +1,13 @@
 package dev.swanndolia.idlemmorpg.characters;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import dev.swanndolia.idlemmorpg.items.Item;
 
-public class DefaultCharacter {
+public class DefaultCharacter implements Serializable {
     String name;
     String desc;
     Integer hp;
@@ -79,13 +80,18 @@ public class DefaultCharacter {
     public Integer getDamage() {
         return damage;
     }
-    public Integer getCritDamage(){
-        return (int) (this.damage * this.critMultiplier);
+
+    public Integer getCritDamage() {
+        if (this.damage != null && this.critMultiplier != null) {
+            return (int) (this.damage * this.critMultiplier);
+        }
+        return null;
     }
 
     public Double getCritMultiplier() {
         return this.critMultiplier;
     }
+
     public void setCritMultiplier(Double critMultiplier) {
         this.critMultiplier = critMultiplier;
     }
@@ -97,6 +103,7 @@ public class DefaultCharacter {
     public void setCritChance(Integer critChance) {
         this.critChance = critChance;
     }
+
     public Integer getAccuracy() {
         return accuracy;
     }
@@ -123,6 +130,7 @@ public class DefaultCharacter {
         }
         this.inventory = inventory;
     }
+
     public void removeInventory(Item item) {
         this.inventory.remove(item);
     }

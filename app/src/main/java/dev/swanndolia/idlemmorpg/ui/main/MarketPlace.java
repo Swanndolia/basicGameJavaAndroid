@@ -94,7 +94,7 @@ public class MarketPlace extends AppCompatActivity {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot1) {
                                         Player owner = snapshot1.child("player").getValue(Player.class);
-                                        owner.addCryptoCoins(itemHolder.getPrice() * itemHolder.getAmount());
+                                        owner.addCoins(itemHolder.getPrice() * itemHolder.getAmount());
                                     }
 
                                     @Override
@@ -128,7 +128,7 @@ public class MarketPlace extends AppCompatActivity {
                 inventoryItemListBtn.setOnClickListener(view -> {
                     final Integer[] amountToSell = {entry.getValue()};
                     Dialog dialog = new Dialog(MarketPlace.this);
-                    dialog.setContentView(R.layout.add_item_marketplace);
+                    dialog.setContentView(R.layout.overlay_add_item_marketplace);
                     Button confirmBtn = (Button) dialog.findViewById(R.id.confirmBtn);
                     Button plusBtn = (Button) dialog.findViewById(R.id.plusBtn);
                     Button minusBtn = (Button) dialog.findViewById(R.id.minusBtn);

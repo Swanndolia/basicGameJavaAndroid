@@ -13,6 +13,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.MessageFormat;
+
 import dev.swanndolia.idlemmorpg.R;
 import dev.swanndolia.idlemmorpg.characters.Player;
 import dev.swanndolia.idlemmorpg.tools.activity.ActivityLauncher;
@@ -42,23 +44,21 @@ public class Profile extends AppCompatActivity {
         TextView playerDeaths = findViewById(R.id.playerDeathsStats);
         playerDeaths.setText(player.getDeaths().toString());
 
-        TextView playerLevel = findViewById(R.id.playerExpStats);
-        playerLevel.setText(player.getLevel().toString());
         TextView playerExp = findViewById(R.id.playerExpStats);
-        playerExp.setText(player.getExp().toString() + " / " + player.getNextLevelExp().toString());
+        playerExp.setText(MessageFormat.format("Level: {0}({1} / {2})", player.getLevel().toString(), player.getExp().toString(), player.getNextLevelExp().toString()));
 
         TextView playerHp = findViewById(R.id.playerHpStats);
-        playerHp.setText(player.getHp().toString() + " / " + player.getMaxHp().toString());
+        playerHp.setText(MessageFormat.format("{0} / {1}", player.getHp().toString(), player.getMaxHp().toString()));
         TextView playerMaxMp = findViewById(R.id.playerMpStats);
-        playerMaxMp.setText(player.getMp().toString() + " / " + player.getMaxMp().toString());
+        playerMaxMp.setText(MessageFormat.format("{0} / {1}", player.getMp().toString(), player.getMaxMp().toString()));
 
-
+        //TODO
         player.getItemBoughtMarket();
         player.getItemSoldMarket();
         player.getLegendaryEnemyKilled();
         player.getLegendaryItemFound();
         player.getUniqueItemFound();
-        player.getRareEnemyKilled();
+        player.getEnemyKilled();
         player.getMoneyGained();
         player.getQuestCompleted();
 
@@ -81,6 +81,6 @@ public class Profile extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        new ActivityLauncher().ActivityLauncher(this, Menu.class, player);
+        new ActivityLauncher(this, Menu.class, player);
     }
 }

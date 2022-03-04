@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import dev.swanndolia.idlemmorpg.R;
 import dev.swanndolia.idlemmorpg.characters.Player;
+import dev.swanndolia.idlemmorpg.tools.activity.Tutorial;
 import dev.swanndolia.idlemmorpg.ui.overlays.ChatOverlay;
 import dev.swanndolia.idlemmorpg.ui.overlays.SettingsOverlay;
 import dev.swanndolia.idlemmorpg.tools.activity.ActivityLauncher;
@@ -30,12 +31,15 @@ public class Menu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getIntent().getExtras();
         player = (Player) bundle.getSerializable("player");
+        if(bundle.getSerializable("tutorial") != null &&(Boolean)  bundle.getSerializable("tutorial")){
+            new Tutorial(this, player);
+        }
         makePlayerAlwaysUpdated();
 
         setContentView(R.layout.activity_menu);
         setContentView(R.layout.activity_menu);
 
-        expProgressBar = (ProgressBar) findViewById(R.id.expProgressBar);
+        expProgressBar = findViewById(R.id.expProgressBar);
         expProgressBar.setMax(player.getNextLevelExp());
         expProgressBar.setProgress(player.getExp());
 
@@ -55,20 +59,20 @@ public class Menu extends AppCompatActivity {
 
 
 
-        exploreBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, Explore.class, player));
-        inventoryBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, Inventory.class, player));
-        craftBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, Craft.class, player));
-        smeltBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, Smelt.class, player));
-        tinkerBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, Tinker.class, player));
-        fuseBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, Fuse.class, player));
-        townBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, Town.class, player));
-        inventoryBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, Inventory.class, player));
-        profileBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, Profile.class, player));
-        bestiaryBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, Bestiary.class, player));
-        guildBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, Guild.class, player));
-        storeBtn.setOnClickListener(v -> new ActivityLauncher().ActivityLauncher(this, Store.class, player));
-        settingsBtn.setOnClickListener(v -> new SettingsOverlay().SettingsOverlay(this, getSharedPreferences("AUTO_LOGIN", Context.MODE_PRIVATE)));
-        chatBtn.setOnClickListener(v -> new ChatOverlay().ChatOverlay(this, player));
+        exploreBtn.setOnClickListener(v -> new ActivityLauncher(this, Explore.class, player));
+        inventoryBtn.setOnClickListener(v -> new ActivityLauncher(this, Inventory.class, player));
+        craftBtn.setOnClickListener(v -> new ActivityLauncher(this, Craft.class, player));
+        smeltBtn.setOnClickListener(v -> new ActivityLauncher(this, Smelt.class, player));
+        tinkerBtn.setOnClickListener(v -> new ActivityLauncher(this, Tinker.class, player));
+        fuseBtn.setOnClickListener(v -> new ActivityLauncher(this, Fuse.class, player));
+        townBtn.setOnClickListener(v -> new ActivityLauncher(this, Town.class, player));
+        inventoryBtn.setOnClickListener(v -> new ActivityLauncher(this, Inventory.class, player));
+        profileBtn.setOnClickListener(v -> new ActivityLauncher(this, Profile.class, player));
+        bestiaryBtn.setOnClickListener(v -> new ActivityLauncher(this, Bestiary.class, player));
+        guildBtn.setOnClickListener(v -> new ActivityLauncher(this, Guild.class, player));
+        storeBtn.setOnClickListener(v -> new ActivityLauncher(this, Store.class, player));
+        settingsBtn.setOnClickListener(v -> new SettingsOverlay(this, getSharedPreferences("AUTO_LOGIN", Context.MODE_PRIVATE)));
+        chatBtn.setOnClickListener(v -> new ChatOverlay(this, player));
     }
 
     private void makePlayerAlwaysUpdated() {

@@ -1,4 +1,4 @@
-package dev.swanndolia.idlemmorpg.items.drops.fields.chickendrops;
+package dev.swanndolia.idlemmorpg.items.drops.fields;
 
 import java.io.Serializable;
 

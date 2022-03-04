@@ -60,8 +60,6 @@ public class Register extends AppCompatActivity {
 
                             Toast.makeText(Register.this, "User successfully Register", Toast.LENGTH_SHORT).show();
                             Player player = new Player(usernameTxt);
-                            Intent intent = new Intent(Register.this, Menu.class);
-                            intent.putExtra("player", player);
                             if (stayLoginCheckBox.isChecked()) {
                                 SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
                                 editor.putString("username", usernameTxt);
@@ -69,6 +67,9 @@ public class Register extends AppCompatActivity {
                                 editor.putBoolean("stayLogin", true);
                                 editor.apply();
                             }
+                            Intent intent = new Intent(Register.this, Menu.class);
+                            intent.putExtra("player", player);
+                            intent.putExtra("tutorial", true);
                             startActivity(intent);
                             finish();
                         }

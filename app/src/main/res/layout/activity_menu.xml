@@ -22,6 +22,15 @@
         android:background="@drawable/icon_chat" />
 
     <ImageButton
+        android:id="@+id/questBtn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/icon_quests" />
+
+    <ImageButton
         android:id="@+id/settingsBtn"
         android:layout_width="40dp"
         android:layout_height="40dp"

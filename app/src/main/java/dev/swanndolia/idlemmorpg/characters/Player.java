@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dev.swanndolia.idlemmorpg.items.Item;
-import dev.swanndolia.idlemmorpg.items.armor.torso.BasicTunic;
 import dev.swanndolia.idlemmorpg.items.weapons.normal.BrokenSword;
-import dev.swanndolia.idlemmorpg.items.weapons.ranged.BrokenBow;
 import dev.swanndolia.idlemmorpg.tools.player.ForceSaveInventoryList;
 import dev.swanndolia.idlemmorpg.tools.player.PlayerStats;
 
@@ -130,7 +128,7 @@ public class Player extends PlayerStats implements Serializable {
         }
     }
 
-    public void addCryptoCoins(Integer cryptoCoins) {
+    public void addCoins(Integer cryptoCoins) {
         this.coins += cryptoCoins;
         this.savePlayer();
     }
@@ -170,7 +168,6 @@ public class Player extends PlayerStats implements Serializable {
     public void setEvade(Integer evade) {
         this.evade = evade;
     }
-
 
     public List<Item> getInventory() {
         return this.inventory;
@@ -245,8 +242,6 @@ public class Player extends PlayerStats implements Serializable {
         this.addInventory(new ForceSaveInventoryList());
         this.addEquippedInventory(new ForceSaveInventoryList());
         this.addEquippedInventory(new BrokenSword());
-        this.addEquippedInventory(new BrokenBow());
-        this.addEquippedInventory(new BasicTunic());
         this.savePlayer();
     }
 

@@ -33,7 +33,11 @@
         <entry key="app/src/main/res/layout/enemy_drops_layout.xml" value="0.18958333333333333" />
         <entry key="app/src/main/res/layout/enemy_killed_dialog.xml" value="0.18958333333333333" />
         <entry key="app/src/main/res/layout/flee_confirm_layout.xml" value="0.18958333333333333" />
+        <entry key="app/src/main/res/layout/overlay_healer.xml" value="0.18645833333333334" />
+        <entry key="app/src/main/res/layout/overlay_quests.xml" value="0.18645833333333334" />
+        <entry key="app/src/main/res/layout/overlay_tutorial.xml" value="0.31567028985507245" />
         <entry key="app/src/main/res/layout/player_dead_layout.xml" value="0.18958333333333333" />
+        <entry key="app/src/main/res/layout/recipe_layout.xml" value="0.18645833333333334" />
         <entry key="app/src/main/res/layout/settings_overlay.xml" value="0.184375" />
         <entry key="app/src/main/res/layout/take_or_sell_buttons.xml" value="0.18958333333333333" />
       </map>

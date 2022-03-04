@@ -24,7 +24,7 @@ import dev.swanndolia.idlemmorpg.tools.activity.ActivityLauncher;
 public class EnemyKilledOverlay {
     public void EnemyKilledOverlay(Context context, Player player, DefaultCharacter enemyEncountered) {
         Dialog dialog = new Dialog(context);
-        dialog.setContentView(R.layout.enemy_drops_layout);
+        dialog.setContentView(R.layout.overlay_enemy_drops);
 
         final Integer[] totalValue = {0};
 
@@ -37,13 +37,13 @@ public class EnemyKilledOverlay {
         Button backMenu = dialog.findViewById(R.id.backToMenuBtn);
         backMenu.setOnClickListener(view -> {
             player.addInventory(enemyEncountered.getInventory());
-            new ActivityLauncher().ActivityLauncher(context, Menu.class, player);
+            new ActivityLauncher(context, Menu.class, player);
         });
 
         Button exploreMore = dialog.findViewById(R.id.exploreAgainBtn);
         exploreMore.setOnClickListener(view -> {
             player.addInventory(enemyEncountered.getInventory());
-            new ActivityLauncher().ActivityLauncher(context, Fight.class, player);
+            new ActivityLauncher(context, Fight.class, player);
         });
 
         Button sellAllLoot = dialog.findViewById(R.id.sellAllLootBtn);
@@ -59,7 +59,7 @@ public class EnemyKilledOverlay {
 
         Integer finalTotalValue = totalValue[0];
         sellAllLoot.setOnClickListener(view -> {
-            player.addCryptoCoins(finalTotalValue);
+            player.addCoins(finalTotalValue);
             int amountToRemove = enemyEncountered.getInventory().size();
             enemyEncountered.setInventory(new HashMap<>());
             itemListHolder.removeViews(0, amountToRemove);
@@ -92,7 +92,7 @@ public class EnemyKilledOverlay {
             sellOneItem.setOnClickListener(view -> {
                 totalValue[0] -= item.getSellValue();
                 enemyEncountered.removeInventory(item);
-                player.addCryptoCoins(item.getSellValue());
+                player.addCoins(item.getSellValue());
                 itemListHolder.removeView(rewardAction);
                 if (itemListHolder.getChildCount() == 0) {
                     sellAllLoot.setVisibility(View.GONE);

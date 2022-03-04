@@ -40,7 +40,7 @@ public class Login extends AppCompatActivity {
             String usernameFromPref = (String) bundle.getSerializable("username");
             String passwordFromPref = (String) bundle.getSerializable("password");
             if (autologin) {
-                loginFirebaseAndGetPlayer(usernameFromPref, passwordFromPref);
+                loginFirebaseAndGetPlayer(passwordFromPref, usernameFromPref);
                 if (isLogged) {
                     finish();
                 }
@@ -96,7 +96,7 @@ public class Login extends AppCompatActivity {
                         Toast.makeText(Login.this, "Password incorrect", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(Login.this, "Email don't exist, create an account first", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login.this, "Username don't exist, create an account first", Toast.LENGTH_SHORT).show();
                 }
             }
 

@@ -1,7 +1,6 @@
 package dev.swanndolia.idlemmorpg.ui.main;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,12 +22,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.MessageFormat;
 import java.util.Random;
+
 import dev.swanndolia.idlemmorpg.R;
 import dev.swanndolia.idlemmorpg.characters.DefaultCharacter;
 import dev.swanndolia.idlemmorpg.characters.Player;
 import dev.swanndolia.idlemmorpg.items.Item;
 import dev.swanndolia.idlemmorpg.items.weapons.ranged.Arrow;
-import dev.swanndolia.idlemmorpg.location.fields.GenerateEnemy;
+import dev.swanndolia.idlemmorpg.enemyzones.fields.GenerateEnemy;
 import dev.swanndolia.idlemmorpg.ui.overlays.EnemyKilledOverlay;
 import dev.swanndolia.idlemmorpg.tools.activity.ActivityLauncher;
 import dev.swanndolia.idlemmorpg.tools.animations.CustomAnimationDrawableNew;
@@ -39,7 +39,6 @@ public class Fight extends AppCompatActivity {
     TextView enemyTextView;
     Button basicAttackBtn;
     Button rangedAttackBtn;
-    Button ultimateAttackBtn;
     DefaultCharacter enemyEncountered;
     Player player;
     ProgressBar playerHp;
@@ -56,17 +55,17 @@ public class Fight extends AppCompatActivity {
         enemyEncountered = new GenerateEnemy().GenerateEnemy(location, player);
         setContentView(R.layout.activity_fight);
 
-        expProgressBar = (ProgressBar) findViewById(R.id.expProgressBar);
+        expProgressBar = findViewById(R.id.expProgressBar);
         expProgressBar.setProgress(player.getExp());
         expProgressBar.setMax(player.getNextLevelExp());
 
-        playerAnimationView = (ImageView) findViewById(R.id.playerAnim);
-        playerTextView = (TextView) findViewById(R.id.playerInfo);
-        playerHp = (ProgressBar) findViewById(R.id.playerHp);
-        enemyTextView = (TextView) findViewById(R.id.enemyInfo);
-        enemyHp = (ProgressBar) findViewById(R.id.enemyHp);
-        basicAttackBtn = (Button) findViewById(R.id.basicWeaponBtn);
-        rangedAttackBtn = (Button) findViewById(R.id.rangedWeaponBtn);
+        playerAnimationView = findViewById(R.id.playerAnim);
+        playerTextView = findViewById(R.id.playerInfo);
+        playerHp = findViewById(R.id.playerHp);
+        enemyTextView = findViewById(R.id.enemyInfo);
+        enemyHp = findViewById(R.id.enemyHp);
+        basicAttackBtn = findViewById(R.id.basicWeaponBtn);
+        rangedAttackBtn = findViewById(R.id.rangedWeaponBtn);
         playerHp.setMax(player.getMaxHp());
         playerHp.setProgress(player.getHp());
         updatePlayerInfo();
@@ -82,12 +81,12 @@ public class Fight extends AppCompatActivity {
 
         if (basicWeapon != null) {
             basicAttackBtn.setText(MessageFormat.format("{0} ({1})", basicWeapon.getName(), basicWeapon.getDamage()));
-            basicAttackBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(getDrawable(basicWeapon.getIcon()), null, null,null);
+            basicAttackBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(getDrawable(basicWeapon.getIcon()), null, null, null);
             basicAttackBtn.setOnClickListener(v -> enemyAttackStep(playerAttackStep(basicWeapon)));
         }
         if (rangedWeapon != null) {
             rangedAttackBtn.setText(MessageFormat.format("{0} ({1})", rangedWeapon.getName(), rangedWeapon.getDamage()));
-            rangedAttackBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(getDrawable(rangedWeapon.getIcon()), null, null,null);
+            rangedAttackBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(getDrawable(rangedWeapon.getIcon()), null, null, null);
             rangedAttackBtn.setOnClickListener(v -> {
                 if (player.getInventory().contains(new Arrow())) {
                     enemyAttackStep(playerAttackStep(rangedWeapon));
@@ -103,21 +102,21 @@ public class Fight extends AppCompatActivity {
         playerTextView.setText(MessageFormat.format("{0} lvl {1} HP: {2}", player.getName(), player.getLevel(), player.getHp()));
         if (player.getHp() <= 0) {
             Dialog dialog = new Dialog(this);
-            dialog.setContentView(R.layout.player_dead_layout);
-            Integer lostExp = (int) player.getExp() / 10;
-            Integer lostCryptoCoins = (int) player.getCoins() / 5;
+            dialog.setContentView(R.layout.overlay_player_dead);
+            Integer lostExp = player.getExp() / 10;
+            Integer lostCryptoCoins = player.getCoins() / 5;
             player.setExp(player.getExp() - lostExp);
             player.setCoins(player.getCoins() - lostCryptoCoins);
-            TextView deadPlayerText = (TextView) dialog.findViewById(R.id.deadPlayerText);
+            TextView deadPlayerText = dialog.findViewById(R.id.deadPlayerText);
             deadPlayerText.setText(MessageFormat.format("{0} has been killed by a {1} lvl {2}", player.getName(), enemyEncountered.getName(), enemyEncountered.getLevel()));
-            TextView lostCryptoCoinsText = (TextView) dialog.findViewById(R.id.lostCryptoCoinsText);
+            TextView lostCryptoCoinsText = dialog.findViewById(R.id.lostCryptoCoinsText);
             lostCryptoCoinsText.setText(MessageFormat.format("You''ve lost {0} Crypto-coins", lostCryptoCoins));
-            TextView lostExpTextView = (TextView) dialog.findViewById(R.id.lostExpText);
+            TextView lostExpTextView = dialog.findViewById(R.id.lostExpText);
             lostExpTextView.setText(MessageFormat.format("You''ve lost {0} exp", lostExp));
             player.setHp(player.getMaxHp());
             dialog.show();
             dialog.setOnCancelListener(
-                    dialogInterface -> new ActivityLauncher().ActivityLauncher(this, Menu.class, player)
+                    dialogInterface -> new ActivityLauncher(this, Menu.class, player)
             );
         }
         player.savePlayer();
@@ -128,6 +127,7 @@ public class Fight extends AppCompatActivity {
         enemyTextView.setText(MessageFormat.format("{0} lvl {1} HP: {2}", enemyEncountered.getName(), enemyEncountered.getLevel(), enemyEncountered.getHp()));
         if (enemyEncountered.getHp() <= 0) {
             new EnemyKilledOverlay().EnemyKilledOverlay(Fight.this, player, enemyEncountered);
+            player.savePlayer();
         }
     }
 
@@ -182,10 +182,10 @@ public class Fight extends AppCompatActivity {
 
             @Override
             public void onAnimationFinish() {
-                if(animation == R.drawable.attack_crit || animation == R.drawable.attack){
+                if (animation == R.drawable.attack_crit || animation == R.drawable.attack) {
                     updateEnemyInfo();
                 }
-                if(animation == R.drawable.hurt){
+                if (animation == R.drawable.hurt) {
                     updatePlayerInfo();
                 }
                 if (animation != R.drawable.idle) {
@@ -218,30 +218,30 @@ public class Fight extends AppCompatActivity {
         if (enemyEncountered.getHp() > 0 && player.getHp() > 0) {
             Integer losingCryptoCoins = (int) player.getCoins() / 10;
             Dialog dialog = new Dialog(this);
-            dialog.setContentView(R.layout.flee_confirm_layout);
+            dialog.setContentView(R.layout.overlay_flee_confirm);
             Button confirmFlee = dialog.findViewById(R.id.confirmFlee);
             confirmFlee.setOnClickListener(view -> {
                 player.setCoins(player.getCoins() - losingCryptoCoins);
                 dialog.dismiss();
-                Intent intent = new Intent(Fight.this, Menu.class);
-                intent.putExtra("player", player);
-                startActivity(intent);
-                finish();
+                new ActivityLauncher(this, Fight.class, player);
             });
             Button stopFlee = dialog.findViewById(R.id.stopFlee);
             stopFlee.setOnClickListener(view -> dialog.dismiss());
             dialog.show();
         } else {
-            new ActivityLauncher().ActivityLauncher(this, Menu.class, player);
+            new ActivityLauncher(this, Menu.class, player);
         }
     }
+
     private void makePlayerAlwaysUpdated() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 player = snapshot.child(player.getName()).child("player").getValue(Player.class);
+                updatePlayerInfo();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }

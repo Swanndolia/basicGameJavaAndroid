@@ -46,10 +46,37 @@
             android:layout_marginBottom="20dp"
             android:text="Healer" />
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/smithBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="Smith" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/otherShopBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Mine" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/againOtherBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Farm" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatButton
@@ -64,28 +91,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:text="Magic Shop" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:orientation="horizontal">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/otherShopBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="Ore Shop" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/againOtherBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="Magic Shop" />
+                android:text="Consumable Shop" />
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
