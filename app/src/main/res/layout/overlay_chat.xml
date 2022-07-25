@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.2"
             android:hint="Your message here"
+            android:textColor="@color/black"
             android:inputType="text" />
 
         <androidx.appcompat.widget.AppCompatButton

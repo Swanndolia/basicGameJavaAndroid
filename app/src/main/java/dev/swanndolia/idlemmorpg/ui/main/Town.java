@@ -42,7 +42,7 @@ public class Town extends AppCompatActivity {
         Button marketBtn = findViewById(R.id.marketPlaceButton);
 
         marketBtn.setOnClickListener(view -> {
-            new ActivityLauncher(Town.this, MarketPlace.class);
+            new ActivityLauncher(Town.this, MarketPlace.class, player);
         });
         healerBtn.setOnClickListener(v -> {
             new HealerOverlay(player, this);
@@ -65,6 +65,6 @@ public class Town extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        new ActivityLauncher(Town.this, Menu.class);
+        new ActivityLauncher(this, Menu.class, player);
     }
 }

@@ -1,5 +1,7 @@
 package dev.swanndolia.idlemmorpg.ui.main;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -48,7 +50,7 @@ public class CompareAndEquip extends AppCompatActivity {
         if (!slot.equals("None")) {
             parentLayout.addView(equippedItemBtn);
         }
-
+        equippedItemBtn.setTextColor(Color.BLACK);
         equippedItemBtn.setText("No " + slot + " Equipped");
         if(player.getEquippedItem(slot) != null){
             generateEquippedItemButton(null);
@@ -105,6 +107,7 @@ public class CompareAndEquip extends AppCompatActivity {
                 equippedItemBtn.setText("No " + slot + " Equipped");
                 player.unequippItem(player.getEquippedItem(slot));
                 parentLayout.removeView(button);
+                equippedItemBtn.setTextColor(Color.BLACK);
                 loadInventoryMapped(player.getEquippedItem(slot));
             }
         });

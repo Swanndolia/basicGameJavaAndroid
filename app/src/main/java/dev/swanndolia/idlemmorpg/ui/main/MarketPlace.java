@@ -25,6 +25,7 @@ import java.util.Map;
 import dev.swanndolia.idlemmorpg.R;
 import dev.swanndolia.idlemmorpg.characters.Player;
 import dev.swanndolia.idlemmorpg.items.Item;
+import dev.swanndolia.idlemmorpg.tools.activity.ActivityLauncher;
 import dev.swanndolia.idlemmorpg.tools.firebase.GetRgbFromRarity;
 import dev.swanndolia.idlemmorpg.tools.market.ItemHolder;
 import dev.swanndolia.idlemmorpg.tools.player.ForceSaveInventoryList;
@@ -80,33 +81,34 @@ public class MarketPlace extends AppCompatActivity {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         ItemHolder itemHolder = dataSnapshot.getValue(ItemHolder.class);
                         Item item = itemHolder.getItem();
+                        if(!itemHolder.getOwnerName().equals(player.getName())) {
+                            Button marketItemListBtn = new Button(MarketPlace.this);
+                            marketItemListBtn.setTextSize(20);
+                            marketItemListBtn.setTextColor(new GetRgbFromRarity().GetRgbFromRarity(item.getRarity()));
+                            marketItemListBtn.setText(MessageFormat.format("{0} x {1}  Buy for: {2}", item.getName(), itemHolder.getAmount(), itemHolder.getAmount() * itemHolder.getPrice()));
+                            marketItemListBtn.setOnClickListener(view -> {
+                                if (player.getCoins() >= itemHolder.getPrice() * itemHolder.getAmount()) {
+                                    player.setCoins(player.getCoins() - itemHolder.getPrice() * itemHolder.getAmount());
+                                    player.addInventory(item, itemHolder.getAmount());
+                                    dataSnapshot.getRef().removeValue();
+                                    databaseReference.child("users").child(itemHolder.getOwnerName()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot1) {
+                                            Player owner = snapshot1.child("player").getValue(Player.class);
+                                            owner.addCoins(itemHolder.getPrice() * itemHolder.getAmount());
+                                        }
 
-                        Button marketItemListBtn = new Button(MarketPlace.this);
-                        marketItemListBtn.setTextSize(20);
-                        marketItemListBtn.setTextColor(new GetRgbFromRarity().GetRgbFromRarity(item.getRarity()));
-                        marketItemListBtn.setText(MessageFormat.format("{0} x {1}  Buy for: {2}", item.getName(), itemHolder.getAmount(), itemHolder.getAmount() * itemHolder.getPrice()));
-                        marketItemListBtn.setOnClickListener(view -> {
-                            if (player.getCoins() >= itemHolder.getPrice() * itemHolder.getAmount()) {
-                                player.setCoins(player.getCoins() - itemHolder.getPrice() * itemHolder.getAmount());
-                                player.addInventory(item, itemHolder.getAmount());
-                                dataSnapshot.getRef().removeValue();
-                                databaseReference.child("users").child(itemHolder.getOwnerName()).addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot1) {
-                                        Player owner = snapshot1.child("player").getValue(Player.class);
-                                        owner.addCoins(itemHolder.getPrice() * itemHolder.getAmount());
-                                    }
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
 
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-
-                                    }
-                                });
-                            } else {
-                                Toast.makeText(MarketPlace.this, "You don't have enough money", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        marketItemListHolder.addView(marketItemListBtn);
+                                        }
+                                    });
+                                } else {
+                                    Toast.makeText(MarketPlace.this, "You don't have enough money", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            marketItemListHolder.addView(marketItemListBtn);
+                        }
                     }
                 }
             }
@@ -187,10 +189,7 @@ public class MarketPlace extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(MarketPlace.this, Town.class);
-        intent.putExtra("player", player);
-        startActivity(intent);
-        finish();
+        new ActivityLauncher(this, Menu.class, player);
     }
 
     private void makePlayerAlwaysUpdated() {

@@ -77,7 +77,7 @@ public class Craft extends AppCompatActivity {
             resultBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    for()//check for each item required if present in inventory if yes check if present entry.value amount of time
+                    for(int i = 0; i < 1; i++){}//check for each item required if present in inventory if yes check if present entry.value amount of time
                         // try removeitem x ammount  if NPE not enough in inv
                     player.addInventory(recipe.getRecipeResult());
                 }

@@ -34,43 +34,6 @@
           ]
         }
       }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1034141928896:android:7ffa512c9bdabcff7d8c25",
-        "android_client_info": {
-          "package_name": "dev.swanndolia.loginregisterfirebase"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1034141928896-dlls25e90s0d2hr37fr7iiopleriaaad.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "dev.swanndolia.loginregisterfirebase",
-            "certificate_hash": "8b2f1375d440d20e8bfd314a8a5b5de5f627b799"
-          }
-        },
-        {
-          "client_id": "1034141928896-pao5mqhr4elt2701v6r5qdg3asujjrve.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyC-m4bUPRCDU680YUVK5lR8zxANRmBkar4"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1034141928896-pao5mqhr4elt2701v6r5qdg3asujjrve.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
     }
   ],
   "configuration_version": "1"

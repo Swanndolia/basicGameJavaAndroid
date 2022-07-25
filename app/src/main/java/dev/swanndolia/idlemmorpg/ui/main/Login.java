@@ -25,6 +25,7 @@ import dev.swanndolia.idlemmorpg.characters.Player;
 public class Login extends AppCompatActivity {
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
     CheckBox stayLoginCheckBox;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;

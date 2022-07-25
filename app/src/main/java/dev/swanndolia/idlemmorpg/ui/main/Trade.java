@@ -14,6 +14,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import dev.swanndolia.idlemmorpg.R;
 import dev.swanndolia.idlemmorpg.characters.Player;
+import dev.swanndolia.idlemmorpg.tools.activity.ActivityLauncher;
 
 public class Trade extends AppCompatActivity {
     Player player;
@@ -43,5 +44,8 @@ public class Trade extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+    }
+    public void onBackPressed() {
+        new ActivityLauncher(this, Menu.class, player);
     }
 }

@@ -6,7 +6,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "dev.swanndolia.idleasciimmorpg"
+        applicationId "dev.swanndolia.idlemmorpg"
         minSdk 23
         targetSdk 32
         versionCode 1

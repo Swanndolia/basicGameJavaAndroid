@@ -15,5 +15,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "idleasciimmorpg"
+rootProject.name = "idlemmorpg"
 include ':app'
