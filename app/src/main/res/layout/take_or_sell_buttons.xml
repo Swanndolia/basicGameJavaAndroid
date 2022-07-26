@@ -9,6 +9,7 @@
     android:layout_height="wrap_content"
     android:layout_weight="0.3"></ImageView>
     <androidx.appcompat.widget.AppCompatButton
+        android:textAllCaps="false"
         android:id="@+id/buttonLeft"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,7 +17,13 @@
 
     </androidx.appcompat.widget.AppCompatButton>
 
+    <ImageView
+        android:id="@+id/iconSellItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.3"></ImageView>
     <androidx.appcompat.widget.AppCompatButton
+        android:textAllCaps="false"
         android:id="@+id/buttonRight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

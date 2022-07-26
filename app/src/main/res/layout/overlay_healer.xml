@@ -16,6 +16,7 @@
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatButton
+            android:textAllCaps="false"
             android:id="@+id/acceptHealBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,6 +25,7 @@
             android:text="Accept Heal" />
 
         <androidx.appcompat.widget.AppCompatButton
+            android:textAllCaps="false"
             android:id="@+id/cancelHealBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

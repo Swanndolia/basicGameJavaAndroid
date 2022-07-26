@@ -14,6 +14,7 @@
         android:textSize="20dp" />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:textAllCaps="false"
         android:id="@+id/craftBtn"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

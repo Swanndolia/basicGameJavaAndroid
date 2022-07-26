@@ -1,4 +1,4 @@
-package dev.swanndolia.idlemmorpg.items.drops.fields;
+package dev.swanndolia.idlemmorpg.items.drops.commons;
 
 import java.io.Serializable;
 

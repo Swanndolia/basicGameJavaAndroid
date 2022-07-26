@@ -42,6 +42,18 @@
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatButton
+                android:textAllCaps="false"
+                android:id="@+id/testAreaButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="20dp"
+                android:text="Test Area (dev)" />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:textAllCaps="false"
                 android:id="@+id/fieldsBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -51,6 +63,7 @@
                 android:text="Fields (lvl 1-5)" />
 
             <androidx.appcompat.widget.AppCompatButton
+                android:textAllCaps="false"
                 android:id="@+id/forestBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -60,6 +73,7 @@
                 android:text="Forest (lvl 5-9)" />
 
             <androidx.appcompat.widget.AppCompatButton
+                android:textAllCaps="false"
                 android:id="@+id/caveBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -71,6 +85,7 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/desertBtn"
+                android:textAllCaps="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -81,6 +96,7 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/mountainsBtn"
                 android:layout_width="match_parent"
+                android:textAllCaps="false"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
@@ -93,6 +109,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
+                android:textAllCaps="false"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:text="Mansion (lvl 40-49)" />
@@ -100,6 +117,7 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/oceanBtn"
+                android:textAllCaps="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -108,6 +126,7 @@
                 android:text="Ocean (lvl 50-59)" />
 
             <androidx.appcompat.widget.AppCompatButton
+                android:textAllCaps="false"
                 android:id="@+id/dungeonBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -118,6 +137,7 @@
 
 
             <androidx.appcompat.widget.AppCompatButton
+                android:textAllCaps="false"
                 android:id="@+id/cemeteryBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -10,12 +10,14 @@
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatButton
+            android:textAllCaps="false"
             android:id="@+id/itemSelectBtn"
             android:layout_weight="0.15"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"></androidx.appcompat.widget.AppCompatButton>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:textAllCaps="false"
             android:id="@+id/minusBtn"
             android:layout_weight="0.5"
             android:layout_width="match_parent"
@@ -23,6 +25,7 @@
             android:text="-"></androidx.appcompat.widget.AppCompatButton>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:textAllCaps="false"
             android:id="@+id/plusBtn"
             android:layout_weight="0.5"
             android:layout_width="match_parent"
@@ -56,6 +59,7 @@
         </TextView>
     </LinearLayout>
     <androidx.appcompat.widget.AppCompatButton
+        android:textAllCaps="false"
         android:id="@+id/confirmBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -31,6 +31,17 @@ public class Explore extends AppCompatActivity {
         expProgressBar.setProgress(player.getExp());
         expProgressBar.setMax(player.getNextLevelExp());
 
+        final Button testAreaButton = findViewById(R.id.testAreaButton);
+        testAreaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Explore.this, Fight.class);
+                intent.putExtra("player", player);
+                intent.putExtra("location", "testArea");
+                startActivity(intent);
+                finish();
+            }
+        });
         final Button fieldsBtn = findViewById(R.id.fieldsBtn);
         fieldsBtn.setOnClickListener(new View.OnClickListener() {
             @Override

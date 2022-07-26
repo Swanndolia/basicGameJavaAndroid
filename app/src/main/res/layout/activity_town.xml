@@ -40,6 +40,7 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatButton
+            android:textAllCaps="false"
             android:id="@+id/healerBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,6 +48,7 @@
             android:text="Healer" />
 
         <androidx.appcompat.widget.AppCompatButton
+            android:textAllCaps="false"
             android:id="@+id/smithBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,6 +61,7 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatButton
+                android:textAllCaps="false"
                 android:id="@+id/otherShopBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -66,6 +69,7 @@
                 android:text="Mine" />
 
             <androidx.appcompat.widget.AppCompatButton
+                android:textAllCaps="false"
                 android:id="@+id/againOtherBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -80,6 +84,7 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatButton
+                android:textAllCaps="false"
                 android:id="@+id/oreShopBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -87,6 +92,7 @@
                 android:text="Ore Shop" />
 
             <androidx.appcompat.widget.AppCompatButton
+                android:textAllCaps="false"
                 android:id="@+id/magicShopBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -95,6 +101,7 @@
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:textAllCaps="false"
             android:id="@+id/exchangeButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -102,6 +109,7 @@
             android:text="Exchange with another player" />
 
         <androidx.appcompat.widget.AppCompatButton
+            android:textAllCaps="false"
             android:id="@+id/marketPlaceButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

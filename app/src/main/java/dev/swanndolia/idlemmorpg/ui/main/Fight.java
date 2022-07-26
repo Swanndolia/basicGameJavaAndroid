@@ -28,7 +28,7 @@ import dev.swanndolia.idlemmorpg.characters.DefaultCharacter;
 import dev.swanndolia.idlemmorpg.characters.Player;
 import dev.swanndolia.idlemmorpg.items.Item;
 import dev.swanndolia.idlemmorpg.items.weapons.ranged.Arrow;
-import dev.swanndolia.idlemmorpg.enemyzones.fields.GenerateEnemy;
+import dev.swanndolia.idlemmorpg.enemyzones.tests.GenerateEnemy;
 import dev.swanndolia.idlemmorpg.ui.overlays.EnemyKilledOverlay;
 import dev.swanndolia.idlemmorpg.tools.activity.ActivityLauncher;
 import dev.swanndolia.idlemmorpg.tools.animations.CustomAnimationDrawableNew;
@@ -39,6 +39,8 @@ public class Fight extends AppCompatActivity {
     TextView enemyTextView;
     Button basicAttackBtn;
     Button rangedAttackBtn;
+    Button fleeBtn;
+    Button bagBtn;
     DefaultCharacter enemyEncountered;
     Player player;
     ProgressBar playerHp;
@@ -66,6 +68,8 @@ public class Fight extends AppCompatActivity {
         enemyHp = findViewById(R.id.enemyHp);
         basicAttackBtn = findViewById(R.id.basicWeaponBtn);
         rangedAttackBtn = findViewById(R.id.rangedWeaponBtn);
+        fleeBtn = findViewById(R.id.fleeBtn);
+        bagBtn = findViewById(R.id.bagBtn);
         playerHp.setMax(player.getMaxHp());
         playerHp.setProgress(player.getHp());
         updatePlayerInfo();
@@ -78,6 +82,10 @@ public class Fight extends AppCompatActivity {
 
         Item basicWeapon = player.getEquippedItem("Basic Weapon");
         Item rangedWeapon = player.getEquippedItem("Special Weapon");
+
+        fleeBtn.setOnClickListener(v -> {
+            onBackPressed();
+        });
 
         if (basicWeapon != null) {
             basicAttackBtn.setText(MessageFormat.format("{0} ({1})", basicWeapon.getName(), basicWeapon.getDamage()));
@@ -95,6 +103,7 @@ public class Fight extends AppCompatActivity {
                 }
             });
         }
+
     }
 
     private void updatePlayerInfo() {
@@ -223,7 +232,7 @@ public class Fight extends AppCompatActivity {
             confirmFlee.setOnClickListener(view -> {
                 player.setCoins(player.getCoins() - losingCryptoCoins);
                 dialog.dismiss();
-                new ActivityLauncher(this, Fight.class, player);
+                new ActivityLauncher(this, Menu.class, player);
             });
             Button stopFlee = dialog.findViewById(R.id.stopFlee);
             stopFlee.setOnClickListener(view -> dialog.dismiss());
