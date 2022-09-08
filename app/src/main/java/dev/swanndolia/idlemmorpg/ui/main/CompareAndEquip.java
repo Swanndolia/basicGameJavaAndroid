@@ -1,6 +1,5 @@
 package dev.swanndolia.idlemmorpg.ui.main;
 
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
@@ -17,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Map;
+
 import dev.swanndolia.idlemmorpg.R;
 import dev.swanndolia.idlemmorpg.characters.Player;
 import dev.swanndolia.idlemmorpg.items.Item;
@@ -52,7 +52,7 @@ public class CompareAndEquip extends AppCompatActivity {
         }
         equippedItemBtn.setTextColor(Color.BLACK);
         equippedItemBtn.setText("No " + slot + " Equipped");
-        if(player.getEquippedItem(slot) != null){
+        if (player.getEquippedItem(slot) != null) {
             generateEquippedItemButton(null);
         }
 
@@ -117,6 +117,7 @@ public class CompareAndEquip extends AppCompatActivity {
     public void onBackPressed() {
         new ActivityLauncher(this, Inventory.class, player);
     }
+
     private void makePlayerAlwaysUpdated() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("users").addValueEventListener(new ValueEventListener() {
@@ -124,6 +125,7 @@ public class CompareAndEquip extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 player = snapshot.child(player.getName()).child("player").getValue(Player.class);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }

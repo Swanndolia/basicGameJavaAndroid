@@ -11,7 +11,7 @@ import dev.swanndolia.idlemmorpg.R;
 import dev.swanndolia.idlemmorpg.characters.Player;
 
 public class HealerOverlay {
-    public HealerOverlay(Player player, Context context){
+    public HealerOverlay(Player player, Context context) {
         int healCost = player.getMaxHp() * player.getLevel() / 3;
         String healerSentence = player.getHp() > player.getMaxHp() * 0.75 ? "Sure you need my services ? (" + player.getHp() + "/" + player.getMaxHp() + ")" : "Lemme see ! You're hurt ! (" + player.getHp() + "/" + player.getMaxHp() + ")";
         Dialog dialog = new Dialog(context);
@@ -24,15 +24,15 @@ public class HealerOverlay {
         acceptHealBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(player.getCoins() >= healCost){
+                if (player.getCoins() >= healCost) {
                     player.setCoins(player.getCoins() - healCost);
                     player.setHp(player.getMaxHp());
                     dialog.dismiss();
                     Toast.makeText(context, "You've been successfully healed to max HP", Toast.LENGTH_SHORT);
-                }
-                else {
+                } else {
                     dialog.dismiss();
-                    Toast.makeText(context, "You don't have enough money to heal yourself", Toast.LENGTH_SHORT);}
+                    Toast.makeText(context, "You don't have enough money to heal yourself", Toast.LENGTH_SHORT);
+                }
             }
         });
         dialog.show();

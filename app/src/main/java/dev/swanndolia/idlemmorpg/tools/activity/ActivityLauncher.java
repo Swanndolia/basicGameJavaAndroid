@@ -10,19 +10,21 @@ public class ActivityLauncher {
     public ActivityLauncher(Context fromActivity, Class<?> toActivity) {
         Intent intent = new Intent(fromActivity, toActivity);
         fromActivity.startActivity(intent);
-        ((Activity)fromActivity).finish();
+        ((Activity) fromActivity).finish();
     }
+
     public ActivityLauncher(Context fromActivity, Class<?> toActivity, Player player) {
         Intent intent = new Intent(fromActivity, toActivity);
         intent.putExtra("player", player);
         fromActivity.startActivity(intent);
-        ((Activity)fromActivity).finish();
+        ((Activity) fromActivity).finish();
     }
-    public ActivityLauncher(Context fromActivity, Class<?> toActivity, Player player, String slot) {
+
+    public ActivityLauncher(Context fromActivity, Class<?> toActivity, Player player, String extraName, String extraMeta) {
         Intent intent = new Intent(fromActivity, toActivity);
         intent.putExtra("player", player);
-        intent.putExtra("slot", slot);
+        intent.putExtra(extraName, extraMeta);
         fromActivity.startActivity(intent);
-        ((Activity)fromActivity).finish();
+        ((Activity) fromActivity).finish();
     }
 }

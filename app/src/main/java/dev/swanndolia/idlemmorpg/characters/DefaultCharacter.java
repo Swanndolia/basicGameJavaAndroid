@@ -73,12 +73,23 @@ public class DefaultCharacter implements Serializable {
         return inventory;
     }
 
-    protected void setDamage(int damage) {
-        this.damage = damage;
+    public void setInventory(Map<Item, Integer> map) {
+        List<Item> inventory = new ArrayList<Item>();
+        for (Item key : map.keySet()) {
+            int random = (int) (Math.random() * 1000);
+            if (map.get(key) <= random) {
+                inventory.add(key);
+            }
+        }
+        this.inventory = inventory;
     }
 
     public Integer getDamage() {
         return damage;
+    }
+
+    protected void setDamage(int damage) {
+        this.damage = damage;
     }
 
     public Integer getCritDamage() {
@@ -118,17 +129,6 @@ public class DefaultCharacter implements Serializable {
 
     public void setExpReward(Integer expReward) {
         this.expReward = expReward;
-    }
-
-    public void setInventory(Map<Item, Integer> map) {
-        List<Item> inventory = new ArrayList<Item>();
-        for (Item key : map.keySet()) {
-            int random = (int) (Math.random() * 1000);
-            if (map.get(key) <= random) {
-                inventory.add(key);
-            }
-        }
-        this.inventory = inventory;
     }
 
     public void removeInventory(Item item) {

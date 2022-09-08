@@ -26,12 +26,13 @@ import java.util.Random;
 import dev.swanndolia.idlemmorpg.R;
 import dev.swanndolia.idlemmorpg.characters.DefaultCharacter;
 import dev.swanndolia.idlemmorpg.characters.Player;
+import dev.swanndolia.idlemmorpg.enemy.GenerateEnemy;
+import dev.swanndolia.idlemmorpg.enemy.GetEnemyListFromZone;
 import dev.swanndolia.idlemmorpg.items.Item;
 import dev.swanndolia.idlemmorpg.items.weapons.ranged.Arrow;
-import dev.swanndolia.idlemmorpg.enemyzones.tests.GenerateEnemy;
-import dev.swanndolia.idlemmorpg.ui.overlays.EnemyKilledOverlay;
 import dev.swanndolia.idlemmorpg.tools.activity.ActivityLauncher;
 import dev.swanndolia.idlemmorpg.tools.animations.CustomAnimationDrawableNew;
+import dev.swanndolia.idlemmorpg.ui.overlays.EnemyKilledOverlay;
 
 public class Fight extends AppCompatActivity {
     ImageView playerAnimationView;
@@ -46,15 +47,16 @@ public class Fight extends AppCompatActivity {
     ProgressBar playerHp;
     ProgressBar enemyHp;
     ProgressBar expProgressBar;
+    String location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getIntent().getExtras();
-        String location = (String) bundle.getSerializable("location");
+        location = (String) bundle.getSerializable("location");
         player = (Player) bundle.getSerializable("player");
         makePlayerAlwaysUpdated();
-        enemyEncountered = new GenerateEnemy().GenerateEnemy(location, player);
+        enemyEncountered = new GenerateEnemy(new GetEnemyListFromZone(location, player).getEnemyList()).getRandomEnemy();
         setContentView(R.layout.activity_fight);
 
         expProgressBar = findViewById(R.id.expProgressBar);
@@ -135,7 +137,7 @@ public class Fight extends AppCompatActivity {
         enemyHp.setProgress(enemyEncountered.getHp());
         enemyTextView.setText(MessageFormat.format("{0} lvl {1} HP: {2}", enemyEncountered.getName(), enemyEncountered.getLevel(), enemyEncountered.getHp()));
         if (enemyEncountered.getHp() <= 0) {
-            new EnemyKilledOverlay().EnemyKilledOverlay(Fight.this, player, enemyEncountered);
+            new EnemyKilledOverlay().EnemyKilledOverlay(Fight.this, player, enemyEncountered, location);
             player.savePlayer();
         }
     }

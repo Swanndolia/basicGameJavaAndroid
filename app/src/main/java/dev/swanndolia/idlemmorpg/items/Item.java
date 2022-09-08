@@ -1,8 +1,6 @@
 package dev.swanndolia.idlemmorpg.items;
 
 
-import android.graphics.drawable.Drawable;
-
 import java.io.Serializable;
 
 public class Item implements Serializable {
@@ -22,6 +20,10 @@ public class Item implements Serializable {
     public String rarity;
     public int icon;
 
+    public Item() {
+        this.slot = "None";
+    }
+
     public int getIcon() {
         return icon;
     }
@@ -36,10 +38,6 @@ public class Item implements Serializable {
 
     public void setRarity(String rarity) {
         this.rarity = rarity;
-    }
-
-    public Item() {
-        this.slot = "None";
     }
 
     public String getSlot() {
@@ -122,12 +120,12 @@ public class Item implements Serializable {
         this.weight = weight;
     }
 
-    public void setCritMultiplier(Double critMultiplier) {
-        this.critMultiplier = critMultiplier;
-    }
-
     public Double getCritMultiplier() {
         return critMultiplier;
+    }
+
+    public void setCritMultiplier(Double critMultiplier) {
+        this.critMultiplier = critMultiplier;
     }
 
     public void calculateCritDamage() {

@@ -10,10 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 
 import dev.swanndolia.idlemmorpg.R;
+import dev.swanndolia.idlemmorpg.tools.activity.ActivityLauncher;
 import dev.swanndolia.idlemmorpg.tools.music.BackgroundMusicService;
 import dev.swanndolia.idlemmorpg.ui.main.Login;
-import dev.swanndolia.idlemmorpg.tools.activity.ActivityLauncher;
-import dev.swanndolia.idlemmorpg.ui.main.Menu;
 
 public class SettingsOverlay {
 

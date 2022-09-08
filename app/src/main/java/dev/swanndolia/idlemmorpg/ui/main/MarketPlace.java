@@ -1,7 +1,6 @@
 package dev.swanndolia.idlemmorpg.ui.main;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -81,7 +80,7 @@ public class MarketPlace extends AppCompatActivity {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         ItemHolder itemHolder = dataSnapshot.getValue(ItemHolder.class);
                         Item item = itemHolder.getItem();
-                        if(!itemHolder.getOwnerName().equals(player.getName())) {
+                        if (!itemHolder.getOwnerName().equals(player.getName())) {
                             Button marketItemListBtn = new Button(MarketPlace.this);
                             marketItemListBtn.setTextSize(20);
                             marketItemListBtn.setTextColor(new GetRgbFromRarity().GetRgbFromRarity(item.getRarity()));

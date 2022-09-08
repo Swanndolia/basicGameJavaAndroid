@@ -24,7 +24,6 @@ import java.text.MessageFormat;
 
 import dev.swanndolia.idlemmorpg.R;
 import dev.swanndolia.idlemmorpg.characters.Player;
-
 import dev.swanndolia.idlemmorpg.tools.chat.MessageHolder;
 
 public class ChatOverlay {

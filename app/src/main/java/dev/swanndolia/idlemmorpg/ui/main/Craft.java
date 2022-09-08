@@ -1,6 +1,5 @@
 package dev.swanndolia.idlemmorpg.ui.main;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +17,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +24,6 @@ import java.util.Map;
 import dev.swanndolia.idlemmorpg.R;
 import dev.swanndolia.idlemmorpg.characters.Player;
 import dev.swanndolia.idlemmorpg.items.Item;
-import dev.swanndolia.idlemmorpg.items.armor.boots.BonesBoots;
 import dev.swanndolia.idlemmorpg.recipes.Recipe;
 import dev.swanndolia.idlemmorpg.recipes.craft.bonesarmor.BonesBootsRecipe;
 import dev.swanndolia.idlemmorpg.recipes.craft.bonesarmor.BonesHelmetRecipe;
@@ -77,8 +73,9 @@ public class Craft extends AppCompatActivity {
             resultBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    for(int i = 0; i < 1; i++){}//check for each item required if present in inventory if yes check if present entry.value amount of time
-                        // try removeitem x ammount  if NPE not enough in inv
+                    for (int i = 0; i < 1; i++) {
+                    }//check for each item required if present in inventory if yes check if present entry.value amount of time
+                    // try removeitem x ammount  if NPE not enough in inv
                     player.addInventory(recipe.getRecipeResult());
                 }
             });

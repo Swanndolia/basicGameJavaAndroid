@@ -2,8 +2,10 @@ package dev.swanndolia.idlemmorpg.ui.main;
 
 import android.os.Bundle;
 import android.widget.ProgressBar;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +32,7 @@ public class Bestiary extends AppCompatActivity {
         expProgressBar.setProgress(player.getExp());
         expProgressBar.setMax(player.getNextLevelExp());
     }
+
     private void makePlayerAlwaysUpdated() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("users").addValueEventListener(new ValueEventListener() {
@@ -37,11 +40,13 @@ public class Bestiary extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 player = snapshot.child(player.getName()).child("player").getValue(Player.class);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
     }
+
     public void onBackPressed() {
         new ActivityLauncher(this, Menu.class, player);
     }

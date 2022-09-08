@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import dev.swanndolia.idlemmorpg.tools.music.BackgroundMusicService;
 import dev.swanndolia.idlemmorpg.ui.main.Login;
 import dev.swanndolia.idlemmorpg.ui.main.Register;
-import dev.swanndolia.idlemmorpg.tools.music.BackgroundMusicService;
 
 public class BootStrap extends AppCompatActivity {
 

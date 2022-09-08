@@ -10,11 +10,14 @@ import dev.swanndolia.idlemmorpg.enemy.fields.enemylist.Fox;
 import dev.swanndolia.idlemmorpg.enemy.fields.enemylist.Rat;
 
 public class EnemyListFields {
-    public List<DefaultCharacter> EnemyList(Player player) {
-        List<DefaultCharacter> enemyList = new ArrayList<DefaultCharacter>();
+    public List<DefaultCharacter> getEnemyList() {
+        return enemyList;
+    }
+
+    List<DefaultCharacter> enemyList = new ArrayList<DefaultCharacter>();
+    public EnemyListFields(Player player) {
         enemyList.add(new Chicken(player.getLevel()));
         enemyList.add(new Fox(player.getLevel()));
         enemyList.add(new Rat(player.getLevel()));
-        return (List<DefaultCharacter>) enemyList;
     }
      }

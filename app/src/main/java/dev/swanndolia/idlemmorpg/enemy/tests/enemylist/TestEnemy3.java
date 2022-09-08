@@ -1,4 +1,4 @@
-package dev.swanndolia.idlemmorpg.enemyzones.tests.enemylist;
+package dev.swanndolia.idlemmorpg.enemy.tests.enemylist;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -14,10 +14,6 @@ import dev.swanndolia.idlemmorpg.items.drops.commons.LegendaryRarityLoot;
 import dev.swanndolia.idlemmorpg.items.drops.commons.RareRarityLoot;
 import dev.swanndolia.idlemmorpg.items.drops.commons.UncommonRarityLoot;
 import dev.swanndolia.idlemmorpg.items.drops.commons.UniqueRarityLoot;
-import dev.swanndolia.idlemmorpg.items.drops.fields.Egg;
-import dev.swanndolia.idlemmorpg.items.drops.fields.Feather;
-import dev.swanndolia.idlemmorpg.items.drops.fields.RawChicken;
-import dev.swanndolia.idlemmorpg.items.rarity.Epic;
 
 public class TestEnemy3 extends DefaultCharacter implements Serializable {
     public TestEnemy3(int playerLevel) {

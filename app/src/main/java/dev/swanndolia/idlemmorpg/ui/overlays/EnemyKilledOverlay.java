@@ -3,7 +3,6 @@ package dev.swanndolia.idlemmorpg.ui.overlays;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,14 +17,14 @@ import java.util.HashMap;
 import dev.swanndolia.idlemmorpg.R;
 import dev.swanndolia.idlemmorpg.characters.DefaultCharacter;
 import dev.swanndolia.idlemmorpg.characters.Player;
+import dev.swanndolia.idlemmorpg.items.Item;
+import dev.swanndolia.idlemmorpg.tools.activity.ActivityLauncher;
 import dev.swanndolia.idlemmorpg.tools.firebase.GetRgbFromRarity;
 import dev.swanndolia.idlemmorpg.ui.main.Fight;
 import dev.swanndolia.idlemmorpg.ui.main.Menu;
-import dev.swanndolia.idlemmorpg.items.Item;
-import dev.swanndolia.idlemmorpg.tools.activity.ActivityLauncher;
 
 public class EnemyKilledOverlay {
-    public void EnemyKilledOverlay(Context context, Player player, DefaultCharacter enemyEncountered) {
+    public void EnemyKilledOverlay(Context context, Player player, DefaultCharacter enemyEncountered, String location) {
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.overlay_enemy_drops);
 
@@ -40,13 +39,15 @@ public class EnemyKilledOverlay {
         Button backMenu = dialog.findViewById(R.id.backToMenuBtn);
         backMenu.setOnClickListener(view -> {
             player.addInventory(enemyEncountered.getInventory());
+            dialog.dismiss();
             new ActivityLauncher(context, Menu.class, player);
         });
 
         Button exploreMore = dialog.findViewById(R.id.exploreAgainBtn);
         exploreMore.setOnClickListener(view -> {
             player.addInventory(enemyEncountered.getInventory());
-            new ActivityLauncher(context, Fight.class, player);
+            dialog.dismiss();
+            new ActivityLauncher(context, Fight.class, player, "location", location);
         });
 
         Button sellAllLoot = dialog.findViewById(R.id.sellAllLootBtn);
@@ -61,7 +62,6 @@ public class EnemyKilledOverlay {
             enemyEncountered.setInventory(new HashMap<>());
             itemListHolder.removeViews(0, amountToRemove);
             removeButtonAndIcon(sellAllLoot, iconSellAllItem, takeAllLoot, iconAllItem);
-
         });
 
         Integer finalTotalValue = totalValue[0];
@@ -119,7 +119,8 @@ public class EnemyKilledOverlay {
             dialog.show();
         }
     }
-    public void removeButtonAndIcon(Button sellAllLoot, ImageView iconSellAllItem, Button iconAllItem, ImageView takeAllLoot){
+
+    public void removeButtonAndIcon(Button sellAllLoot, ImageView iconSellAllItem, Button iconAllItem, ImageView takeAllLoot) {
         sellAllLoot.setVisibility(View.GONE);
         iconSellAllItem.setVisibility(View.GONE);
         iconAllItem.setVisibility(View.GONE);

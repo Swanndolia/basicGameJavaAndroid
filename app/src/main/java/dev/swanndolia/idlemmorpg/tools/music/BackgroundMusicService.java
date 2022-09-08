@@ -12,14 +12,16 @@ import dev.swanndolia.idlemmorpg.R;
 public class BackgroundMusicService extends Service {
     private static final String TAG = null;
     MediaPlayer player;
+
     @Override
     public void onCreate() {
         super.onCreate();
         player = MediaPlayer.create(this, R.raw.music);
         player.setLooping(true); // Set looping
-        player.setVolume(100,100);
+        player.setVolume(100, 100);
 
     }
+
     public int onStartCommand(Intent intent, int flags, int startId) {
         player.start();
         return Service.START_NOT_STICKY;
@@ -33,9 +35,11 @@ public class BackgroundMusicService extends Service {
     public void onStop() {
 
     }
+
     public void onPause() {
 
     }
+
     @Override
     public void onDestroy() {
         player.stop();

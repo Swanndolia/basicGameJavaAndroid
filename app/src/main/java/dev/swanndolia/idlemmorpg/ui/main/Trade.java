@@ -33,6 +33,7 @@ public class Trade extends AppCompatActivity {
         expProgressBar.setProgress(player.getExp());
         expProgressBar.setMax(player.getNextLevelExp());
     }
+
     private void makePlayerAlwaysUpdated() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("users").addValueEventListener(new ValueEventListener() {
@@ -40,11 +41,13 @@ public class Trade extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 player = snapshot.child(player.getName()).child("player").getValue(Player.class);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
     }
+
     public void onBackPressed() {
         new ActivityLauncher(this, Menu.class, player);
     }

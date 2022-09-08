@@ -5,7 +5,9 @@ import android.os.Handler;
 
 public abstract class CustomAnimationDrawableNew extends AnimationDrawable {
 
-    /** Handles the animation callback. */
+    /**
+     * Handles the animation callback.
+     */
     Handler mAnimationHandler;
 
     public CustomAnimationDrawableNew(AnimationDrawable aniDrawable) {

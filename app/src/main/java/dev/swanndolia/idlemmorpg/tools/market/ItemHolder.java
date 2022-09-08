@@ -10,7 +10,9 @@ public class ItemHolder implements Serializable {
     Integer amount;
     String ownerName;
 
-    public ItemHolder() {}
+    public ItemHolder() {
+    }
+
     public ItemHolder(Item item, Integer amountToSell, Integer sellPrice, String ownerName) {
         this.item = item;
         this.price = sellPrice;

@@ -1,26 +1,27 @@
 package dev.swanndolia.idlemmorpg.ui.main;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import dev.swanndolia.idlemmorpg.R;
 import dev.swanndolia.idlemmorpg.characters.Player;
+import dev.swanndolia.idlemmorpg.tools.activity.ActivityLauncher;
 import dev.swanndolia.idlemmorpg.tools.activity.Tutorial;
 import dev.swanndolia.idlemmorpg.ui.overlays.ChatOverlay;
 import dev.swanndolia.idlemmorpg.ui.overlays.SettingsOverlay;
-import dev.swanndolia.idlemmorpg.tools.activity.ActivityLauncher;
 
 public class Menu extends AppCompatActivity {
     Player player;
@@ -31,7 +32,7 @@ public class Menu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getIntent().getExtras();
         player = (Player) bundle.getSerializable("player");
-        if(bundle.getSerializable("tutorial") != null &&(Boolean)  bundle.getSerializable("tutorial")){
+        if (bundle.getSerializable("tutorial") != null && (Boolean) bundle.getSerializable("tutorial")) {
             new Tutorial(this, player);
         }
         makePlayerAlwaysUpdated();
@@ -58,7 +59,6 @@ public class Menu extends AppCompatActivity {
         final ImageButton chatBtn = findViewById(R.id.chatBtn);
 
 
-
         exploreBtn.setOnClickListener(v -> new ActivityLauncher(this, Explore.class, player));
         inventoryBtn.setOnClickListener(v -> new ActivityLauncher(this, Inventory.class, player));
         craftBtn.setOnClickListener(v -> new ActivityLauncher(this, Craft.class, player));
@@ -82,6 +82,7 @@ public class Menu extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 player = snapshot.child(player.getName()).child("player").getValue(Player.class);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }

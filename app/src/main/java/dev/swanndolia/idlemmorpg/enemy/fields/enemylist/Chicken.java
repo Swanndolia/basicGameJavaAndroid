@@ -1,4 +1,4 @@
-package dev.swanndolia.idlemmorpg.enemyzones.fields.enemylist;
+package dev.swanndolia.idlemmorpg.enemy.fields.enemylist;
 
 import java.io.Serializable;
 import java.util.HashMap;

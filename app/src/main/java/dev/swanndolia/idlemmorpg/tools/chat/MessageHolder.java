@@ -14,7 +14,8 @@ public class MessageHolder implements Serializable {
     String message;
     String date;
 
-    public MessageHolder() {}
+    public MessageHolder() {
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public MessageHolder(String messageToSend, String sender) {

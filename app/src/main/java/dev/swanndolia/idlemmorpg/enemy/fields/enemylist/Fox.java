@@ -1,4 +1,4 @@
-package dev.swanndolia.idlemmorpg.enemyzones.fields.enemylist;
+package dev.swanndolia.idlemmorpg.enemy.fields.enemylist;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -12,7 +12,7 @@ import dev.swanndolia.idlemmorpg.items.drops.fields.Feather;
 import dev.swanndolia.idlemmorpg.items.drops.fields.RawChicken;
 
 public class Fox extends DefaultCharacter implements Serializable {
-     public Fox(int playerLevel) {
+    public Fox(int playerLevel) {
         this.setName("Fox");
         this.setDesc("Can you catch it");
         this.setLevel((int) (new Random().nextInt((int) ((playerLevel * 1.4 - playerLevel * 0.6) + 1)) + (playerLevel * 0.6) + 1));
