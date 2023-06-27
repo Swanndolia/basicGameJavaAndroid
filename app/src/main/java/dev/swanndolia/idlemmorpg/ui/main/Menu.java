@@ -25,7 +25,9 @@ import dev.swanndolia.idlemmorpg.ui.overlays.SettingsOverlay;
 
 public class Menu extends AppCompatActivity {
     Player player;
-    ProgressBar expProgressBar;
+    ProgressBar playerExp;
+    ProgressBar playerHp;
+    ProgressBar playerStamina;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +55,6 @@ public class Menu extends AppCompatActivity {
         final Button storeBtn = findViewById(R.id.storeBtn);
         final ImageButton settingsBtn = findViewById(R.id.settingsBtn);
         final ImageButton chatBtn = findViewById(R.id.chatBtn);
-
 
         exploreBtn.setOnClickListener(v -> new ActivityLauncher(this, Explore.class, player));
         inventoryBtn.setOnClickListener(v -> new ActivityLauncher(this, Inventory.class, player));

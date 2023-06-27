@@ -42,38 +42,46 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_margin="20dp"
         android:gravity="center"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="40sp"
+            android:background="#80808080"
+
             android:baselineAligned="false">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.3"
+                android:layout_weight="0.7"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/playerExp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@string/exp"
+                    android:textColor="@color/white"
                     android:textAlignment="viewStart" />
                 <TextView
                     android:id="@+id/playerHp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20sp"
+                    android:text="@string/hp"
+                    android:textColor="@color/white"
                     android:textAlignment="viewStart" />
                 <TextView
-                    android:id="@+id/playerEnergy"
+                    android:id="@+id/playerStamina"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="40sp"
+                    android:text="@string/stamina"
+                    android:textColor="@color/white"
                     android:textAlignment="viewStart" />
 
 
@@ -82,7 +90,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.7"
+                android:layout_weight="0.3"
                 android:orientation="vertical">
 
                 <ProgressBar
@@ -90,27 +98,30 @@
                     style="@android:style/Widget.Material.ProgressBar.Horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
                     android:indeterminate="false"
-                    android:progressTint="@color/design_default_color_error" />
+                    android:progressTint="#FF0000"
+                    android:progressBackgroundTint="@color/black"
+                    />
 
                 <ProgressBar
                     android:id="@+id/playerHpBar"
                     style="@android:style/Widget.Material.ProgressBar.Horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_marginTop="20sp"
                     android:indeterminate="false"
-                    android:progressTint="@color/design_default_color_error" />
+                    android:progressTint="#FF0000"
+                    android:progressBackgroundTint="@color/black"/>
 
                 <ProgressBar
-                    android:id="@+id/playerEnergyBar"
+                    android:id="@+id/playerStaminaBar"
                     style="@android:style/Widget.Material.ProgressBar.Horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_marginTop="40sp"
                     android:indeterminate="false"
-                    android:progressTint="@color/design_default_color_error" />
+                    android:progressTint="#FF0000"
+                    android:progressBackgroundTint="@color/black"/>
 
 
             </RelativeLayout>
@@ -122,7 +133,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="110dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:text="@string/explore"
             android:textColor="@color/cardview_dark_background"

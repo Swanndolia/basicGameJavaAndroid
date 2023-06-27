@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,7 +31,6 @@ import dev.swanndolia.idlemmorpg.tools.player.ListToMapInventory;
 
 public class MarketPlace extends AppCompatActivity {
     Player player;
-    ProgressBar expProgressBar;
     LinearLayout marketItemListHolder;
     DatabaseReference databaseReference;
     Button sellOnMarket;
@@ -42,13 +40,12 @@ public class MarketPlace extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getIntent().getExtras();
         player = (Player) bundle.getSerializable("player");
-        makePlayerAlwaysUpdated();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         setContentView(R.layout.activity_marketplace);
-        sellOnMarket = (Button) findViewById(R.id.sellItemOnMarket);
-        Button buyOnMarket = (Button) findViewById(R.id.buyItemOnMarket);
+        sellOnMarket = findViewById(R.id.sellItemOnMarket);
+        Button buyOnMarket = findViewById(R.id.buyItemOnMarket);
 
-        marketItemListHolder = (LinearLayout) findViewById(R.id.marketItemListHolder);
+        marketItemListHolder = findViewById(R.id.marketItemListHolder);
 
         fetchItemOnMarket();
 
@@ -127,11 +124,11 @@ public class MarketPlace extends AppCompatActivity {
                     final Integer[] amountToSell = {entry.getValue()};
                     Dialog dialog = new Dialog(MarketPlace.this);
                     dialog.setContentView(R.layout.overlay_add_item_marketplace);
-                    Button confirmBtn = (Button) dialog.findViewById(R.id.confirmBtn);
-                    Button plusBtn = (Button) dialog.findViewById(R.id.plusBtn);
-                    Button minusBtn = (Button) dialog.findViewById(R.id.minusBtn);
-                    Button itemSelectBtn = (Button) dialog.findViewById(R.id.itemSelectBtn);
-                    EditText sellPriceField = (EditText) dialog.findViewById(R.id.sellPriceField);
+                    Button confirmBtn = dialog.findViewById(R.id.confirmBtn);
+                    Button plusBtn = dialog.findViewById(R.id.plusBtn);
+                    Button minusBtn = dialog.findViewById(R.id.minusBtn);
+                    Button itemSelectBtn = dialog.findViewById(R.id.itemSelectBtn);
+                    EditText sellPriceField = dialog.findViewById(R.id.sellPriceField);
                     itemSelectBtn.setText(MessageFormat.format("{0} x {1}", entry.getKey().getName(), amountToSell[0]));
 
                     confirmBtn.setOnClickListener(view1 -> {
@@ -188,17 +185,4 @@ public class MarketPlace extends AppCompatActivity {
         new ActivityLauncher(this, Menu.class, player);
     }
 
-    private void makePlayerAlwaysUpdated() {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("users").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                player = snapshot.child(player.getName()).child("player").getValue(Player.class);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-    }
 }

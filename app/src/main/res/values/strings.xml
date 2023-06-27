@@ -16,4 +16,7 @@
     <string name="bestiary">Bestiary</string>
     <string name="store">Store</string>
     <string name="guild">Guild</string>
+    <string name="exp">Exp</string>
+    <string name="hp">Hp</string>
+    <string name="stamina">Stamina</string>
 </resources>

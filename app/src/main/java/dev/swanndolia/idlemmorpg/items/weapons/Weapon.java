@@ -2,7 +2,6 @@ package dev.swanndolia.idlemmorpg.items.weapons;
 
 import java.io.Serializable;
 
-import dev.swanndolia.idlemmorpg.R;
 import dev.swanndolia.idlemmorpg.items.Item;
 
 

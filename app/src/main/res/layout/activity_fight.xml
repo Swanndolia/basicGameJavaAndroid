@@ -4,124 +4,129 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/top_Layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_fields"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/parentLayout"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
             android:orientation="vertical">
 
-            <LinearLayout
+            <ProgressBar
+                android:id="@+id/playerHp"
+                style="@android:style/Widget.Material.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/background_fields"
-                android:baselineAligned="false"
-                android:orientation="horizontal">
+                android:layout_marginStart="10sp"
+                android:indeterminate="false"
+                android:progressTint="#FF0000" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.5"
-                    android:orientation="vertical">
+            <TextView
+                android:id="@+id/playerInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/playerHp"
+                android:textAlignment="center" />
 
-                    <ProgressBar
-                        android:id="@+id/playerHp"
-                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:indeterminate="false"
-                        android:progressTint="@color/design_default_color_error" />
+            <ImageView
+                android:id="@+id/playerAnim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="130sp"
+                android:src="@drawable/idle1" />
 
-                    <TextView
-                        android:id="@+id/playerInfo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/playerHp"
-                        android:textAlignment="center" />
+        </RelativeLayout>
 
-                    <ImageView
-                        android:id="@+id/playerAnim"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:src="@drawable/idle1" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:orientation="vertical">
 
-                </RelativeLayout>
+            <ProgressBar
+                android:id="@+id/enemyHp"
+                style="@android:style/Widget.Material.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="10sp"
+                android:indeterminate="false"
+                android:progressTint="#FF0000" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.5"
-                    android:orientation="vertical">
+            <TextView
+                android:id="@+id/enemyInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/enemyHp"
+                android:textAlignment="center" />
 
-                    <ProgressBar
-                        android:id="@+id/enemyHp"
-                        style="@android:style/Widget.Material.ProgressBar.Horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:indeterminate="false"
-                        android:progressTint="@color/design_default_color_error" />
+            <ImageView
+                android:id="@+id/enemyAnim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="130sp"
+                android:src="@drawable/idle1" />
 
-                    <TextView
-                        android:id="@+id/enemyInfo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/enemyHp"
-                        android:textAlignment="center" />
+        </RelativeLayout>
+    </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/enemyAnim"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:src="@drawable/idle1" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/top_Layout"
+        android:layout_above="@+id/bottom_layout"
+        android:orientation="vertical">
 
-                </RelativeLayout>
-            </LinearLayout>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/meleeWeaponBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="20dp"
+        android:gravity="start|center_vertical"
+        android:text="@string/no_melee_weapon_equipped"
+        android:textAllCaps="false" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/meleeWeaponBtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="20dp"
-                    android:gravity="start|center_vertical"
-                    android:text="@string/no_melee_weapon_equipped"
-                    android:textAllCaps="false" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/rangedWeaponBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="20dp"
+        android:gravity="start|center_vertical"
+        android:text="@string/no_special_weapon_equipped"
+        android:textAllCaps="false">
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/rangedWeaponBtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="20dp"
-                    android:gravity="start|center_vertical"
-                    android:text="@string/no_special_weapon_equipped"
-                    android:textAllCaps="false">
+    </androidx.appcompat.widget.AppCompatButton>
 
-                </androidx.appcompat.widget.AppCompatButton>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bagBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start|center_vertical"
+        android:text="@string/bag"
+        android:textAllCaps="false" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/bagBtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="start|center_vertical"
-                    android:text="@string/bag"
-                    android:textAllCaps="false" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/fleeBtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/flee"
-                    android:textAlignment="center"
-                    android:textAllCaps="false" />
-
-        </LinearLayout>
-    </ScrollView>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/fleeBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/flee"
+        android:textAlignment="center"
+        android:textAllCaps="false" />
+    </LinearLayout>
 </RelativeLayout>

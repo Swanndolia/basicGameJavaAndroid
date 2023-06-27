@@ -10,15 +10,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.text.MessageFormat;
 import java.util.Random;
@@ -46,7 +39,6 @@ public class Fight extends AppCompatActivity {
     Player player;
     ProgressBar playerHp;
     ProgressBar enemyHp;
-    ProgressBar expProgressBar;
     String location;
 
     @Override
@@ -55,7 +47,6 @@ public class Fight extends AppCompatActivity {
         Bundle bundle = this.getIntent().getExtras();
         location = (String) bundle.getSerializable("location");
         player = (Player) bundle.getSerializable("player");
-        makePlayerAlwaysUpdated();
         enemyEncountered = new GenerateEnemy(new GetEnemyListFromZone(location, player).getEnemyList()).getRandomEnemy();
         setContentView(R.layout.activity_fight);
 
@@ -172,7 +163,7 @@ public class Fight extends AppCompatActivity {
         }
     }
 
-    public Integer runAnimation(Integer animation) {
+    public Integer runAnimation(Integer animation) {//todo remove animation from fight class for cleanup
         CustomAnimationDrawableNew cad = new CustomAnimationDrawableNew((AnimationDrawable) AppCompatResources.getDrawable(this, animation)) {
             @Override
             public void onAnimationStart() {
@@ -219,7 +210,7 @@ public class Fight extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed() {//todo improve this
         if (enemyEncountered.getHp() > 0 && player.getHp() > 0) {
             Integer losingCryptoCoins = player.getCoins() / 10;
             Dialog dialog = new Dialog(this);
@@ -236,21 +227,6 @@ public class Fight extends AppCompatActivity {
         } else {
             new ActivityLauncher(this, Menu.class, player);
         }
-    }
-
-    private void makePlayerAlwaysUpdated() {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("users").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                player = snapshot.child(player.getName()).child("player").getValue(Player.class);
-                updatePlayerInfo();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
     }
 }
 
