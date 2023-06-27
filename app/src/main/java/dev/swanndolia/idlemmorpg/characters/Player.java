@@ -16,8 +16,8 @@ public class Player extends PlayerStats implements Serializable {
 
     String name;
     Integer hp;
-    Integer mp;
-    Integer maxMp;
+    Integer stamina;
+    Integer maxStamina;
     Integer level;
     Integer arrow;
     Integer coins;
@@ -35,9 +35,9 @@ public class Player extends PlayerStats implements Serializable {
     public Player(String name) {
         this.name = name;
         this.hp = 100;
-        this.mp = 100;
+        this.stamina = 100;
         this.maxHp = 100;
-        this.maxMp = 100;
+        this.maxStamina = 100;
         this.level = 1;
         this.exp = 0;
         this.nextLevelExp = 8;
@@ -74,20 +74,20 @@ public class Player extends PlayerStats implements Serializable {
         this.maxHp = maxHp;
     }
 
-    public Integer getMp() {
-        return mp;
+    public Integer getStamina() {
+        return stamina;
     }
 
-    public void setMp(Integer mp) {
-        this.mp = mp;
+    public void setStamina(Integer stamina) {
+        this.stamina = stamina;
     }
 
-    public Integer getMaxMp() {
-        return maxMp;
+    public Integer getMaxStamina() {
+        return maxStamina;
     }
 
-    public void setMaxMp(Integer maxMp) {
-        this.maxMp = maxMp;
+    public void setMaxStamina(Integer maxStamina) {
+        this.maxStamina = maxStamina;
     }
 
     public Integer getExp() {

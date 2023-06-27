@@ -15,7 +15,7 @@ import android.widget.TextView;
 import java.util.HashMap;
 
 import dev.swanndolia.idlemmorpg.R;
-import dev.swanndolia.idlemmorpg.characters.DefaultCharacter;
+import dev.swanndolia.idlemmorpg.characters.DefaultEncounter;
 import dev.swanndolia.idlemmorpg.characters.Player;
 import dev.swanndolia.idlemmorpg.items.Item;
 import dev.swanndolia.idlemmorpg.tools.activity.ActivityLauncher;
@@ -24,7 +24,7 @@ import dev.swanndolia.idlemmorpg.ui.main.Fight;
 import dev.swanndolia.idlemmorpg.ui.main.Menu;
 
 public class EnemyKilledOverlay {
-    public void EnemyKilledOverlay(Context context, Player player, DefaultCharacter enemyEncountered, String location) {
+    public EnemyKilledOverlay(Context context, Player player, DefaultEncounter enemyEncountered, String location) {
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.overlay_enemy_drops);
 
@@ -64,17 +64,6 @@ public class EnemyKilledOverlay {
             removeButtonAndIcon(sellAllLoot, iconSellAllItem, takeAllLoot, iconAllItem);
         });
 
-        Integer finalTotalValue = totalValue[0];
-        iconSellAllItem.setImageResource(R.drawable.icon_coins);
-        sellAllLoot.setOnClickListener(view -> {
-            player.addCoins(finalTotalValue);
-            int amountToRemove = enemyEncountered.getInventory().size();
-            enemyEncountered.setInventory(new HashMap<>());
-            itemListHolder.removeViews(0, amountToRemove);
-            removeButtonAndIcon(sellAllLoot, iconSellAllItem, takeAllLoot, iconAllItem);
-        });
-
-
         for (Item item : enemyEncountered.getInventory()) {
             totalValue[0] += item.getSellValue();
             // used to setup double buttons don't touch this fucking shit stay in loop to avoid already have parent
@@ -112,6 +101,17 @@ public class EnemyKilledOverlay {
             });
             itemListHolder.addView(rewardAction);
         }
+
+        Integer finalTotalValue = totalValue[0];
+        iconSellAllItem.setImageResource(R.drawable.icon_coins);
+        sellAllLoot.setOnClickListener(view -> {
+            player.addCoins(finalTotalValue);
+            int amountToRemove = enemyEncountered.getInventory().size();
+            enemyEncountered.setInventory(new HashMap<>());
+            itemListHolder.removeViews(0, amountToRemove);
+            removeButtonAndIcon(sellAllLoot, iconSellAllItem, takeAllLoot, iconAllItem);
+        });
+
         dialog.setCancelable(false);
         Window window = dialog.getWindow();
         window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);

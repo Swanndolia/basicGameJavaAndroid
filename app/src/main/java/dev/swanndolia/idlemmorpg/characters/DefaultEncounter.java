@@ -7,7 +7,7 @@ import java.util.Map;
 
 import dev.swanndolia.idlemmorpg.items.Item;
 
-public class DefaultCharacter implements Serializable {
+public class DefaultEncounter implements Serializable {
     String name;
     String desc;
     Integer hp;

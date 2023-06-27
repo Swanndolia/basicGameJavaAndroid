@@ -5,13 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import dev.swanndolia.idlemmorpg.characters.DefaultCharacter;
+import dev.swanndolia.idlemmorpg.characters.DefaultEncounter;
 import dev.swanndolia.idlemmorpg.items.Item;
 import dev.swanndolia.idlemmorpg.items.drops.fields.Egg;
 import dev.swanndolia.idlemmorpg.items.drops.fields.Feather;
 import dev.swanndolia.idlemmorpg.items.drops.fields.RawChicken;
 
-public class Fox extends DefaultCharacter implements Serializable {
+public class Fox extends DefaultEncounter implements Serializable {
     public Fox(int playerLevel) {
         this.setName("Fox");
         this.setDesc("Can you catch it");

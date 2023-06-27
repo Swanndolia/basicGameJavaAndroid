@@ -1,6 +1,6 @@
 package dev.swanndolia.idlemmorpg.items;
 
-
+//TODO convert this and other defaults items files to an interface
 import java.io.Serializable;
 
 public class Item implements Serializable {

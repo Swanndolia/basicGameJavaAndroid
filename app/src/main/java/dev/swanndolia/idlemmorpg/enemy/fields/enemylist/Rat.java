@@ -5,13 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import dev.swanndolia.idlemmorpg.characters.DefaultCharacter;
+import dev.swanndolia.idlemmorpg.characters.DefaultEncounter;
 import dev.swanndolia.idlemmorpg.items.Item;
 import dev.swanndolia.idlemmorpg.items.drops.fields.Egg;
 import dev.swanndolia.idlemmorpg.items.drops.fields.Feather;
 import dev.swanndolia.idlemmorpg.items.drops.fields.RawChicken;
 
-public class Rat extends DefaultCharacter implements Serializable {
+public class Rat extends DefaultEncounter implements Serializable {
     public Rat(int playerLevel) {
         this.setName("Rat");
         this.setDesc("I should avoid getting bitten");

@@ -17,7 +17,7 @@ import java.text.MessageFormat;
 import java.util.Random;
 
 import dev.swanndolia.idlemmorpg.R;
-import dev.swanndolia.idlemmorpg.characters.DefaultCharacter;
+import dev.swanndolia.idlemmorpg.characters.DefaultEncounter;
 import dev.swanndolia.idlemmorpg.characters.Player;
 import dev.swanndolia.idlemmorpg.enemy.GenerateEnemy;
 import dev.swanndolia.idlemmorpg.enemy.GetEnemyListFromZone;
@@ -35,7 +35,7 @@ public class Fight extends AppCompatActivity {
     Button rangedAttackBtn;
     Button fleeBtn;
     Button bagBtn;
-    DefaultCharacter enemyEncountered;
+    DefaultEncounter enemyEncountered;
     Player player;
     ProgressBar playerHp;
     ProgressBar enemyHp;
@@ -122,7 +122,7 @@ public class Fight extends AppCompatActivity {
         enemyHp.setProgress(enemyEncountered.getHp());
         enemyTextView.setText(MessageFormat.format("{0} lvl {1} HP: {2}", enemyEncountered.getName(), enemyEncountered.getLevel(), enemyEncountered.getHp()));
         if (enemyEncountered.getHp() <= 0) {
-            new EnemyKilledOverlay().EnemyKilledOverlay(Fight.this, player, enemyEncountered, location);
+            new EnemyKilledOverlay(Fight.this, player, enemyEncountered, location);
             player.savePlayer();
         }
     }

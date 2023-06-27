@@ -1,6 +1,7 @@
 package dev.swanndolia.idlemmorpg.ui.main;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -25,9 +26,7 @@ import dev.swanndolia.idlemmorpg.ui.overlays.SettingsOverlay;
 
 public class Menu extends AppCompatActivity {
     Player player;
-    ProgressBar playerExp;
-    ProgressBar playerHp;
-    ProgressBar playerStamina;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +40,22 @@ public class Menu extends AppCompatActivity {
 
         setContentView(R.layout.activity_menu);
         setContentView(R.layout.activity_menu);
+
+        //TODO make bars work
+        final ProgressBar playerExp = findViewById(R.id.playerExpBar);
+        final ProgressBar playerHp = findViewById(R.id.playerHpBar);
+        final ProgressBar playerStamina = findViewById(R.id.playerStaminaBar);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            playerExp.setProgress(player.getExp(), true);
+            playerHp.setProgress(player.getHp(), true);
+            playerStamina.setProgress(player.getStamina(), true);
+        }
+        else{
+            playerExp.setProgress(player.getExp());
+            playerHp.setProgress(player.getHp());
+            playerStamina.setProgress(player.getStamina());
+        }
 
         final Button exploreBtn = findViewById(R.id.exploreBtn);
         final Button craftBtn = findViewById(R.id.craftBtn);

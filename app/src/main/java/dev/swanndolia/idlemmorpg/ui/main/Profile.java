@@ -37,8 +37,8 @@ public class Profile extends AppCompatActivity {
 
         TextView playerHp = findViewById(R.id.playerHpStats);
         playerHp.setText(MessageFormat.format("{0} / {1}", player.getHp().toString(), player.getMaxHp().toString()));
-        TextView playerMaxMp = findViewById(R.id.playerMpStats);
-        playerMaxMp.setText(MessageFormat.format("{0} / {1}", player.getMp().toString(), player.getMaxMp().toString()));
+        TextView playerMaxStamina = findViewById(R.id.playerMpStats);
+        playerMaxStamina.setText(MessageFormat.format("{0} / {1}", player.getStamina().toString(), player.getMaxStamina().toString()));
 
         //TODO
         player.getItemBoughtMarket();
