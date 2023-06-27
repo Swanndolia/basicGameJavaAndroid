@@ -40,11 +40,9 @@ public class CompareAndEquip extends AppCompatActivity {
         slot = (String) bundle.getSerializable("slot");
         setContentView(R.layout.activity_compare);
 
-        expProgressBar = (ProgressBar) findViewById(R.id.expProgressBar);
-        expProgressBar.setProgress(player.getExp());
-        expProgressBar.setMax(player.getNextLevelExp());
 
-        parentLayout = (LinearLayout) findViewById(R.id.parentLayout);
+
+        parentLayout = findViewById(R.id.parentLayout);
         equippedItemBtn = new Button(this);
         equippedItemBtn.setTextSize(20);
         if (!slot.equals("None")) {

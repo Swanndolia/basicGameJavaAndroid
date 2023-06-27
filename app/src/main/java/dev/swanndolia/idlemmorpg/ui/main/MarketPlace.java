@@ -49,9 +49,6 @@ public class MarketPlace extends AppCompatActivity {
         Button buyOnMarket = (Button) findViewById(R.id.buyItemOnMarket);
 
         marketItemListHolder = (LinearLayout) findViewById(R.id.marketItemListHolder);
-        expProgressBar = (ProgressBar) findViewById(R.id.expProgressBar);
-        expProgressBar.setProgress(player.getExp());
-        expProgressBar.setMax(player.getNextLevelExp());
 
         fetchItemOnMarket();
 

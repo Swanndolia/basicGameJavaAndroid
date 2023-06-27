@@ -28,9 +28,6 @@ public class Smelt extends AppCompatActivity {
         makePlayerAlwaysUpdated();
         setContentView(R.layout.activity_smelt);
 
-        expProgressBar = (ProgressBar) findViewById(R.id.expProgressBar);
-        expProgressBar.setProgress(player.getExp());
-        expProgressBar.setMax(player.getNextLevelExp());
     }
 
     private void makePlayerAlwaysUpdated() {

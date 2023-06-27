@@ -11,31 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/background"></ImageView>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_alignParentTop="true">
-
-        <ProgressBar
-            android:id="@+id/expProgressBar"
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></ProgressBar>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="Level:"
-                android:textColor="#FFFFFF" />
-        </RelativeLayout>
-    </FrameLayout>
+        android:src="@drawable/background" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -44,7 +20,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -193,14 +169,14 @@
                 app:strokeWidth="2dp" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/basicWeaponBtn"
+                android:id="@+id/meleeWeaponBtn"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:drawableLeft="@drawable/icon_basic_weapon"
-                android:text="Basic Weapon"
+                android:drawableLeft="@drawable/icon_melee_weapon"
+                android:text="Melee Weapon"
                 android:textColor="@color/cardview_dark_background"
                 app:strokeColor="@color/cardview_dark_background"
                 app:strokeWidth="2dp" />

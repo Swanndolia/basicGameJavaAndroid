@@ -30,10 +30,6 @@ public class Explore extends AppCompatActivity {
         makePlayerAlwaysUpdated();
         setContentView(R.layout.activity_explore);
 
-        expProgressBar = (ProgressBar) findViewById(R.id.expProgressBar);
-        expProgressBar.setProgress(player.getExp());
-        expProgressBar.setMax(player.getNextLevelExp());
-
         final Button testAreaButton = findViewById(R.id.testAreaButton);
         testAreaButton.setOnClickListener(new View.OnClickListener() {
             @Override

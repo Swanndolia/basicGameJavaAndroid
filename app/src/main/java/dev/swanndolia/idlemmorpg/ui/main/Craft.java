@@ -44,10 +44,6 @@ public class Craft extends AppCompatActivity {
         makePlayerAlwaysUpdated();
         setContentView(R.layout.activity_craft);
 
-        expProgressBar = findViewById(R.id.expProgressBar);
-        expProgressBar.setProgress(player.getExp());
-        expProgressBar.setMax(player.getNextLevelExp());
-
         List<Recipe> recipeList = new ArrayList<>();
         recipeList.add(new BonesHelmetRecipe());
         recipeList.add(new BonesTorsoRecipe());
@@ -75,7 +71,7 @@ public class Craft extends AppCompatActivity {
                 public void onClick(View view) {
                     for (int i = 0; i < 1; i++) {
                     }//check for each item required if present in inventory if yes check if present entry.value amount of time
-                    // try removeitem x ammount  if NPE not enough in inv
+                    //todo try removeitem x ammount  if NPE not enough in inv
                     player.addInventory(recipe.getRecipeResult());
                 }
             });

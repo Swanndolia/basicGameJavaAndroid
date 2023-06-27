@@ -1,7 +1,6 @@
 package dev.swanndolia.idlemmorpg.ui.main;
 
 import android.os.Bundle;
-import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +17,6 @@ import dev.swanndolia.idlemmorpg.tools.activity.ActivityLauncher;
 
 public class Trade extends AppCompatActivity {
     Player player;
-    ProgressBar expProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +24,8 @@ public class Trade extends AppCompatActivity {
         Bundle bundle = this.getIntent().getExtras();
         player = (Player) bundle.getSerializable("player");
         makePlayerAlwaysUpdated();
-
         setContentView(R.layout.activity_trade);
 
-        expProgressBar = (ProgressBar) findViewById(R.id.expProgressBar);
-        expProgressBar.setProgress(player.getExp());
-        expProgressBar.setMax(player.getNextLevelExp());
     }
 
     private void makePlayerAlwaysUpdated() {

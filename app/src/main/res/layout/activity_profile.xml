@@ -3,29 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_alignParentTop="true">
-
-        <ProgressBar
-            android:id="@+id/expProgressBar"
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></ProgressBar>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="Level:" />
-        </RelativeLayout>
-    </FrameLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -43,14 +20,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textColor="#80471C"
-                android:textSize="20dp"></TextView>
+                android:textSize="20sp" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
-                android:src="@drawable/icon_coins"></ImageView>
+                android:src="@drawable/icon_coins" />
 
             <TextView
                 android:id="@+id/playerCoinsStats"
@@ -58,14 +35,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textColor="#80471C"
-                android:textSize="20dp"></TextView>
+                android:textSize="20sp" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
-                android:src="@drawable/icon_arrow"></ImageView>
+                android:src="@drawable/icon_arrow" />
 
             <TextView
                 android:id="@+id/playerArrowsStats"
@@ -73,14 +50,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textColor="#80471C"
-                android:textSize="20dp"></TextView>
+                android:textSize="20sp" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
-                android:src="@drawable/icon_death"></ImageView>
+                android:src="@drawable/icon_death" />
 
             <TextView
                 android:id="@+id/playerDeathsStats"
@@ -88,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textColor="#80471C"
-                android:textSize="20dp"></TextView>
+                android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -101,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
-                android:src="@drawable/icon_hp"></ImageView>
+                android:src="@drawable/icon_hp" />
 
             <TextView
                 android:id="@+id/playerExpStats"
@@ -109,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textColor="#80471C"
-                android:textSize="20dp"></TextView>
+                android:textSize="20sp" />
 
         </LinearLayout>
 
@@ -123,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
-                android:src="@drawable/icon_hp"></ImageView>
+                android:src="@drawable/icon_hp" />
 
             <TextView
                 android:id="@+id/playerHpStats"
@@ -131,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textColor="#80471C"
-                android:textSize="20dp"></TextView>
+                android:textSize="20sp" />
 
         </LinearLayout>
 
@@ -145,7 +122,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:src="@drawable/icon_mp"></ImageView>
+                android:src="@drawable/icon_mp" />
 
             <TextView
                 android:id="@+id/playerMpStats"
@@ -153,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textColor="#80471C"
-                android:textSize="20dp"></TextView>
+                android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

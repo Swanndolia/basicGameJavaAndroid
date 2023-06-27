@@ -3,11 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
-<ImageView
-    android:id="@+id/iconItem"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_weight="0.3"></ImageView>
+
+    <ImageView
+        android:id="@+id/iconItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.3" />
     <androidx.appcompat.widget.AppCompatButton
         android:textAllCaps="false"
         android:id="@+id/buttonLeft"
@@ -21,7 +22,7 @@
         android:id="@+id/iconSellItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.3"></ImageView>
+        android:layout_weight="0.3" />
     <androidx.appcompat.widget.AppCompatButton
         android:textAllCaps="false"
         android:id="@+id/buttonRight"

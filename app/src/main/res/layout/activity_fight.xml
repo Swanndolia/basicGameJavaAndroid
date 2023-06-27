@@ -4,46 +4,21 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_alignParentTop="true">
-
-        <ProgressBar
-            android:id="@+id/expProgressBar"
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></ProgressBar>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="Level:"
-                android:textColor="#FFFFFF" />
-        </RelativeLayout>
-    </FrameLayout>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <LinearLayout
             android:id="@+id/parentLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
-
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_fields"
+                android:baselineAligned="false"
                 android:orientation="horizontal">
 
                 <RelativeLayout
@@ -59,21 +34,22 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:indeterminate="false"
-                        android:progressTint="@color/design_default_color_error"></ProgressBar>
+                        android:progressTint="@color/design_default_color_error" />
 
                     <TextView
                         android:id="@+id/playerInfo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/playerHp"
-                        android:textAlignment="center"></TextView>
+                        android:textAlignment="center" />
 
                     <ImageView
                         android:id="@+id/playerAnim"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
-                        android:src="@drawable/idle1"></ImageView>
+                        android:src="@drawable/idle1" />
+
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -89,65 +65,63 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:indeterminate="false"
-                        android:progressTint="@color/design_default_color_error"></ProgressBar>
+                        android:progressTint="@color/design_default_color_error" />
 
                     <TextView
                         android:id="@+id/enemyInfo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/enemyHp"
-                        android:textAlignment="center"></TextView>
+                        android:textAlignment="center" />
 
                     <ImageView
                         android:id="@+id/enemyAnim"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"></ImageView>
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:src="@drawable/idle1" />
+
                 </RelativeLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
                 <androidx.appcompat.widget.AppCompatButton
-                    android:textAllCaps="false"
-                    android:id="@+id/basicWeaponBtn"
+                    android:id="@+id/meleeWeaponBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="20dp"
-                    android:gravity="left|center_vertical"
-                    android:text="No Basic Weapon Equipped"></androidx.appcompat.widget.AppCompatButton>
+                    android:gravity="start|center_vertical"
+                    android:text="@string/no_melee_weapon_equipped"
+                    android:textAllCaps="false" />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:textAllCaps="false"
                     android:id="@+id/rangedWeaponBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="20dp"
-                    android:gravity="left|center_vertical"
-                    android:text="No Special Weapon Equipped">
+                    android:gravity="start|center_vertical"
+                    android:text="@string/no_special_weapon_equipped"
+                    android:textAllCaps="false">
 
                 </androidx.appcompat.widget.AppCompatButton>
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:textAllCaps="false"
                     android:id="@+id/bagBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:text="Bag"></androidx.appcompat.widget.AppCompatButton>
-            </LinearLayout>
-            <androidx.appcompat.widget.AppCompatButton
-                android:textAllCaps="false"
-                android:id="@+id/fleeBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Flee"
-                android:textAlignment="center"
-                ></androidx.appcompat.widget.AppCompatButton>
+                    android:gravity="start|center_vertical"
+                    android:text="@string/bag"
+                    android:textAllCaps="false" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/fleeBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/flee"
+                    android:textAlignment="center"
+                    android:textAllCaps="false" />
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

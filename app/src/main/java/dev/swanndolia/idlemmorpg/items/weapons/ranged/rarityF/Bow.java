@@ -1,12 +1,12 @@
-package dev.swanndolia.idlemmorpg.items.weapons.ranged;
+package dev.swanndolia.idlemmorpg.items.weapons.ranged.rarityF;
 
 import java.io.Serializable;
 
 import dev.swanndolia.idlemmorpg.R;
-import dev.swanndolia.idlemmorpg.items.rarity.Broken;
+import dev.swanndolia.idlemmorpg.items.weapons.ranged.RangedWeapon;
 
-public class BrokenBow extends RangedWeapon implements Serializable, Broken {
-    public BrokenBow() {
+public class Bow extends RangedWeapon implements Serializable {
+    public Bow() {
         this.setName("Broken Bow");
         this.setDesc("A Broken bow, Still use arrows");
         this.setCritChance(30);
@@ -15,7 +15,7 @@ public class BrokenBow extends RangedWeapon implements Serializable, Broken {
         this.setSellValue(25);
         this.setCritMultiplier(3.0);
         this.calculateCritDamage();
-        this.Broken(this);
+        this.setRarity("F");
         this.setIcon(R.drawable.icon_ranged_weapon);
     }
 }

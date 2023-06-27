@@ -28,10 +28,10 @@ public class HealerOverlay {
                     player.setCoins(player.getCoins() - healCost);
                     player.setHp(player.getMaxHp());
                     dialog.dismiss();
-                    Toast.makeText(context, "You've been successfully healed to max HP", Toast.LENGTH_SHORT);
+                    Toast.makeText(context, "You've been successfully healed to max HP", Toast.LENGTH_SHORT).show();
                 } else {
                     dialog.dismiss();
-                    Toast.makeText(context, "You don't have enough money to heal yourself", Toast.LENGTH_SHORT);
+                    Toast.makeText(context, "You don't have enough money to heal yourself", Toast.LENGTH_SHORT).show();
                 }
             }
         });

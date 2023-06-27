@@ -15,7 +15,7 @@
         android:background="@color/design_default_color_error"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="30dp" />
+        android:textSize="30sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textAlignment="center"
-            android:textSize="18dp"></TextView>
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/lostCryptoCoinsText"
@@ -36,6 +36,6 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textAlignment="center"
-            android:textSize="18dp"></TextView>
+            android:textSize="18sp" />
     </LinearLayout>
 </LinearLayout>

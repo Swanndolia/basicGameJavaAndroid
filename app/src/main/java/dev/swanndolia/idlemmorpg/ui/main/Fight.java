@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
+import androidx.appcompat.content.res.AppCompatResources;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,7 +38,7 @@ public class Fight extends AppCompatActivity {
     ImageView playerAnimationView;
     TextView playerTextView;
     TextView enemyTextView;
-    Button basicAttackBtn;
+    Button meleeAttackBtn;
     Button rangedAttackBtn;
     Button fleeBtn;
     Button bagBtn;
@@ -59,16 +59,12 @@ public class Fight extends AppCompatActivity {
         enemyEncountered = new GenerateEnemy(new GetEnemyListFromZone(location, player).getEnemyList()).getRandomEnemy();
         setContentView(R.layout.activity_fight);
 
-        expProgressBar = findViewById(R.id.expProgressBar);
-        expProgressBar.setProgress(player.getExp());
-        expProgressBar.setMax(player.getNextLevelExp());
-
         playerAnimationView = findViewById(R.id.playerAnim);
         playerTextView = findViewById(R.id.playerInfo);
         playerHp = findViewById(R.id.playerHp);
         enemyTextView = findViewById(R.id.enemyInfo);
         enemyHp = findViewById(R.id.enemyHp);
-        basicAttackBtn = findViewById(R.id.basicWeaponBtn);
+        meleeAttackBtn = findViewById(R.id.meleeWeaponBtn);
         rangedAttackBtn = findViewById(R.id.rangedWeaponBtn);
         fleeBtn = findViewById(R.id.fleeBtn);
         bagBtn = findViewById(R.id.bagBtn);
@@ -82,21 +78,19 @@ public class Fight extends AppCompatActivity {
 
         runAnimation(R.drawable.idle);
 
-        Item basicWeapon = player.getEquippedItem("Basic Weapon");
-        Item rangedWeapon = player.getEquippedItem("Special Weapon");
+        Item meleeWeapon = player.getEquippedItem("Melee Weapon");
+        Item rangedWeapon = player.getEquippedItem("Ranged Weapon");
 
-        fleeBtn.setOnClickListener(v -> {
-            onBackPressed();
-        });
+        fleeBtn.setOnClickListener(v -> onBackPressed());
 
-        if (basicWeapon != null) {
-            basicAttackBtn.setText(MessageFormat.format("{0} ({1})", basicWeapon.getName(), basicWeapon.getDamage()));
-            basicAttackBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(getDrawable(basicWeapon.getIcon()), null, null, null);
-            basicAttackBtn.setOnClickListener(v -> enemyAttackStep(playerAttackStep(basicWeapon)));
+        if (meleeWeapon != null) {
+            meleeAttackBtn.setText(MessageFormat.format("{0} ({1})", meleeWeapon.getName(), meleeWeapon.getDamage()));
+            meleeAttackBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(AppCompatResources.getDrawable(this, meleeWeapon.getIcon()), null, null, null);
+            meleeAttackBtn.setOnClickListener(v -> enemyAttackStep(playerAttackStep(meleeWeapon)));
         }
         if (rangedWeapon != null) {
             rangedAttackBtn.setText(MessageFormat.format("{0} ({1})", rangedWeapon.getName(), rangedWeapon.getDamage()));
-            rangedAttackBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(getDrawable(rangedWeapon.getIcon()), null, null, null);
+            rangedAttackBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(AppCompatResources.getDrawable(this, rangedWeapon.getIcon()), null, null, null);
             rangedAttackBtn.setOnClickListener(v -> {
                 if (player.getInventory().contains(new Arrow())) {
                     enemyAttackStep(playerAttackStep(rangedWeapon));
@@ -179,14 +173,14 @@ public class Fight extends AppCompatActivity {
     }
 
     public Integer runAnimation(Integer animation) {
-        CustomAnimationDrawableNew cad = new CustomAnimationDrawableNew((AnimationDrawable) ContextCompat.getDrawable(this, animation)) {
+        CustomAnimationDrawableNew cad = new CustomAnimationDrawableNew((AnimationDrawable) AppCompatResources.getDrawable(this, animation)) {
             @Override
             public void onAnimationStart() {
                 if (animation == R.drawable.idle) {
-                    basicAttackBtn.setEnabled(true);
+                    meleeAttackBtn.setEnabled(true);
                     rangedAttackBtn.setEnabled(true);
                 } else {
-                    basicAttackBtn.setEnabled(false);
+                    meleeAttackBtn.setEnabled(false);
                     rangedAttackBtn.setEnabled(false);
                 }
             }
@@ -227,7 +221,7 @@ public class Fight extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (enemyEncountered.getHp() > 0 && player.getHp() > 0) {
-            Integer losingCryptoCoins = (int) player.getCoins() / 10;
+            Integer losingCryptoCoins = player.getCoins() / 10;
             Dialog dialog = new Dialog(this);
             dialog.setContentView(R.layout.overlay_flee_confirm);
             Button confirmFlee = dialog.findViewById(R.id.confirmFlee);

@@ -30,9 +30,6 @@ public class Town extends AppCompatActivity {
         makePlayerAlwaysUpdated();
         setContentView(R.layout.activity_town);
 
-        expProgressBar = findViewById(R.id.expProgressBar);
-        expProgressBar.setProgress(player.getExp());
-        expProgressBar.setMax(player.getNextLevelExp());
         Button healerBtn = findViewById(R.id.healerBtn);
         Button marketBtn = findViewById(R.id.marketPlaceButton);
 

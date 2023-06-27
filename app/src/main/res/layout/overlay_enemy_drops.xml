@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -11,15 +9,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="22dp"
-        android:layout_margin="5dp"></TextView>
+        android:textSize="22sp"
+        android:layout_margin="5dp" />
+
     <TextView
         android:id="@+id/rewardsList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="18dp"
-        android:layout_margin="10dp"></TextView>
+        android:textSize="18sp"
+        android:layout_margin="10dp" />
 
     <LinearLayout
         android:id="@+id/parentLayout"
@@ -39,11 +38,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <ImageView
                 android:id="@+id/iconItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.3"></ImageView>
+                android:layout_weight="0.3" />
             <androidx.appcompat.widget.AppCompatButton
                 android:textAllCaps="false"
                 android:id="@+id/takeAllLootBtn"
@@ -51,11 +51,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.2"
                 android:text="Take all Loot" />
+
             <ImageView
                 android:id="@+id/iconSellItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.3"></ImageView>
+                android:layout_weight="0.3" />
             <androidx.appcompat.widget.AppCompatButton
                 android:textAllCaps="false"
                 android:id="@+id/sellAllLootBtn"

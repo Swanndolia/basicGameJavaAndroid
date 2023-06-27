@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dev.swanndolia.idlemmorpg.items.Item;
-import dev.swanndolia.idlemmorpg.items.weapons.normal.BrokenSword;
+import dev.swanndolia.idlemmorpg.items.weapons.melee.rarityF.Sword;
 import dev.swanndolia.idlemmorpg.tools.player.ForceSaveInventoryList;
 import dev.swanndolia.idlemmorpg.tools.player.PlayerStats;
 
@@ -241,7 +241,7 @@ public class Player extends PlayerStats implements Serializable {
     private void giveAndEquipBasicStuff() {
         this.addInventory(new ForceSaveInventoryList());
         this.addEquippedInventory(new ForceSaveInventoryList());
-        this.addEquippedInventory(new BrokenSword());
+        this.addEquippedInventory(new Sword());
         this.savePlayer();
     }
 

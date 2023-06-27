@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">LoginRegisterFirebase</string>
+    <string name="no_melee_weapon_equipped">No Melee Weapon Equipped</string>
+    <string name="bag">Bag</string>
+    <string name="no_special_weapon_equipped">No Special Weapon Equipped</string>
+    <string name="flee">Flee</string>
+    <string name="level">Level:</string>
+    <string name="explore">Explore</string>
+    <string name="craft">Craft</string>
+    <string name="tinker">Tinker</string>
+    <string name="fuse">Fuse</string>
+    <string name="inventory">Inventory</string>
+    <string name="smelt">Smelt</string>
+    <string name="profile">Profile</string>
+    <string name="town">Town</string>
+    <string name="bestiary">Bestiary</string>
+    <string name="store">Store</string>
+    <string name="guild">Guild</string>
 </resources>

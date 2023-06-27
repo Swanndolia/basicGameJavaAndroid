@@ -14,7 +14,7 @@
             android:id="@+id/itemSelectBtn"
             android:layout_weight="0.15"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></androidx.appcompat.widget.AppCompatButton>
+            android:layout_height="wrap_content" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:textAllCaps="false"
@@ -22,7 +22,7 @@
             android:layout_weight="0.5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="-"></androidx.appcompat.widget.AppCompatButton>
+            android:text="-" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:textAllCaps="false"
@@ -30,7 +30,7 @@
             android:layout_weight="0.5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="+"></androidx.appcompat.widget.AppCompatButton>
+            android:text="+" />
 
     </LinearLayout>
     <LinearLayout
@@ -40,21 +40,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.27"
-            android:textSize="28dp"
+            android:textSize="28sp"
             android:text="Sell for ">
         </TextView>
+
         <EditText
             android:layout_weight="0.36"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/sellPriceField"
-            android:inputType="number"
-            ></EditText>
+            android:inputType="number" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.27"
-            android:textSize="28dp"
+            android:textSize="28sp"
             android:text="per unit">
         </TextView>
     </LinearLayout>

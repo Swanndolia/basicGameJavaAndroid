@@ -40,10 +40,6 @@ public class Menu extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
         setContentView(R.layout.activity_menu);
 
-        expProgressBar = findViewById(R.id.expProgressBar);
-        expProgressBar.setMax(player.getNextLevelExp());
-        expProgressBar.setProgress(player.getExp());
-
         final Button exploreBtn = findViewById(R.id.exploreBtn);
         final Button craftBtn = findViewById(R.id.craftBtn);
         final Button smeltBtn = findViewById(R.id.smeltBtn);

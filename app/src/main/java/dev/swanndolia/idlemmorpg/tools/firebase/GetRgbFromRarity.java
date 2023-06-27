@@ -6,19 +6,18 @@ public class GetRgbFromRarity {
     public int GetRgbFromRarity(String rarity) {
         if (rarity != null) {
             switch (rarity) {
-                case "Broken":
+                case "F":
                     return Color.rgb(180, 180, 180);
-                case "Uncommon":
+                case "C":
                     return Color.rgb(0, 255, 0);
-                case "Rare":
+                case "B":
                     return Color.rgb(0, 0, 255);
-                case "Epic":
+                case "A":
                     return Color.rgb(127, 0, 255);
-                case "Legendary":
+                case "S":
                     return Color.rgb(255, 215, 0);
-                case "Unique":
+                case "SS":
                     return Color.rgb(255, 0, 0);
-                case "Common":
                 default:
                     return Color.rgb(0, 0, 0);
             }

@@ -29,7 +29,7 @@ public class PlayerStats implements Serializable {
         return enemyKilled;
     }
 
-    public void setEnemyKilled(int rareEnemyKilled) {
+    public void setEnemyKilled(int enemyKilled) {
         this.enemyKilled = enemyKilled;
     }
 

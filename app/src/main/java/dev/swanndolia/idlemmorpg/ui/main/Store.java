@@ -28,9 +28,6 @@ public class Store extends AppCompatActivity {
         makePlayerAlwaysUpdated();
         setContentView(R.layout.activity_store);
 
-        expProgressBar = findViewById(R.id.expProgressBar);
-        expProgressBar.setProgress(player.getExp());
-        expProgressBar.setMax(player.getNextLevelExp());
     }
 
     private void makePlayerAlwaysUpdated() {

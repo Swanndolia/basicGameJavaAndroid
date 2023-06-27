@@ -26,15 +26,10 @@ public class Inventory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getIntent().getExtras();
         player = (Player) bundle.getSerializable("player");
-        makePlayerAlwaysUpdated();
         setContentView(R.layout.activity_inventory);
 
-        expProgressBar = (ProgressBar) findViewById(R.id.expProgressBar);
-        expProgressBar.setProgress(player.getExp());
-        expProgressBar.setMax(player.getNextLevelExp());
-
-        final Button basicWeaponBtn = findViewById(R.id.basicWeaponBtn);
-        final Button specialWeaponBtn = findViewById(R.id.rangedWeaponBtn);
+        final Button meleeWeaponBtn = findViewById(R.id.meleeWeaponBtn);
+        final Button rangedWeaponBtn = findViewById(R.id.rangedWeaponBtn);
         final Button armsBtn = findViewById(R.id.armsBtn);
         final Button capeBtn = findViewById(R.id.capeBtn);
         final Button bootsBtn = findViewById(R.id.bootsBtn);
@@ -47,8 +42,8 @@ public class Inventory extends AppCompatActivity {
         final Button torsoBtn = findViewById(R.id.torsoBtn);
         final Button miscBtn = findViewById(R.id.miscBtn);
 
-        basicWeaponBtn.setOnClickListener(v -> new ActivityLauncher(this, CompareAndEquip.class, player, "slot", "Basic Weapon"));
-        specialWeaponBtn.setOnClickListener(v -> new ActivityLauncher(this, CompareAndEquip.class, player, "slot", "Special Weapon"));
+        meleeWeaponBtn.setOnClickListener(v -> new ActivityLauncher(this, CompareAndEquip.class, player, "slot", "Melee Weapon"));
+        rangedWeaponBtn.setOnClickListener(v -> new ActivityLauncher(this, CompareAndEquip.class, player, "slot", "Ranged Weapon"));
         armsBtn.setOnClickListener(v -> new ActivityLauncher(this, CompareAndEquip.class, player, "slot", "Arms"));
         bootsBtn.setOnClickListener(v -> new ActivityLauncher(this, CompareAndEquip.class, player, "slot", "Boots"));
         capeBtn.setOnClickListener(v -> new ActivityLauncher(this, CompareAndEquip.class, player, "slot", "Cape"));
@@ -65,19 +60,5 @@ public class Inventory extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         new ActivityLauncher(this, Menu.class, player);
-    }
-
-    private void makePlayerAlwaysUpdated() {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("users").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                player = snapshot.child(player.getName()).child("player").getValue(Player.class);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
     }
 }

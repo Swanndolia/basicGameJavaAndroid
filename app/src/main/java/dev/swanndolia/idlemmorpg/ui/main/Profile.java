@@ -31,10 +31,6 @@ public class Profile extends AppCompatActivity {
         makePlayerAlwaysUpdated();
         setContentView(R.layout.activity_profile);
 
-        expProgressBar = findViewById(R.id.expProgressBar);
-        expProgressBar.setProgress(player.getExp());
-        expProgressBar.setMax(player.getNextLevelExp());
-
         TextView playerName = findViewById(R.id.playerNameStats);
         playerName.setText(player.getName());
         TextView playerCoin = findViewById(R.id.playerCoinsStats);
