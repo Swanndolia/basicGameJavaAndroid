@@ -123,6 +123,7 @@ public class Fight extends AppCompatActivity {
         enemyTextView.setText(MessageFormat.format("{0} lvl {1} HP: {2}", enemyEncountered.getName(), enemyEncountered.getLevel(), enemyEncountered.getHp()));
         if (enemyEncountered.getHp() <= 0) {
             new EnemyKilledOverlay(Fight.this, player, enemyEncountered, location);
+            player.addExp(enemyEncountered.getExpReward());
             player.savePlayer();
         }
     }

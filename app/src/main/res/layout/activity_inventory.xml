@@ -24,173 +24,185 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/helmetBtn"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:drawableStart="@drawable/icon_helmet"
                 android:text="Helmet"
                 android:textColor="@color/cardview_dark_background"
+                app:icon="@drawable/icon_helmet"
+                app:iconTint="#612B07"
                 app:strokeColor="@color/cardview_dark_background"
                 app:strokeWidth="2dp" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/neckBtn"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:drawableStart="@drawable/icon_neck"
                 android:text="Neck"
                 android:textColor="@color/cardview_dark_background"
+                app:icon="@drawable/icon_neck"
+                app:iconTint="#612B07"
                 app:strokeColor="@color/cardview_dark_background"
                 app:strokeWidth="2dp" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/capeBtn"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:drawableStart="@drawable/icon_cape"
                 android:text="Cape"
                 android:textColor="@color/cardview_dark_background"
+                app:icon="@drawable/icon_cape"
+                app:iconTint="#612B07"
                 app:strokeColor="@color/cardview_dark_background"
                 app:strokeWidth="2dp" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/torsoBtn"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:drawableStart="@drawable/icon_torso"
                 android:text="Torso"
                 android:textColor="@color/cardview_dark_background"
+                app:icon="@drawable/icon_torso"
+                app:iconTint="#612B07"
                 app:strokeColor="@color/cardview_dark_background"
                 app:strokeWidth="2dp" />
 
-
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/armsBtn"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:drawableStart="@drawable/icon_torso"
                 android:text="Arms"
                 android:textColor="@color/cardview_dark_background"
+                app:icon="@drawable/icon_torso"
+                app:iconTint="#612B07"
                 app:strokeColor="@color/cardview_dark_background"
                 app:strokeWidth="2dp" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/lRingBtn"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:drawableStart="@drawable/icon_ring"
                 android:text="Left Ring"
                 android:textColor="@color/cardview_dark_background"
+                app:icon="@drawable/icon_ring"
+                app:iconTint="#612B07"
                 app:strokeColor="@color/cardview_dark_background"
                 app:strokeWidth="2dp" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/rRingBtn"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:drawableStart="@drawable/icon_ring"
                 android:text="Right Ring"
                 android:textColor="@color/cardview_dark_background"
+                app:icon="@drawable/icon_ring"
+                app:iconTint="#612B07"
                 app:strokeColor="@color/cardview_dark_background"
                 app:strokeWidth="2dp" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/glovesBtn"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:drawableStart="@drawable/icon_gloves"
                 android:text="Gloves"
                 android:textColor="@color/cardview_dark_background"
+                app:icon="@drawable/icon_gloves"
+                app:iconTint="#612B07"
                 app:strokeColor="@color/cardview_dark_background"
                 app:strokeWidth="2dp" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/legsBtn"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:drawableStart="@drawable/icon_boots"
                 android:text="Legs"
                 android:textColor="@color/cardview_dark_background"
+                app:icon="@drawable/icon_boots"
+                app:iconTint="#612B07"
                 app:strokeColor="@color/cardview_dark_background"
                 app:strokeWidth="2dp" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/bootsBtn"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:drawableStart="@drawable/icon_boots"
                 android:text="Boots"
                 android:textColor="@color/cardview_dark_background"
+                app:icon="@drawable/icon_boots"
+                app:iconTint="#612B07"
                 app:strokeColor="@color/cardview_dark_background"
                 app:strokeWidth="2dp" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/rangedWeaponBtn"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:drawableStart="@drawable/icon_ranged_weapon"
                 android:text="Ranged Weapon"
                 android:textColor="@color/cardview_dark_background"
+                app:icon="@drawable/icon_ranged_weapon"
+                app:iconTint="#612B07"
                 app:strokeColor="@color/cardview_dark_background"
                 app:strokeWidth="2dp" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/meleeWeaponBtn"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:drawableStart="@drawable/icon_melee_weapon"
                 android:text="Melee Weapon"
                 android:textColor="@color/cardview_dark_background"
+                app:icon="@drawable/icon_melee_weapon"
+                app:iconTint="#612B07"
                 app:strokeColor="@color/cardview_dark_background"
                 app:strokeWidth="2dp" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/miscBtn"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:drawableStart="@drawable/icon_inventory"
                 android:text="Drops and Misc"
                 android:textColor="@color/cardview_dark_background"
+                app:icon="@drawable/icon_inventory"
+                app:iconTint="#612B07"
                 app:strokeColor="@color/cardview_dark_background"
                 app:strokeWidth="2dp" />
         </LinearLayout>

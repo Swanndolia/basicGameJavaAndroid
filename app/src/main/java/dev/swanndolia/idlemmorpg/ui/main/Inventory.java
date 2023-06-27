@@ -12,7 +12,6 @@ import dev.swanndolia.idlemmorpg.tools.activity.ActivityLauncher;
 
 public class Inventory extends AppCompatActivity {
     Player player;
-    ProgressBar expProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

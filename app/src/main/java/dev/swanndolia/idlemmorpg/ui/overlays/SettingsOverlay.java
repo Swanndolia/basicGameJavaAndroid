@@ -34,7 +34,6 @@ public class SettingsOverlay {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
-                //send command to music service somehow
                 Intent musicService = new Intent(context, BackgroundMusicService.class);
                 if (progress == 0) { //todo make sound level instead on off
                     context.stopService(musicService);
