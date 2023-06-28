@@ -39,6 +39,7 @@ public class EnemyKilledOverlay {
         Button backMenu = dialog.findViewById(R.id.backToMenuBtn);
         backMenu.setOnClickListener(view -> {
             player.addItemListToInventory(enemyEncountered.getInventory());
+            player.savePlayer();
             dialog.dismiss();
             new ActivityLauncher(context, Menu.class, player);
         });
@@ -46,6 +47,7 @@ public class EnemyKilledOverlay {
         Button exploreMore = dialog.findViewById(R.id.exploreAgainBtn);
         exploreMore.setOnClickListener(view -> {
             player.addItemListToInventory(enemyEncountered.getInventory());
+            player.savePlayer();
             dialog.dismiss();
             new ActivityLauncher(context, Fight.class, player, "location", location);
         });
@@ -61,6 +63,7 @@ public class EnemyKilledOverlay {
             int amountToRemove = enemyEncountered.getInventory().size();
             enemyEncountered.setInventory(new HashMap<>());
             itemListHolder.removeViews(0, amountToRemove);
+            player.savePlayer();
             removeButtonAndIcon(sellAllLoot, iconSellAllItem, takeAllLoot, iconAllItem);
         });
 
@@ -74,7 +77,6 @@ public class EnemyKilledOverlay {
             Button takeOneItem = rewardAction.findViewById(R.id.buttonLeft);
             ImageView iconSellItem = rewardAction.findViewById(R.id.iconSellItem);
             Button sellOneItem = rewardAction.findViewById(R.id.buttonRight);
-            //iconItem.setImageResource(item.getIcon());
             iconItem.setImageResource(R.drawable.icon_inventory);
             iconSellItem.setImageResource(R.drawable.icon_coins);
             takeOneItem.setAllCaps(false);
@@ -88,6 +90,7 @@ public class EnemyKilledOverlay {
                 if (itemListHolder.getChildCount() == 0) {
                     removeButtonAndIcon(sellAllLoot, iconSellAllItem, takeAllLoot, iconAllItem);
                 }
+                player.savePlayer();
             });
             sellOneItem.setText("Sell for: " + item.getSellValue());
             sellOneItem.setOnClickListener(view -> {
@@ -98,6 +101,7 @@ public class EnemyKilledOverlay {
                 if (itemListHolder.getChildCount() == 0) {
                     removeButtonAndIcon(sellAllLoot, iconSellAllItem, takeAllLoot, iconAllItem);
                 }
+                player.savePlayer();
             });
             itemListHolder.addView(rewardAction);
         }
