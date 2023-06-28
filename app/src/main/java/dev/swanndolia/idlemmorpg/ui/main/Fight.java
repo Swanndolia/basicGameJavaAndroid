@@ -128,7 +128,7 @@ public class Fight extends AppCompatActivity {
         }
     }
 
-    public Integer playerAttackStep(Item weapon) {
+    public Integer playerAttackStep(Item weapon) { //TODO add combat text for both ally and enemy
         Integer waitTimeBeforeEnemyAnim;
 
         if (weapon.getAccuracy() - enemyEncountered.getEvade() > new Random().nextInt(100)) {
@@ -149,7 +149,7 @@ public class Fight extends AppCompatActivity {
         return waitTimeBeforeEnemyAnim;
     }
 
-    public void enemyAttackStep(Integer waitPlayerAnimEnd) {
+    public void enemyAttackStep(Integer waitPlayerAnimEnd) {//todo add some animations + sprites
         if (enemyEncountered.getHp() > 0) {
             if (enemyEncountered.getAccuracy() - player.getEvade() > new Random().nextInt(100)) {
                 scheduleAnim(waitPlayerAnimEnd, R.drawable.hurt);
@@ -164,7 +164,7 @@ public class Fight extends AppCompatActivity {
         }
     }
 
-    public Integer runAnimation(Integer animation) {//todo remove animation from fight class for cleanup
+    public Integer runAnimation(Integer animation) {
         CustomAnimationDrawableNew cad = new CustomAnimationDrawableNew((AnimationDrawable) AppCompatResources.getDrawable(this, animation)) {
             @Override
             public void onAnimationStart() {
@@ -216,9 +216,14 @@ public class Fight extends AppCompatActivity {
             Integer losingCryptoCoins = player.getCoins() / 10;
             Dialog dialog = new Dialog(this);
             dialog.setContentView(R.layout.overlay_flee_confirm);
+
+            TextView confirmFleeText = dialog.findViewById(R.id.textFleeConfirm);
+            confirmFleeText.setText("Are you sure you want to flee ? You're going to lose " + losingCryptoCoins +  " coins !");
             Button confirmFlee = dialog.findViewById(R.id.confirmFlee);
+
             confirmFlee.setOnClickListener(view -> {
                 player.setCoins(player.getCoins() - losingCryptoCoins);
+                player.savePlayer();
                 dialog.dismiss();
                 new ActivityLauncher(this, Menu.class, player);
             });

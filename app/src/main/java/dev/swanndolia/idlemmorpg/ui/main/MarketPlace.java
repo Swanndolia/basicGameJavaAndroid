@@ -89,6 +89,7 @@ public class MarketPlace extends AppCompatActivity {
                                         public void onDataChange(@NonNull DataSnapshot snapshot1) {
                                             Player owner = snapshot1.child("player").getValue(Player.class);
                                             owner.addCoins(itemHolder.getPrice() * itemHolder.getAmount());
+                                            owner.savePlayer();
                                         }
 
                                         @Override

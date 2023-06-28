@@ -114,6 +114,7 @@ public class EnemyKilledOverlay {
             enemyEncountered.setInventory(new HashMap<>());
             itemListHolder.removeViews(0, amountToRemove);
             removeButtonAndIcon(sellAllLoot, iconSellAllItem, takeAllLoot, iconAllItem);
+            player.savePlayer();
         });
 
         dialog.setCancelable(false);

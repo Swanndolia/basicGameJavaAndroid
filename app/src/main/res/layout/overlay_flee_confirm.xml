@@ -6,9 +6,9 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/textFleeConfirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sure you want to flee ? You may lose few items and some CryptoCoins too !"
         android:textAlignment="center"
         android:textSize="22sp" />
 
