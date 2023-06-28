@@ -82,7 +82,7 @@ public class MarketPlace extends AppCompatActivity {
                             marketItemListBtn.setOnClickListener(view -> {
                                 if (player.getCoins() >= itemHolder.getPrice() * itemHolder.getAmount()) {
                                     player.setCoins(player.getCoins() - itemHolder.getPrice() * itemHolder.getAmount());
-                                    player.addInventory(item, itemHolder.getAmount());
+                                    player.addItemsToInventory(item, itemHolder.getAmount());
                                     dataSnapshot.getRef().removeValue();
                                     databaseReference.child("users").child(itemHolder.getOwnerName()).addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
@@ -170,7 +170,7 @@ public class MarketPlace extends AppCompatActivity {
                 DatabaseReference ref = databaseReference.child("market").push();
                 ItemHolder itemHolder = new ItemHolder(item, amountToSell, sellPrice, player.getName());
                 ref.setValue(itemHolder);
-                player.removeInventory(item, amountToSell);
+                player.removeItemFromInventory(item, amountToSell);
             }
 
             @Override

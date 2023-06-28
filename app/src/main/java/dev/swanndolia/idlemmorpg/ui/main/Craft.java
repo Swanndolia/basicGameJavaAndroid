@@ -57,14 +57,11 @@ public class Craft extends AppCompatActivity {
             for (Map.Entry<Item, Integer> entry : mappedResult.entrySet()) {
                 resultBtn.setText(resultBtn.getText() + " " + entry.getKey().getName() + " x " + entry.getValue());
             }
-            resultBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    for (int i = 0; i < 1; i++) {
-                    }//check for each item required if present in inventory if yes check if present entry.value amount of time
-                    //todo try removeitem x ammount  if NPE not enough in inv
-                    player.addInventory(recipe.getRecipeResult());
-                }
+            resultBtn.setOnClickListener(view -> {
+                for (int i = 0; i < 1; i++) {
+                }//check for each item required if present in inventory if yes check if present entry.value amount of time
+                //todo try removeitem x ammount  if NPE not enough in inv
+                player.addItemListToInventory(recipe.getRecipeResult());
             });
             recipeListLayout.addView(recipeLayout);
         }

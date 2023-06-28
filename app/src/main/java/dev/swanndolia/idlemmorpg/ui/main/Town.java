@@ -13,8 +13,6 @@ import dev.swanndolia.idlemmorpg.ui.overlays.HealerOverlay;
 
 public class Town extends AppCompatActivity {
     Player player;
-    ProgressBar expProgressBar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +24,7 @@ public class Town extends AppCompatActivity {
         Button marketBtn = findViewById(R.id.marketPlaceButton);
 
         marketBtn.setOnClickListener(view -> {
-            new ActivityLauncher(Town.this, MarketPlace.class, player);
+            new ActivityLauncher(this, MarketPlace.class, player);
         });
         healerBtn.setOnClickListener(v -> {
             new HealerOverlay(player, this);

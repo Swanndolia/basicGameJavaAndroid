@@ -48,6 +48,7 @@ public class Player extends PlayerStats implements Serializable {
         this.inventory = new ArrayList<Item>();
         this.equippedInventory = new ArrayList<Item>();
         this.giveAndEquipBasicStuff();
+        this.savePlayer();
     }
 
     public String getName() {
@@ -120,19 +121,19 @@ public class Player extends PlayerStats implements Serializable {
 
     public void checkLevelUp() {
         if (this.getExp() >= this.getNextLevelExp()) {
-            this.nextLevelExp = (int) (this.nextLevelExp + this.nextLevelExp * 1.7);
+            this.nextLevelExp = (int) (this.nextLevelExp + this.nextLevelExp * 1.1);
             this.level += 1;
             this.maxHp += this.level;
             this.hp = this.maxHp;
+            this.maxStamina += this.level;
+            this.stamina = this.maxStamina;
             this.savePlayer();
         }
     }
 
     public void addCoins(Integer cryptoCoins) {
         this.coins += cryptoCoins;
-        this.savePlayer();
     }
-
 
     public Integer getArrow() {
         return arrow;
@@ -140,7 +141,6 @@ public class Player extends PlayerStats implements Serializable {
 
     public void setArrow(Integer arrow) {
         this.arrow = arrow;
-
     }
 
     public Integer getCoins() {
@@ -158,7 +158,6 @@ public class Player extends PlayerStats implements Serializable {
 
     public void setLuck(Integer luck) {
         this.luck = luck;
-
     }
 
     public Integer getEvade() {
@@ -177,53 +176,45 @@ public class Player extends PlayerStats implements Serializable {
         return equippedInventory;
     }
 
-    public void addInventory(List<Item> items) {
+    public void addItemListToInventory(List<Item> items) {
         this.inventory.addAll(items);
-        this.savePlayer();
     }
 
-    public void addInventory(Item item, Integer integer) {
+    public void addItemsToInventory(Item item, Integer integer) {
         for (int i = 0; i < integer; i++) {
-            this.addInventory(item);
+            this.inventory.add(item);
         }
+        this.savePlayer();
     }
 
-    public void addInventory(Item item) {
+    public void addItemToInventory(Item item) {
         this.inventory.add(item);
-        this.savePlayer();
     }
 
-    public void addEquippedInventory(Item item) {
+    public void addItemToEquippedInventory(Item item) {
         this.equippedInventory.add(item);
-        this.savePlayer();
     }
 
-    public void removeInventory(Item item) {
+    public void removeItemFromInventory(Item item) {
         this.inventory.remove(item);
         this.savePlayer();
     }
 
-    public void removeInventory(Item item, Integer integer) {
-
+    public void removeItemFromInventory(Item item, Integer integer) {
         for (int i = 0; i < integer; i++) {
-            this.removeInventory(item);
+            this.inventory.remove(item);
         }
-    }
-
-    public void removeEquippedInventory(Item item) {
-        this.equippedInventory.remove(item);
         this.savePlayer();
     }
-
     public void equipItem(Item itemToEquip) {
-        this.removeInventory(itemToEquip);
-        this.addEquippedInventory(itemToEquip);
+        this.removeItemFromInventory(itemToEquip);
+        this.addItemToEquippedInventory(itemToEquip);
         this.savePlayer();
     }
 
-    public void unequippItem(Item itemToEquip) {
-        this.removeEquippedInventory(itemToEquip);
-        this.addInventory(itemToEquip);
+    public void unequippItem(Item itemToUnequipp) {
+        this.equippedInventory.remove(itemToUnequipp);
+        this.addItemToInventory(itemToUnequipp);
         this.savePlayer();
     }
 
@@ -239,10 +230,9 @@ public class Player extends PlayerStats implements Serializable {
     }
 
     private void giveAndEquipBasicStuff() {
-        this.addInventory(new ForceSaveInventoryList());
-        this.addEquippedInventory(new ForceSaveInventoryList());
-        this.addEquippedInventory(new Sword());
-        this.savePlayer();
+        this.addItemToInventory(new ForceSaveInventoryList());
+        this.addItemToEquippedInventory(new ForceSaveInventoryList());
+        this.addItemToEquippedInventory(new Sword());
     }
 
     public void savePlayer() {

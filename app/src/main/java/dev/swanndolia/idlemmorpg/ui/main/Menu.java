@@ -36,9 +36,8 @@ public class Menu extends AppCompatActivity {
         if (bundle.getSerializable("tutorial") != null && (Boolean) bundle.getSerializable("tutorial")) {
             new Tutorial(this, player);
         }
-        makePlayerAlwaysUpdated();
 
-        setContentView(R.layout.activity_menu);
+
         setContentView(R.layout.activity_menu);
 
         //TODO make bars work
@@ -87,19 +86,7 @@ public class Menu extends AppCompatActivity {
         chatBtn.setOnClickListener(v -> new ChatOverlay(this, player));
     }
 
-    private void makePlayerAlwaysUpdated() {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("users").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                player = snapshot.child(player.getName()).child("player").getValue(Player.class);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-    }
 
 
     @Override

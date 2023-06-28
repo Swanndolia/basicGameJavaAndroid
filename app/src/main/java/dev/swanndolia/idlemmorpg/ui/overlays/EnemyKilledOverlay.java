@@ -38,14 +38,14 @@ public class EnemyKilledOverlay {
 
         Button backMenu = dialog.findViewById(R.id.backToMenuBtn);
         backMenu.setOnClickListener(view -> {
-            player.addInventory(enemyEncountered.getInventory());
+            player.addItemListToInventory(enemyEncountered.getInventory());
             dialog.dismiss();
             new ActivityLauncher(context, Menu.class, player);
         });
 
         Button exploreMore = dialog.findViewById(R.id.exploreAgainBtn);
         exploreMore.setOnClickListener(view -> {
-            player.addInventory(enemyEncountered.getInventory());
+            player.addItemListToInventory(enemyEncountered.getInventory());
             dialog.dismiss();
             new ActivityLauncher(context, Fight.class, player, "location", location);
         });
@@ -57,7 +57,7 @@ public class EnemyKilledOverlay {
         //iconItem.setImageResource(item.getIcon());
         iconAllItem.setImageResource(R.drawable.icon_inventory);
         takeAllLoot.setOnClickListener(view -> {
-            player.addInventory(enemyEncountered.getInventory());
+            player.addItemListToInventory(enemyEncountered.getInventory());
             int amountToRemove = enemyEncountered.getInventory().size();
             enemyEncountered.setInventory(new HashMap<>());
             itemListHolder.removeViews(0, amountToRemove);
@@ -83,7 +83,7 @@ public class EnemyKilledOverlay {
             takeOneItem.setOnClickListener(view -> {
                 totalValue[0] -= item.getSellValue();
                 enemyEncountered.removeInventory(item);
-                player.addInventory(item);
+                player.addItemToInventory(item);
                 itemListHolder.removeView(rewardAction);
                 if (itemListHolder.getChildCount() == 0) {
                     removeButtonAndIcon(sellAllLoot, iconSellAllItem, takeAllLoot, iconAllItem);

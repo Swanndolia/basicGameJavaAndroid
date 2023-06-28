@@ -25,7 +25,6 @@ public class Explore extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getIntent().getExtras();
         player = (Player) bundle.getSerializable("player");
-        makePlayerAlwaysUpdated();
         setContentView(R.layout.activity_explore);
 
         final Button testAreaButton = findViewById(R.id.testAreaButton);
@@ -60,17 +59,5 @@ public class Explore extends AppCompatActivity {
         finish();
     }
 
-    private void makePlayerAlwaysUpdated() {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("users").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                player = snapshot.child(player.getName()).child("player").getValue(Player.class);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-    }
 }
