@@ -6,6 +6,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import dev.swanndolia.idlemmorpg.items.Item;
 import dev.swanndolia.idlemmorpg.items.weapons.melee.rarityF.Sword;
@@ -68,7 +69,7 @@ public class Player extends PlayerStats implements Serializable {
     }
 
     public Integer getMaxHp() {
-        return this.maxHp;
+        return maxHp;
     }
 
     public void setMaxHp(Integer maxHp) {
@@ -101,6 +102,7 @@ public class Player extends PlayerStats implements Serializable {
 
     public void addExp(Integer exp) {
         this.exp += exp;
+        this.checkLevelUp();
     }
 
     public Integer getNextLevelExp() {
@@ -206,6 +208,7 @@ public class Player extends PlayerStats implements Serializable {
         }
         this.savePlayer();
     }
+
     public void equipItem(Item itemToEquip) {
         this.removeItemFromInventory(itemToEquip);
         this.addItemToEquippedInventory(itemToEquip);

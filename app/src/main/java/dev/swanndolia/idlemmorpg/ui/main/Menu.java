@@ -1,11 +1,13 @@
 package dev.swanndolia.idlemmorpg.ui.main;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -24,9 +26,13 @@ import dev.swanndolia.idlemmorpg.tools.activity.Tutorial;
 import dev.swanndolia.idlemmorpg.ui.overlays.ChatOverlay;
 import dev.swanndolia.idlemmorpg.ui.overlays.SettingsOverlay;
 
+//todo dungeons with character movement
+//todo economy
+//todo skill system (strength agi dex int const... with buff to hp stamina dmg / crit dodge acc)
+//todo mini story
 public class Menu extends AppCompatActivity {
     Player player;
-
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +51,15 @@ public class Menu extends AppCompatActivity {
         final ProgressBar playerHp = findViewById(R.id.playerHpBar);
         final ProgressBar playerStamina = findViewById(R.id.playerStaminaBar);
 
+        playerExp.setMax(player.getNextLevelExp());
+        playerHp.setMax(player.getMaxHp());
+        playerStamina.setMax(player.getMaxStamina());
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             playerExp.setProgress(player.getExp(), true);
             playerHp.setProgress(player.getHp(), true);
             playerStamina.setProgress(player.getStamina(), true);
-        }
-        else{
+        } else {
             playerExp.setProgress(player.getExp());
             playerHp.setProgress(player.getHp());
             playerStamina.setProgress(player.getStamina());
@@ -82,11 +91,9 @@ public class Menu extends AppCompatActivity {
         bestiaryBtn.setOnClickListener(v -> new ActivityLauncher(this, Bestiary.class, player));
         guildBtn.setOnClickListener(v -> new ActivityLauncher(this, Guild.class, player));
         storeBtn.setOnClickListener(v -> new ActivityLauncher(this, Store.class, player));
-        settingsBtn.setOnClickListener(v -> new SettingsOverlay(this, getSharedPreferences("AUTO_LOGIN", Context.MODE_PRIVATE)));
+        settingsBtn.setOnClickListener(v -> new SettingsOverlay(this, getSharedPreferences("AUTO_LOGIN", Context.MODE_PRIVATE), player));
         chatBtn.setOnClickListener(v -> new ChatOverlay(this, player));
     }
-
-
 
 
     @Override
@@ -103,4 +110,38 @@ public class Menu extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+    @Override
+    public void onStop() {
+        databaseReference.child("users").child(player.getName()).child("onlineSessionID").setValue("");
+        super.onStop();
+    }
+
+    @Override
+    public void onRestart() {//todo trying to add generated token check to dont delog onstop but delog if saved token is different from previous one currently use one instead two tokens
+        databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                SharedPreferences sharedPref = getSharedPreferences("SESSION_ID", Context.MODE_PRIVATE);
+
+
+                if (snapshot.child("users").child(player.getName()).child("onlineSessionID").exists()) {
+                    if (!snapshot.child("users").child(player.getName()).child("onlineSessionID").getValue().toString().equals(sharedPref.getString("id", "")))
+                        new ActivityLauncher(Menu.this, Login.class);
+                    Toast.makeText(Menu.this, snapshot.child("users").child(player.getName()).child("onlineSessionID").getValue().toString(), Toast.LENGTH_SHORT);
+                } else {
+                    databaseReference.child("users").child(player.getName()).child("onlineSessionID").setValue(sharedPref.getString("id", ""));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        super.onRestart();
+    }
 }
+
+
+

@@ -9,14 +9,18 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import dev.swanndolia.idlemmorpg.R;
+import dev.swanndolia.idlemmorpg.characters.Player;
 import dev.swanndolia.idlemmorpg.tools.activity.ActivityLauncher;
 import dev.swanndolia.idlemmorpg.tools.music.BackgroundMusicService;
 import dev.swanndolia.idlemmorpg.ui.main.Login;
 
 public class SettingsOverlay {
 
-    public SettingsOverlay(Context context, SharedPreferences sharedPreferences) {
+    public SettingsOverlay(Context context, SharedPreferences sharedPreferences, Player player) {
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.overlay_settings);
         dialog.setTitle("Customize your settings here !");
@@ -49,6 +53,8 @@ public class SettingsOverlay {
             editor.clear();
             editor.apply();
             dialog.dismiss();
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+            databaseReference.child("users").child(player.getName()).child("onlineSessionID").setValue("");
             new ActivityLauncher(context, Login.class);
         });
 

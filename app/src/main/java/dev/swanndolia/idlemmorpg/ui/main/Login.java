@@ -19,6 +19,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.UUID;
+
 import dev.swanndolia.idlemmorpg.R;
 import dev.swanndolia.idlemmorpg.characters.Player;
 
@@ -80,19 +82,34 @@ public class Login extends AppCompatActivity {
                     String getPassword = snapshot.child(usernameTxt).child("password").getValue(String.class);
                     if (passwordTxt.equals(getPassword)) {
                         Player player = snapshot.child(usernameTxt).child("player").getValue(Player.class);
-                        Intent intent = new Intent(Login.this, Menu.class);
-                        intent.putExtra("player", player);
-                        if (stayLoginCheckBox.isChecked()) {
-                            sharedPreferences = getSharedPreferences("AUTO_LOGIN", Context.MODE_PRIVATE);
-                            editor = sharedPreferences.edit();
-                            editor.putString("username", usernameTxt);
-                            editor.putString("password", passwordTxt);
-                            editor.putBoolean("stayLogin", true);
+                        sharedPreferences = getSharedPreferences("SESSION_ID", Context.MODE_PRIVATE);
+                        editor = sharedPreferences.edit();
+                        String sessionUUID = UUID.randomUUID().toString();
+                        editor.putString("id", sessionUUID);
+                        editor.apply();
+                        if(snapshot.child(usernameTxt).child("onlineSessionID").getValue(String.class).equals("")){
+                            Intent intent = new Intent(Login.this, Menu.class);
+                            intent.putExtra("player", player);
+                            if (stayLoginCheckBox.isChecked()) {
+                                sharedPreferences = getSharedPreferences("AUTO_LOGIN", Context.MODE_PRIVATE);
+                                editor = sharedPreferences.edit();
+                                editor.putString("username", usernameTxt);
+                                editor.putString("password", passwordTxt);
+                                editor.putBoolean("stayLogin", true);
+                                editor.apply();
+                            }
+                            startActivity(intent);
+                            isLogged = true;
+                            String sessionID = UUID.randomUUID().toString();
+                            databaseReference.child("users").child(player.getName()).child("onlineSessionID").setValue(sessionID);
+                            SharedPreferences sharedPref = getSharedPreferences("SESSION_ID", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPref.edit();
+                            editor.putString("id", sessionID);
                             editor.apply();
+                            finish();
+                        }else{
+                            Toast.makeText(Login.this, sessionUUID + "        " +snapshot.child(usernameTxt).child("onlineSessionID").getValue(String.class), Toast.LENGTH_SHORT).show();
                         }
-                        startActivity(intent);
-                        isLogged = true;
-                        finish();
                     } else {
                         Toast.makeText(Login.this, "Password incorrect", Toast.LENGTH_SHORT).show();
                     }

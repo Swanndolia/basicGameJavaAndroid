@@ -7,6 +7,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.UUID;
+
 import dev.swanndolia.idlemmorpg.tools.music.BackgroundMusicService;
 import dev.swanndolia.idlemmorpg.ui.main.Login;
 import dev.swanndolia.idlemmorpg.ui.main.Register;
@@ -15,6 +17,8 @@ public class BootStrap extends AppCompatActivity {
 
     Intent musicService;
     SharedPreferences sharedPreferences;
+
+    UUID uuid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

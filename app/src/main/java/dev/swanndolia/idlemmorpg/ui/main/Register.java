@@ -1,5 +1,6 @@
 package dev.swanndolia.idlemmorpg.ui.main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.UUID;
 
 import dev.swanndolia.idlemmorpg.R;
 import dev.swanndolia.idlemmorpg.characters.Player;
@@ -68,6 +71,13 @@ public class Register extends AppCompatActivity {
                                 editor.putBoolean("stayLogin", true);
                                 editor.apply();
                             }
+
+                            String sessionID = UUID.randomUUID().toString();
+                            SharedPreferences sharedPref = getSharedPreferences("SESSION_ID", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPref.edit();
+                            editor.putString("id", sessionID);
+                            editor.apply();
+
                             Intent intent = new Intent(Register.this, Menu.class);
                             intent.putExtra("player", player);
                             intent.putExtra("tutorial", true);

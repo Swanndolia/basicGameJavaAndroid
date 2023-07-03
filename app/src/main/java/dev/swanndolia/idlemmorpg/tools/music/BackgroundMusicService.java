@@ -44,6 +44,7 @@ public class BackgroundMusicService extends Service {
     public void onDestroy() {
         player.stop();
         player.release();
+        super.onDestroy();
     }
 
     @Override
