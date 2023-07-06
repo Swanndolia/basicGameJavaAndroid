@@ -1,7 +1,6 @@
 package dev.swanndolia.idlemmorpg.ui.main;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
@@ -32,7 +31,7 @@ import dev.swanndolia.idlemmorpg.ui.overlays.SettingsOverlay;
 //todo mini story
 public class Menu extends AppCompatActivity {
     Player player;
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference usersDatabase = FirebaseDatabase.getInstance().getReference().child("users");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,30 +112,38 @@ public class Menu extends AppCompatActivity {
 
     @Override
     public void onStop() {
-        databaseReference.child("users").child(player.getName()).child("onlineSessionID").setValue("");
-        super.onStop();
-    }
-
-    @Override
-    public void onRestart() {//todo trying to add generated token check to dont delog onstop but delog if saved token is different from previous one currently use one instead two tokens
-        databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+        usersDatabase = FirebaseDatabase.getInstance().getReference().child("users");
+        usersDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                SharedPreferences sharedPref = getSharedPreferences("SESSION_ID", Context.MODE_PRIVATE);
-
-
-                if (snapshot.child("users").child(player.getName()).child("onlineSessionID").exists()) {
-                    if (!snapshot.child("users").child(player.getName()).child("onlineSessionID").getValue().toString().equals(sharedPref.getString("id", "")))
-                        new ActivityLauncher(Menu.this, Login.class);
-                    Toast.makeText(Menu.this, snapshot.child("users").child(player.getName()).child("onlineSessionID").getValue().toString(), Toast.LENGTH_SHORT);
-                } else {
-                    databaseReference.child("users").child(player.getName()).child("onlineSessionID").setValue(sharedPref.getString("id", ""));
+                if (snapshot.child(player.getName()).child("lastSessionID").getValue().toString().equals(getSharedPreferences("SESSION", Context.MODE_PRIVATE).getString("id", ""))){
+                    usersDatabase.child(player.getName()).child("online").setValue(false);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+        super.onStop();
+    }
+
+    @Override
+    public void onRestart() {
+        usersDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.child(player.getName()).child("lastSessionID").getValue().toString().equals(getSharedPreferences("SESSION", Context.MODE_PRIVATE).getString("id", ""))) {
+                    Toast.makeText(Menu.this, "You logged in from another device and so got disconnected", Toast.LENGTH_SHORT).show();
+                    new ActivityLauncher(Menu.this, Login.class);
+                } else {
+                    usersDatabase.child(player.getName()).child("online").setValue(true);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
             }
         });
         super.onRestart();

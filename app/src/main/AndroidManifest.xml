@@ -11,10 +11,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LoginRegisterFirebase">
         <service
-            android:name="dev.swanndolia.idlemmorpg.tools.music.BackgroundMusicService"
+            android:name="dev.swanndolia.idlemmorpg.tools.services.BackgroundMusicService"
             android:enabled="true"
             android:exported="true" />
-
+        <service
+            android:name="dev.swanndolia.idlemmorpg.tools.services.DisconnectPlayerAfterTaskKill"
+            android:enabled="true"
+            android:exported="true" />
         <activity
             android:name="dev.swanndolia.idlemmorpg.tools.activity.BootStrap"
             android:exported="true">

@@ -15,7 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import dev.swanndolia.idlemmorpg.R;
 import dev.swanndolia.idlemmorpg.characters.Player;
 import dev.swanndolia.idlemmorpg.tools.activity.ActivityLauncher;
-import dev.swanndolia.idlemmorpg.tools.music.BackgroundMusicService;
+import dev.swanndolia.idlemmorpg.tools.services.BackgroundMusicService;
 import dev.swanndolia.idlemmorpg.ui.main.Login;
 
 public class SettingsOverlay {
@@ -53,8 +53,9 @@ public class SettingsOverlay {
             editor.clear();
             editor.apply();
             dialog.dismiss();
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-            databaseReference.child("users").child(player.getName()).child("onlineSessionID").setValue("");
+            DatabaseReference usersDatabase = FirebaseDatabase.getInstance().getReference().child("users");
+            usersDatabase.child(player.getName()).child("lastSessionID").setValue("");
+            usersDatabase.child(player.getName()).child("online").setValue(false);
             new ActivityLauncher(context, Login.class);
         });
 

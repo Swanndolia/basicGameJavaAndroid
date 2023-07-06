@@ -23,11 +23,11 @@ import java.util.UUID;
 
 import dev.swanndolia.idlemmorpg.R;
 import dev.swanndolia.idlemmorpg.characters.Player;
+import dev.swanndolia.idlemmorpg.tools.services.DisconnectPlayerAfterTaskKill;
 
 public class Login extends AppCompatActivity {
 
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-
+    DatabaseReference usersDatabase = FirebaseDatabase.getInstance().getReference().child("users");
     CheckBox stayLoginCheckBox;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -36,14 +36,16 @@ public class Login extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Bundle bundle = this.getIntent().getExtras();
+
         if (bundle != null) {
             Boolean autologin = (Boolean) bundle.getSerializable("autologin");
             String usernameFromPref = (String) bundle.getSerializable("username");
             String passwordFromPref = (String) bundle.getSerializable("password");
+
             if (autologin) {
                 loginFirebaseAndGetPlayer(passwordFromPref, usernameFromPref);
+
                 if (isLogged) {
                     finish();
                 }
@@ -75,43 +77,49 @@ public class Login extends AppCompatActivity {
     }
 
     public void loginFirebaseAndGetPlayer(String passwordTxt, String usernameTxt) {
-        databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+        usersDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                 if (snapshot.hasChild(usernameTxt)) {
                     String getPassword = snapshot.child(usernameTxt).child("password").getValue(String.class);
-                    if (passwordTxt.equals(getPassword)) {
-                        Player player = snapshot.child(usernameTxt).child("player").getValue(Player.class);
-                        sharedPreferences = getSharedPreferences("SESSION_ID", Context.MODE_PRIVATE);
-                        editor = sharedPreferences.edit();
-                        String sessionUUID = UUID.randomUUID().toString();
-                        editor.putString("id", sessionUUID);
-                        editor.apply();
-                        if(snapshot.child(usernameTxt).child("onlineSessionID").getValue(String.class).equals("")){
+                    if (Boolean.FALSE.equals(snapshot.child(usernameTxt).child("online").getValue(Boolean.class))) {
+
+                        if (passwordTxt.equals(getPassword)) {
+                            String sessionUUID = UUID.randomUUID().toString();
+
+                            Player player = snapshot.child(usernameTxt).child("player").getValue(Player.class);
+                            usersDatabase.child(usernameTxt).child("online").setValue(true);
+                            usersDatabase.child(usernameTxt).child("lastSessionID").setValue(sessionUUID);
+
+                            sharedPreferences = getSharedPreferences("SESSION", Context.MODE_PRIVATE);
+                            editor = sharedPreferences.edit();
+                            editor.putString("id", sessionUUID);
+                            editor.putString("username", usernameTxt);
+                            editor.apply();
+
+                            isLogged = true;
                             Intent intent = new Intent(Login.this, Menu.class);
                             intent.putExtra("player", player);
+
+                            Intent disconnectPlayerService = new Intent(Login.this, DisconnectPlayerAfterTaskKill.class);
+                            startService(disconnectPlayerService);
+
                             if (stayLoginCheckBox.isChecked()) {
                                 sharedPreferences = getSharedPreferences("AUTO_LOGIN", Context.MODE_PRIVATE);
-                                editor = sharedPreferences.edit();
                                 editor.putString("username", usernameTxt);
                                 editor.putString("password", passwordTxt);
                                 editor.putBoolean("stayLogin", true);
                                 editor.apply();
                             }
                             startActivity(intent);
-                            isLogged = true;
-                            String sessionID = UUID.randomUUID().toString();
-                            databaseReference.child("users").child(player.getName()).child("onlineSessionID").setValue(sessionID);
-                            SharedPreferences sharedPref = getSharedPreferences("SESSION_ID", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sharedPref.edit();
-                            editor.putString("id", sessionID);
-                            editor.apply();
                             finish();
-                        }else{
-                            Toast.makeText(Login.this, sessionUUID + "        " +snapshot.child(usernameTxt).child("onlineSessionID").getValue(String.class), Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            Toast.makeText(Login.this, "Password incorrect", Toast.LENGTH_SHORT).show();
                         }
-                    } else {
-                        Toast.makeText(Login.this, "Password incorrect", Toast.LENGTH_SHORT).show();
+                    } else if(Boolean.TRUE.equals(snapshot.child(usernameTxt).child("online").getValue(Boolean.class))){
+                        Toast.makeText(Login.this, "you are already logged on an other device, please log off first", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(Login.this, "Username don't exist, create an account first", Toast.LENGTH_SHORT).show();

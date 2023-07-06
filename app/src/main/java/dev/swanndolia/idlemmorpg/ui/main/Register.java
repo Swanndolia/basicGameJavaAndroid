@@ -23,9 +23,12 @@ import java.util.UUID;
 
 import dev.swanndolia.idlemmorpg.R;
 import dev.swanndolia.idlemmorpg.characters.Player;
+import dev.swanndolia.idlemmorpg.tools.services.DisconnectPlayerAfterTaskKill;
 
 public class Register extends AppCompatActivity {
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,7 @@ public class Register extends AppCompatActivity {
         final TextView loginNowBtn = findViewById(R.id.loginNowBtn);
 
         registerBtn.setOnClickListener(v -> {
+
             final String usernameTxt = userName.getText().toString();
             final String emailTxt = email.getText().toString().replace(".", ",");
             final String passwordTxt = password.getText().toString();
@@ -55,6 +59,7 @@ public class Register extends AppCompatActivity {
                 databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                         if (snapshot.hasChild(usernameTxt)) {
                             Toast.makeText(Register.this, "This username has already been register", Toast.LENGTH_SHORT).show();
                         } else {
@@ -62,21 +67,27 @@ public class Register extends AppCompatActivity {
                             databaseReference.child("users").child(usernameTxt).child("email").setValue(emailTxt);
                             databaseReference.child("users").child(usernameTxt).child("password").setValue(passwordTxt);
 
-                            Toast.makeText(Register.this, "User successfully Register", Toast.LENGTH_SHORT).show();
+                            String sessionUUID = UUID.randomUUID().toString();
                             Player player = new Player(usernameTxt);
+                            databaseReference.child("users").child(usernameTxt).child("online").setValue(true);
+
+                            Intent disconnectPlayerService = new Intent(Register.this, DisconnectPlayerAfterTaskKill.class);
+                            startService(disconnectPlayerService);
+
+                            databaseReference.child("users").child(player.getName()).child("lastSessionID").setValue(sessionUUID);
+                            sharedPreferences = getSharedPreferences("SESSION", Context.MODE_PRIVATE);
+                            editor = sharedPreferences.edit();
+                            editor.putString("id", sessionUUID);
+                            editor.putString("username", usernameTxt);
+                            editor.apply();
+
                             if (stayLoginCheckBox.isChecked()) {
-                                SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
+                                sharedPreferences = getSharedPreferences("AUTO_LOGIN", Context.MODE_PRIVATE);
                                 editor.putString("username", usernameTxt);
                                 editor.putString("password", passwordTxt);
                                 editor.putBoolean("stayLogin", true);
                                 editor.apply();
                             }
-
-                            String sessionID = UUID.randomUUID().toString();
-                            SharedPreferences sharedPref = getSharedPreferences("SESSION_ID", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sharedPref.edit();
-                            editor.putString("id", sessionID);
-                            editor.apply();
 
                             Intent intent = new Intent(Register.this, Menu.class);
                             intent.putExtra("player", player);

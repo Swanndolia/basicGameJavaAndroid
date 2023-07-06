@@ -1,4 +1,4 @@
-package dev.swanndolia.idlemmorpg.tools.music;
+package dev.swanndolia.idlemmorpg.tools.services;
 
 import android.app.Service;
 import android.content.Intent;
@@ -30,14 +30,6 @@ public class BackgroundMusicService extends Service {
     public IBinder onUnBind(Intent arg0) {
         // TO DO Auto-generated method
         return null;
-    }
-
-    public void onStop() {
-
-    }
-
-    public void onPause() {
-
     }
 
     @Override

@@ -56,7 +56,7 @@ public class CompareAndEquip extends AppCompatActivity {
 
                 Button itemListBtn = new Button(this);
                 itemListBtn.setTextSize(20);
-                itemListBtn.setTextColor(new GetRgbFromRarity().GetRgbFromRarity(entry.getKey().getRarity()));
+                itemListBtn.setTextColor(new GetRgbFromRarity().getRgbFromRarity(entry.getKey().getRarity()));
                 itemListBtn.setText(entry.getKey().getName() + " x " + entry.getValue());
 
                 if (player.getEquippedItem(slot) != null && player.getEquippedItem(slot).equals(entry.getKey())) {
@@ -90,7 +90,7 @@ public class CompareAndEquip extends AppCompatActivity {
 
     private void generateEquippedItemButton(Button button) {
         equippedItemBtn.setText("Equipped: " + player.getEquippedItem(slot).getName());
-        equippedItemBtn.setTextColor(new GetRgbFromRarity().GetRgbFromRarity(player.getEquippedItem(slot).getRarity()));
+        equippedItemBtn.setTextColor(new GetRgbFromRarity().getRgbFromRarity(player.getEquippedItem(slot).getRarity()));
         equippedItemBtn.setOnClickListener(view -> {
             if (player.getEquippedItem(slot) != null) {
                 equippedItemBtn.setText("No " + slot + " Equipped");

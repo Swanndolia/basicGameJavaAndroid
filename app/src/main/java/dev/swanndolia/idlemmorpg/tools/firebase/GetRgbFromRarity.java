@@ -3,7 +3,7 @@ package dev.swanndolia.idlemmorpg.tools.firebase;
 import android.graphics.Color;
 
 public class GetRgbFromRarity {
-    public int GetRgbFromRarity(String rarity) {
+    public int getRgbFromRarity(String rarity) {
         if (rarity != null) {
             switch (rarity) {
                 case "F":

@@ -77,7 +77,7 @@ public class MarketPlace extends AppCompatActivity {
                         if (!itemHolder.getOwnerName().equals(player.getName())) {
                             Button marketItemListBtn = new Button(MarketPlace.this);
                             marketItemListBtn.setTextSize(20);
-                            marketItemListBtn.setTextColor(new GetRgbFromRarity().GetRgbFromRarity(item.getRarity()));
+                            marketItemListBtn.setTextColor(new GetRgbFromRarity().getRgbFromRarity(item.getRarity()));
                             marketItemListBtn.setText(MessageFormat.format("{0} x {1}  Buy for: {2}", item.getName(), itemHolder.getAmount(), itemHolder.getAmount() * itemHolder.getPrice()));
                             marketItemListBtn.setOnClickListener(view -> {
                                 if (player.getCoins() >= itemHolder.getPrice() * itemHolder.getAmount()) {
@@ -119,7 +119,7 @@ public class MarketPlace extends AppCompatActivity {
             if (!entry.getKey().equals(new ForceSaveInventoryList())) {
                 Button inventoryItemListBtn = new Button(this);
                 inventoryItemListBtn.setTextSize(20);
-                inventoryItemListBtn.setTextColor(new GetRgbFromRarity().GetRgbFromRarity(entry.getKey().getRarity()));
+                inventoryItemListBtn.setTextColor(new GetRgbFromRarity().getRgbFromRarity(entry.getKey().getRarity()));
                 inventoryItemListBtn.setText(MessageFormat.format("{0} x {1}", entry.getKey().getName(), entry.getValue()));
                 inventoryItemListBtn.setOnClickListener(view -> {
                     final Integer[] amountToSell = {entry.getValue()};

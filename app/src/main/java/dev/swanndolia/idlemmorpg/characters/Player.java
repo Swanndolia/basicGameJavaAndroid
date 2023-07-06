@@ -59,7 +59,6 @@ public class Player extends PlayerStats implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
     public Integer getHp() {
         return hp;
     }

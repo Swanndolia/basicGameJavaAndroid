@@ -9,7 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.UUID;
 
-import dev.swanndolia.idlemmorpg.tools.music.BackgroundMusicService;
+import dev.swanndolia.idlemmorpg.tools.services.BackgroundMusicService;
+import dev.swanndolia.idlemmorpg.tools.services.DisconnectPlayerAfterTaskKill;
 import dev.swanndolia.idlemmorpg.ui.main.Login;
 import dev.swanndolia.idlemmorpg.ui.main.Register;
 
@@ -27,9 +28,8 @@ public class BootStrap extends AppCompatActivity {
 
     @Override
     public void onResume() {
-        super.onResume();
-        sharedPreferences = getSharedPreferences("AUTO_LOGIN", Context.MODE_PRIVATE);
 
+        sharedPreferences = getSharedPreferences("AUTO_LOGIN", Context.MODE_PRIVATE);
         musicService = new Intent(BootStrap.this, BackgroundMusicService.class);
         startService(musicService);
 
@@ -52,5 +52,6 @@ public class BootStrap extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+        super.onResume();
     }
 }

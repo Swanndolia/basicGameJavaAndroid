@@ -81,7 +81,7 @@ public class EnemyKilledOverlay {
             iconSellItem.setImageResource(R.drawable.icon_coins);
             takeOneItem.setAllCaps(false);
             takeOneItem.setText(item.getName());
-            takeOneItem.setTextColor(new GetRgbFromRarity().GetRgbFromRarity(item.getRarity()));
+            takeOneItem.setTextColor(new GetRgbFromRarity().getRgbFromRarity(item.getRarity()));
             takeOneItem.setOnClickListener(view -> {
                 totalValue[0] -= item.getSellValue();
                 enemyEncountered.removeInventory(item);
