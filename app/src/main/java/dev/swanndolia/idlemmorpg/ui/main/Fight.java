@@ -1,11 +1,10 @@
 package dev.swanndolia.idlemmorpg.ui.main;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -27,7 +26,6 @@ import dev.swanndolia.idlemmorpg.items.Item;
 import dev.swanndolia.idlemmorpg.items.weapons.ranged.Arrow;
 import dev.swanndolia.idlemmorpg.tools.activity.ActivityLauncher;
 import dev.swanndolia.idlemmorpg.tools.animations.CustomAnimationDrawableNew;
-import dev.swanndolia.idlemmorpg.tools.animations.DynamicCharacterFrameBuilder;
 import dev.swanndolia.idlemmorpg.ui.overlays.EnemyKilledOverlay;
 
 public class Fight extends AppCompatActivity {
@@ -71,7 +69,7 @@ public class Fight extends AppCompatActivity {
         enemyHp.setProgress(enemyEncountered.getHp());
         updateEnemyInfo();
 
-        runAnimation(R.drawable.player_idle);
+        runAnimation(R.drawable.player_idle_template, "walk");
 
         Item meleeWeapon = player.getEquippedItem("Melee Weapon");
         Item rangedWeapon = player.getEquippedItem("Ranged Weapon");
@@ -132,22 +130,22 @@ public class Fight extends AppCompatActivity {
         }
     }
 
-    public Integer playerAttackStep(Item weapon) { //TODO add combat text for both ally and enemy
+    public Integer playerAttackStep(Item weapon) { //TODO add combat text for both ally and enemy + rework crit
         Integer waitTimeBeforeEnemyAnim;
 
         if (weapon.getAccuracy() - enemyEncountered.getEvade() > new Random().nextInt(100)) {
             if (weapon.getCritChance() > new Random().nextInt(100)) {
-                waitTimeBeforeEnemyAnim = runAnimation(R.drawable.player_attack_crit);
+                waitTimeBeforeEnemyAnim = runAnimation(R.drawable.player_attack_crit_template, "slash");
                 enemyEncountered.setHp(enemyEncountered.getHp() - weapon.getCritDamage());
             } else {
-                waitTimeBeforeEnemyAnim = runAnimation(R.drawable.player_attack);
+                waitTimeBeforeEnemyAnim = runAnimation(R.drawable.player_attack_template, "slash");
                 enemyEncountered.setHp(enemyEncountered.getHp() - weapon.getDamage());
             }
         } else {
             if (weapon.getCritChance() > new Random().nextInt(100)) {
-                waitTimeBeforeEnemyAnim = runAnimation(R.drawable.player_attack_crit);
+                waitTimeBeforeEnemyAnim = runAnimation(R.drawable.player_attack_crit_template, "slash");
             } else {
-                waitTimeBeforeEnemyAnim = runAnimation(R.drawable.player_attack);
+                waitTimeBeforeEnemyAnim = runAnimation(R.drawable.player_attack_template, "slash");
             }
         }
         return waitTimeBeforeEnemyAnim;
@@ -156,24 +154,24 @@ public class Fight extends AppCompatActivity {
     public void enemyAttackStep(Integer waitPlayerAnimEnd) {//todo add some animations + sprites
         if (enemyEncountered.getHp() > 0) {
             if (enemyEncountered.getAccuracy() - player.getEvade() > new Random().nextInt(100)) {
-                scheduleAnim(waitPlayerAnimEnd, R.drawable.player_hurt);
+                scheduleAnim(waitPlayerAnimEnd, R.drawable.player_hurt_template, "hurt");
                 if (enemyEncountered.getCritChance() > new Random().nextInt(100)) {
                     player.setHp(player.getHp() - enemyEncountered.getCritDamage());
                 } else {
                     player.setHp(player.getHp() - enemyEncountered.getDamage());
                 }
             } else {
-                scheduleAnim(waitPlayerAnimEnd, R.drawable.player_dodge);
+                scheduleAnim(waitPlayerAnimEnd, R.drawable.player_dodge_template, "dodge");
             }
         }
     }
 
-    public Integer runAnimation(Integer animation) {
+    public Integer runAnimation(Integer animation, String action) {
 
-        CustomAnimationDrawableNew cad = new CustomAnimationDrawableNew((AnimationDrawable) AppCompatResources.getDrawable(this, animation), this, player) {
+        CustomAnimationDrawableNew cad = new CustomAnimationDrawableNew((AnimationDrawable) AppCompatResources.getDrawable(this, animation), this, player, action) {
             @Override
             public void onAnimationStart() {
-                if (animation == R.drawable.player_idle) {
+                if (animation == R.drawable.player_idle_template) {
                     meleeAttackBtn.setEnabled(true);
                     rangedAttackBtn.setEnabled(true);
                 } else {
@@ -184,20 +182,20 @@ public class Fight extends AppCompatActivity {
 
             @Override
             public void onAnimationFinish() {
-                if (animation == R.drawable.player_attack_crit || animation == R.drawable.player_attack) {
+                if (animation == R.drawable.player_attack_crit_template || animation == R.drawable.player_attack_template) {
                     updateEnemyInfo();
                 }
-                if (animation == R.drawable.player_hurt) {
+                if (animation == R.drawable.player_hurt_template) {
                     updatePlayerInfo();
                 }
-                if (animation != R.drawable.player_idle) {
+                if (animation != R.drawable.player_idle_template) {
                     this.stop();
-                    if (animation != R.drawable.player_death) {
+                    if (animation != R.drawable.player_death_template) {
                         if (player.getHp() > 0) {
-                            runAnimation(R.drawable.player_idle);
+                            runAnimation(R.drawable.player_idle_template, "walk");
                         } else {
                             this.stop();
-                            runAnimation(R.drawable.player_death);
+                            runAnimation(R.drawable.player_death_template, "death");
                             updatePlayerInfo();
                         }
                     }
@@ -210,9 +208,9 @@ public class Fight extends AppCompatActivity {
         return cad.getTotalDuration();
     }
 
-    private void scheduleAnim(Integer waitPlayerAnimEnd, Integer animationId) {
+    private void scheduleAnim(Integer waitPlayerAnimEnd, Integer animationId, String action) {
         Handler animHandler = new Handler();
-        animHandler.postDelayed(() -> runAnimation(animationId), waitPlayerAnimEnd);
+        animHandler.postDelayed(() -> runAnimation(animationId, action), waitPlayerAnimEnd);
     }
 
     @Override
@@ -223,7 +221,7 @@ public class Fight extends AppCompatActivity {
             dialog.setContentView(R.layout.overlay_flee_confirm);
 
             TextView confirmFleeText = dialog.findViewById(R.id.textFleeConfirm);
-            confirmFleeText.setText("Are you sure you want to flee ? You're going to lose " + losingCryptoCoins +  " coins !");
+            confirmFleeText.setText("Are you sure you want to flee ? You're going to lose " + losingCryptoCoins + " coins !");
             Button confirmFlee = dialog.findViewById(R.id.confirmFlee);
 
             confirmFlee.setOnClickListener(view -> {

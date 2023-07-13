@@ -29,7 +29,7 @@ public class Player extends PlayerStats implements Serializable {
     Integer nextLevelExp;
     List<Item> inventory;
     List<Item> equippedInventory;
-    List<Bodypart> bodyparts;
+    List<Bodypart> bodypartsList;
 
     public Player() {
     }
@@ -49,12 +49,11 @@ public class Player extends PlayerStats implements Serializable {
         this.evade = 0;
         this.inventory = new ArrayList<Item>();
         this.equippedInventory = new ArrayList<Item>();
-        this.bodyparts = new ArrayList<Bodypart>();
+        this.bodypartsList = new ArrayList<Bodypart>();
         this.giveAndEquipBasicStuff();
-        //todo this just for dev
-        for (Bodypart.SLOTS slot : Bodypart.SLOTS.values()) {
-            bodyparts.add(new Bodypart(slot, "none"));
-        }
+        this.setEmptyBodyParts();
+        this.setBodypart(Bodypart.SLOTS.body, "male");
+        this.setBodypart(Bodypart.SLOTS.head, "long_center_dark_brown");
         this.savePlayer();
     }
 
@@ -67,7 +66,7 @@ public class Player extends PlayerStats implements Serializable {
     }
 
     public Bodypart getBodypart(Bodypart.SLOTS slot) {
-        for (Bodypart bodypart : this.bodyparts) {
+        for (Bodypart bodypart : this.bodypartsList) {
             if (bodypart.getSlot() == slot) {
                 return bodypart;
             }
@@ -75,15 +74,15 @@ public class Player extends PlayerStats implements Serializable {
         return null;
     }
 
-    public void addBodypart(Bodypart.SLOTS slot, String name) {
+    public void setBodypart(Bodypart.SLOTS slot, String name) {
         Bodypart bodypart = this.getBodypart(slot);
         if (bodypart != null) {
             bodypart.setName(name);
         }
     }
 
-    public List<Bodypart> getBodyparts() {
-        return bodyparts;
+    public List<Bodypart> getBodypartsList() {
+        return bodypartsList;
     }
 
     public Integer getHp() {
@@ -262,6 +261,12 @@ public class Player extends PlayerStats implements Serializable {
         this.addItemToInventory(new ForceSaveInventoryList());
         this.addItemToEquippedInventory(new ForceSaveInventoryList());
         this.addItemToEquippedInventory(new Sword());
+    }
+
+    private void setEmptyBodyParts() {
+        for (Bodypart.SLOTS slot : Bodypart.SLOTS.values()) {
+            this.bodypartsList.add(new Bodypart(slot, "none"));
+        }
     }
 
     public void savePlayer() {

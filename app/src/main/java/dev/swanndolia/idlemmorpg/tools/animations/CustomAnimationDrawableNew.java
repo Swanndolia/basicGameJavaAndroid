@@ -2,27 +2,21 @@ package dev.swanndolia.idlemmorpg.tools.animations;
 
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 
 import dev.swanndolia.idlemmorpg.characters.Player;
 
 public abstract class CustomAnimationDrawableNew extends AnimationDrawable {
 
-    /**
-     * Handles the animation callback.
-     */
     Handler mAnimationHandler;
 
-    public CustomAnimationDrawableNew(AnimationDrawable aniDrawable, Context context, Player player) {
-        // Add each frame to our animation drawable
+    public CustomAnimationDrawableNew(AnimationDrawable aniDrawable, Context context, Player player, String action) {
 
-        player.addBodypart(Bodypart.SLOTS.body, "player");
-        player.addBodypart(Bodypart.SLOTS.head, "test");
-        for (int i = 0; i < aniDrawable.getNumberOfFrames(); i++) {
-            DynamicCharacterFrameBuilder builder = new DynamicCharacterFrameBuilder(context, "attack", i + 1);
-            builder.addBodyparts(player.getBodyparts());
-            this.addFrame(builder.build(), aniDrawable.getDuration(i));
+        //TODO add data to item to make them visible
+        for (int animationStep = 0; animationStep < aniDrawable.getNumberOfFrames(); animationStep++) {
+            DynamicPlayerFrameBuilder builder = new DynamicPlayerFrameBuilder(context, action, animationStep);
+            builder.addBodyparts(player.getBodypartsList());
+            this.addFrame(builder.build(), aniDrawable.getDuration(animationStep));
         }
     }
 

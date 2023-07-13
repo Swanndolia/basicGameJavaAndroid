@@ -33,11 +33,12 @@ public class Bodypart implements Serializable {
 
     public enum SLOTS {
         body,
-        head,
-        arms,
-        torso,
-        legs,
         boots,
+        legs,
+        torso,
+        arms,
+        hair,
+        head,
         cape
     }
 }
