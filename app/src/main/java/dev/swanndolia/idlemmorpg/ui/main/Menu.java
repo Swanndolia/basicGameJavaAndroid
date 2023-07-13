@@ -43,6 +43,7 @@ public class Menu extends AppCompatActivity {
         }
 
 
+
         setContentView(R.layout.activity_menu);
 
         //TODO make bars work

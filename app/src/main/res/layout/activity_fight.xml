@@ -8,7 +8,7 @@
         android:id="@+id/top_Layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_fields"
+        android:background="@drawable/z_background_fields"
         android:baselineAligned="false"
         android:orientation="horizontal">
 
@@ -38,8 +38,7 @@
                 android:id="@+id/playerAnim"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="130sp"
-                android:src="@drawable/idle1" />
+                android:layout_marginTop="130sp" />
 
         </RelativeLayout>
 
@@ -71,8 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="130sp"
-                android:src="@drawable/idle1" />
+                android:layout_marginTop="130sp" />
 
         </RelativeLayout>
     </LinearLayout>

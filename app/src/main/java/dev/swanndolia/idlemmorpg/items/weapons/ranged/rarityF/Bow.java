@@ -16,6 +16,6 @@ public class Bow extends RangedWeapon implements Serializable {
         this.setCritMultiplier(3.0);
         this.calculateCritDamage();
         this.setRarity("F");
-        this.setIcon(R.drawable.icon_ranged_weapon);
+        this.setIcon(R.drawable.z_icon_ranged_weapon);
     }
 }

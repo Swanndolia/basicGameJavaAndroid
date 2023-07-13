@@ -1,7 +1,14 @@
 package dev.swanndolia.idlemmorpg.tools.animations;
 
+import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.util.Log;
+
+import androidx.appcompat.content.res.AppCompatResources;
+
+import dev.swanndolia.idlemmorpg.characters.Player;
 
 public abstract class CustomAnimationDrawableNew extends AnimationDrawable {
 
@@ -10,10 +17,15 @@ public abstract class CustomAnimationDrawableNew extends AnimationDrawable {
      */
     Handler mAnimationHandler;
 
-    public CustomAnimationDrawableNew(AnimationDrawable aniDrawable) {
-        /* Add each frame to our animation drawable */
+    public CustomAnimationDrawableNew(AnimationDrawable aniDrawable, Context context, Player player) {
+        // Add each frame to our animation drawable
+
+        player.addBodypart(Bodypart.SLOTS.body, "player");
         for (int i = 0; i < aniDrawable.getNumberOfFrames(); i++) {
-            this.addFrame(aniDrawable.getFrame(i), aniDrawable.getDuration(i));
+                DynamicCharacterFrameBuilder builder = new DynamicCharacterFrameBuilder(context,"attack" , i + 1);
+                builder.addBodyparts(player.getBodyparts());
+                Drawable drawable = builder.build();
+            this.addFrame(drawable, aniDrawable.getDuration(i));
         }
     }
 

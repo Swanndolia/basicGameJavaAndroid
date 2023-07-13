@@ -19,7 +19,7 @@
             android:enabled="true"
             android:exported="true" />
         <activity
-            android:name="dev.swanndolia.idlemmorpg.tools.activity.BootStrap"
+            android:name="dev.swanndolia.idlemmorpg.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

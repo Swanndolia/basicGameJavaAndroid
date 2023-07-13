@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/background" />
+        android:src="@drawable/z_background" />
 
     <ImageButton
         android:id="@+id/chatBtn"
@@ -19,7 +19,7 @@
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:layout_margin="10dp"
-        android:background="@drawable/icon_chat" />
+        android:background="@drawable/z_icon_chat" />
 
     <ImageButton
         android:id="@+id/questBtn"
@@ -28,7 +28,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
-        android:background="@drawable/icon_quests" />
+        android:background="@drawable/z_icon_quests" />
 
     <ImageButton
         android:id="@+id/settingsBtn"
@@ -37,7 +37,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="10dp"
-        android:background="@drawable/icon_settings" />
+        android:background="@drawable/z_icon_settings" />
 
     <LinearLayout
         android:layout_width="match_parent"

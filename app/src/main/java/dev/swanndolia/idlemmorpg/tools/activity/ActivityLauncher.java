@@ -12,12 +12,12 @@ public class ActivityLauncher {
         previousActivity.startActivity(intent);
         ((Activity) previousActivity).finish();
     }
-
-    public ActivityLauncher(Context fromActivity, Class<?> nextActivity, Player player) {
-        Intent intent = new Intent(fromActivity, nextActivity);
+//TODO finish make player set to disconnected after leaving menu
+    public ActivityLauncher(Context previousActivity, Class<?> nextActivity, Player player) {
+        Intent intent = new Intent(previousActivity, nextActivity);
         intent.putExtra("player", player);
-        fromActivity.startActivity(intent);
-        ((Activity) fromActivity).finish();
+        previousActivity.startActivity(intent);
+        ((Activity) previousActivity).finish();
     }
 
     public ActivityLauncher(Context previousActivity, Class<?> nextActivity, Player player, String extraName, String extraMeta) {

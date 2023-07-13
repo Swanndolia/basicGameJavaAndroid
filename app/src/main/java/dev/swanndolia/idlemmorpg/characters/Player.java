@@ -6,10 +6,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import dev.swanndolia.idlemmorpg.items.Item;
 import dev.swanndolia.idlemmorpg.items.weapons.melee.rarityF.Sword;
+import dev.swanndolia.idlemmorpg.tools.animations.Bodypart;
 import dev.swanndolia.idlemmorpg.tools.player.ForceSaveInventoryList;
 import dev.swanndolia.idlemmorpg.tools.player.PlayerStats;
 
@@ -29,6 +29,7 @@ public class Player extends PlayerStats implements Serializable {
     Integer nextLevelExp;
     List<Item> inventory;
     List<Item> equippedInventory;
+    List<Bodypart> bodyparts;
 
     public Player() {
     }
@@ -48,7 +49,12 @@ public class Player extends PlayerStats implements Serializable {
         this.evade = 0;
         this.inventory = new ArrayList<Item>();
         this.equippedInventory = new ArrayList<Item>();
+        this.bodyparts = new ArrayList<Bodypart>();
         this.giveAndEquipBasicStuff();
+        //todo this just for dev
+        for (Bodypart.SLOTS slot : Bodypart.SLOTS.values()) {
+            bodyparts.add(new Bodypart(slot, "none"));
+        }
         this.savePlayer();
     }
 
@@ -59,6 +65,27 @@ public class Player extends PlayerStats implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Bodypart getBodypart(Bodypart.SLOTS slot) {
+        for (Bodypart bodypart : this.bodyparts) {
+            if (bodypart.getSlot() == slot) {
+                return bodypart;
+            }
+        }
+        return null;
+    }
+
+    public void addBodypart(Bodypart.SLOTS slot, String name) {
+        Bodypart bodypart = this.getBodypart(slot);
+        if (bodypart != null) {
+            bodypart.setName(name);
+        }
+    }
+
+    public List<Bodypart> getBodyparts() {
+        return bodyparts;
+    }
+
     public Integer getHp() {
         return hp;
     }
@@ -170,7 +197,7 @@ public class Player extends PlayerStats implements Serializable {
     }
 
     public List<Item> getInventory() {
-        return this.inventory;
+        return inventory;
     }
 
     public List<Item> getEquippedInventory() {

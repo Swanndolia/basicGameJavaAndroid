@@ -16,6 +16,6 @@ public class Sword extends MeleeWeapon implements Serializable {
         this.setCritMultiplier(2.0);
         this.calculateCritDamage();
         this.setRarity("F");
-        this.setIcon(R.drawable.icon_melee_weapon);
+        this.setIcon(R.drawable.z_icon_melee_weapon);
     }
 }

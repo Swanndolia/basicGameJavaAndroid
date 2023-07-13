@@ -1,0 +1,8 @@
+<animation-list android:id="@+id/player_death_animation" android:oneshot="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/z_coin_lvl_1" android:duration="150" />
+    <item android:drawable="@drawable/z_coin_lvl_1" android:duration="150" />
+    <item android:drawable="@drawable/z_coin_lvl_1" android:duration="150" />
+    <item android:drawable="@drawable/z_coin_lvl_1" android:duration="150" />
+    <item android:drawable="@drawable/z_coin_lvl_1" android:duration="350" />
+</animation-list>

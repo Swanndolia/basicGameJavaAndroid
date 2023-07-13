@@ -57,7 +57,7 @@ public class EnemyKilledOverlay {
         ImageView iconSellAllItem = dialog.findViewById(R.id.iconSellItem);
         ImageView iconAllItem = dialog.findViewById(R.id.iconItem);
         //iconItem.setImageResource(item.getIcon());
-        iconAllItem.setImageResource(R.drawable.icon_inventory);
+        iconAllItem.setImageResource(R.drawable.z_icon_inventory);
         takeAllLoot.setOnClickListener(view -> {
             player.addItemListToInventory(enemyEncountered.getInventory());
             int amountToRemove = enemyEncountered.getInventory().size();
@@ -77,8 +77,8 @@ public class EnemyKilledOverlay {
             Button takeOneItem = rewardAction.findViewById(R.id.buttonLeft);
             ImageView iconSellItem = rewardAction.findViewById(R.id.iconSellItem);
             Button sellOneItem = rewardAction.findViewById(R.id.buttonRight);
-            iconItem.setImageResource(R.drawable.icon_inventory);
-            iconSellItem.setImageResource(R.drawable.icon_coins);
+            iconItem.setImageResource(R.drawable.z_icon_inventory);
+            iconSellItem.setImageResource(R.drawable.z_icon_coins);
             takeOneItem.setAllCaps(false);
             takeOneItem.setText(item.getName());
             takeOneItem.setTextColor(new GetRgbFromRarity().getRgbFromRarity(item.getRarity()));
@@ -107,7 +107,7 @@ public class EnemyKilledOverlay {
         }
 
         Integer finalTotalValue = totalValue[0];
-        iconSellAllItem.setImageResource(R.drawable.icon_coins);
+        iconSellAllItem.setImageResource(R.drawable.z_icon_coins);
         sellAllLoot.setOnClickListener(view -> {
             player.addCoins(finalTotalValue);
             int amountToRemove = enemyEncountered.getInventory().size();

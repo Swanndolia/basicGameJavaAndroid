@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/background" />
+        android:src="@drawable/z_background" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -33,7 +33,7 @@
                 android:layout_marginEnd="20dp"
                 android:text="Helmet"
                 android:textColor="@color/cardview_dark_background"
-                app:icon="@drawable/icon_helmet"
+                app:icon="@drawable/z_icon_helmet"
                 app:iconTint="#612B07"
                 app:strokeColor="@color/cardview_dark_background"
                 app:strokeWidth="2dp" />
@@ -47,7 +47,7 @@
                 android:layout_marginEnd="20dp"
                 android:text="Neck"
                 android:textColor="@color/cardview_dark_background"
-                app:icon="@drawable/icon_neck"
+                app:icon="@drawable/z_icon_neck"
                 app:iconTint="#612B07"
                 app:strokeColor="@color/cardview_dark_background"
                 app:strokeWidth="2dp" />
@@ -61,7 +61,7 @@
                 android:layout_marginEnd="20dp"
                 android:text="Cape"
                 android:textColor="@color/cardview_dark_background"
-                app:icon="@drawable/icon_cape"
+                app:icon="@drawable/z_icon_cape"
                 app:iconTint="#612B07"
                 app:strokeColor="@color/cardview_dark_background"
                 app:strokeWidth="2dp" />
@@ -75,7 +75,7 @@
                 android:layout_marginEnd="20dp"
                 android:text="Torso"
                 android:textColor="@color/cardview_dark_background"
-                app:icon="@drawable/icon_torso"
+                app:icon="@drawable/z_icon_torso"
                 app:iconTint="#612B07"
                 app:strokeColor="@color/cardview_dark_background"
                 app:strokeWidth="2dp" />
@@ -89,7 +89,7 @@
                 android:layout_marginEnd="20dp"
                 android:text="Arms"
                 android:textColor="@color/cardview_dark_background"
-                app:icon="@drawable/icon_torso"
+                app:icon="@drawable/z_icon_torso"
                 app:iconTint="#612B07"
                 app:strokeColor="@color/cardview_dark_background"
                 app:strokeWidth="2dp" />
@@ -103,7 +103,7 @@
                 android:layout_marginEnd="20dp"
                 android:text="Left Ring"
                 android:textColor="@color/cardview_dark_background"
-                app:icon="@drawable/icon_ring"
+                app:icon="@drawable/z_icon_ring"
                 app:iconTint="#612B07"
                 app:strokeColor="@color/cardview_dark_background"
                 app:strokeWidth="2dp" />
@@ -117,7 +117,7 @@
                 android:layout_marginEnd="20dp"
                 android:text="Right Ring"
                 android:textColor="@color/cardview_dark_background"
-                app:icon="@drawable/icon_ring"
+                app:icon="@drawable/z_icon_ring"
                 app:iconTint="#612B07"
                 app:strokeColor="@color/cardview_dark_background"
                 app:strokeWidth="2dp" />
@@ -131,7 +131,7 @@
                 android:layout_marginEnd="20dp"
                 android:text="Gloves"
                 android:textColor="@color/cardview_dark_background"
-                app:icon="@drawable/icon_gloves"
+                app:icon="@drawable/z_icon_gloves"
                 app:iconTint="#612B07"
                 app:strokeColor="@color/cardview_dark_background"
                 app:strokeWidth="2dp" />
@@ -145,7 +145,7 @@
                 android:layout_marginEnd="20dp"
                 android:text="Legs"
                 android:textColor="@color/cardview_dark_background"
-                app:icon="@drawable/icon_boots"
+                app:icon="@drawable/z_icon_boots"
                 app:iconTint="#612B07"
                 app:strokeColor="@color/cardview_dark_background"
                 app:strokeWidth="2dp" />
@@ -159,7 +159,7 @@
                 android:layout_marginEnd="20dp"
                 android:text="Boots"
                 android:textColor="@color/cardview_dark_background"
-                app:icon="@drawable/icon_boots"
+                app:icon="@drawable/z_icon_boots"
                 app:iconTint="#612B07"
                 app:strokeColor="@color/cardview_dark_background"
                 app:strokeWidth="2dp" />
@@ -173,7 +173,7 @@
                 android:layout_marginEnd="20dp"
                 android:text="Ranged Weapon"
                 android:textColor="@color/cardview_dark_background"
-                app:icon="@drawable/icon_ranged_weapon"
+                app:icon="@drawable/z_icon_ranged_weapon"
                 app:iconTint="#612B07"
                 app:strokeColor="@color/cardview_dark_background"
                 app:strokeWidth="2dp" />
@@ -187,7 +187,7 @@
                 android:layout_marginEnd="20dp"
                 android:text="Melee Weapon"
                 android:textColor="@color/cardview_dark_background"
-                app:icon="@drawable/icon_melee_weapon"
+                app:icon="@drawable/z_icon_melee_weapon"
                 app:iconTint="#612B07"
                 app:strokeColor="@color/cardview_dark_background"
                 app:strokeWidth="2dp" />
@@ -201,7 +201,7 @@
                 android:layout_marginEnd="20dp"
                 android:text="Drops and Misc"
                 android:textColor="@color/cardview_dark_background"
-                app:icon="@drawable/icon_inventory"
+                app:icon="@drawable/z_icon_inventory"
                 app:iconTint="#612B07"
                 app:strokeColor="@color/cardview_dark_background"
                 app:strokeWidth="2dp" />
