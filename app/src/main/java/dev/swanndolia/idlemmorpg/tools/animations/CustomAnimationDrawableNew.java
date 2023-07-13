@@ -4,9 +4,6 @@ import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
-import android.util.Log;
-
-import androidx.appcompat.content.res.AppCompatResources;
 
 import dev.swanndolia.idlemmorpg.characters.Player;
 
@@ -21,11 +18,11 @@ public abstract class CustomAnimationDrawableNew extends AnimationDrawable {
         // Add each frame to our animation drawable
 
         player.addBodypart(Bodypart.SLOTS.body, "player");
+        player.addBodypart(Bodypart.SLOTS.head, "test");
         for (int i = 0; i < aniDrawable.getNumberOfFrames(); i++) {
-                DynamicCharacterFrameBuilder builder = new DynamicCharacterFrameBuilder(context,"attack" , i + 1);
-                builder.addBodyparts(player.getBodyparts());
-                Drawable drawable = builder.build();
-            this.addFrame(drawable, aniDrawable.getDuration(i));
+            DynamicCharacterFrameBuilder builder = new DynamicCharacterFrameBuilder(context, "attack", i + 1);
+            builder.addBodyparts(player.getBodyparts());
+            this.addFrame(builder.build(), aniDrawable.getDuration(i));
         }
     }
 
