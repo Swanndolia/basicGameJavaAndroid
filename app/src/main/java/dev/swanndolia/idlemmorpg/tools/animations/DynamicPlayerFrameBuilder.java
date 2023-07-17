@@ -27,7 +27,7 @@ public class DynamicPlayerFrameBuilder {
         String gender = "male";
         Drawable drawable = null;
         for (Bodypart bodypart : bodyparts) {
-            Log.e("currentAnim", "player_" + action + "_" + gender + "_" + stepNumber);
+            Log.e("currentAnim", "player_" + action + "_" + gender + "_" + stepNumber); //todo name scheme would look like "player_<action>_<gender>_<bodypart_slot>_<bodypart_name>_<step>"
             String bodypartName = bodypart.getName();
             if (bodypart.getSlot() == Bodypart.SLOTS.body) {
                 gender = bodypart.getName();
@@ -36,7 +36,7 @@ public class DynamicPlayerFrameBuilder {
             }
             if (!bodypartName.equals("none")) {
                 try {
-                    drawable = AppCompatResources.getDrawable(context, context.getResources().getIdentifier("player_" + action + "_" + gender + "_" + bodypartName + "_" + stepNumber, "drawable", context.getPackageName()));
+                    drawable = AppCompatResources.getDrawable(context, context.getResources().getIdentifier("player_" + action + "_" + gender + "_" + bodypart.getSlot() + "_" + bodypartName + "_" + stepNumber, "drawable", context.getPackageName()));
                 } catch (Exception e) {
                     Log.e("LayerListBuilder", "Error getting drawable for ID " + bodypartName, e);
                 }

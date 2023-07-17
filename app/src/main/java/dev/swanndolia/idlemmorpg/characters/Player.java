@@ -234,7 +234,7 @@ public class Player extends PlayerStats implements Serializable {
         this.savePlayer();
     }
 
-    public void equipItem(Item itemToEquip) {
+    public void equipItem(Item itemToEquip) {//todo add entry to item class "vanityItem"(if item.vanityItem) => player.setbodypart(item.getSlot, item.getVanityNme) do for unequipto
         this.removeItemFromInventory(itemToEquip);
         this.addItemToEquippedInventory(itemToEquip);
         this.savePlayer();

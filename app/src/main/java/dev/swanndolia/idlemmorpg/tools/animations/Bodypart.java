@@ -31,14 +31,23 @@ public class Bodypart implements Serializable {
         this.slot = slot;
     }
 
-    public enum SLOTS {
+    public enum SLOTS {//TODO add belt ?
         body,
+        eyes,
         boots,
         legs,
+        legs_armor,
         torso,
+        torso_armor,
+        shoulders,
         arms,
+        gloves,
+        cape,
+        beard,
         hair,
         head,
-        cape
+        main_hand,
+        off_hand,
+
     }
 }
